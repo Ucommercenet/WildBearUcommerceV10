@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Ucommerce.Web.BackOffice" Version="10.0.0-alpha3027" />
     <PackageReference Include="Ucommerce.Web.WebSite" Version="10.0.0-alpha3027" />
     <PackageReference Include="Ucommerce.Search.Elastic" Version="10.0.0-alpha1267" />
