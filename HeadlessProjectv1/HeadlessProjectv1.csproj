@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ucommerce.Web.BackOffice" Version="10.0.0-alpha3027" />
+    <PackageReference Include="Ucommerce.Web.WebSite" Version="10.0.0-alpha3027" />
+    <PackageReference Include="Ucommerce.Search.Elastic" Version="10.0.0-alpha1267" />
+  </ItemGroup>
+</Project>
