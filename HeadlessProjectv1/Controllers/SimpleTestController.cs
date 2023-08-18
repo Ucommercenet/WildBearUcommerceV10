@@ -6,25 +6,16 @@ namespace HeadlessProjectv1.Controllers
     [ApiController]
     public class SimpleTestController : ControllerBase
     {
+        [HttpGet("AskQuestionGet")]
         public int AskQuestionGet()
         {
             return 42;
         }
 
-        //[HttpGet("AskQuestionGet2")]
-        //public int AskQuestionGet2()
-        //{
-        //    return 85;
-        //}
-
-        //public ActionResult<string> BestAnswerGet(int guess)
-        //{
-        //    if (guess == 42)
-        //    {
-        //        return "Correct";
-        //    }
-
-        //    return this.BadRequest();
-        //}
+        [HttpGet("BestAnswerGet")]
+        public ActionResult<string> BestAnswerGet(int guess)
+        {
+            return guess == 42 ? "Correct" : "Incorrect";
+        }
     }
 }
