@@ -19,12 +19,12 @@ namespace HeadlessProjectv1.Controllers
 
         //test with product A001
         [HttpGet("GetProductName")]
-        public async Task<string> GetProductName(string sku)
+        public string GetProductName(string sku)
         {
             //Todo: Get Language
             var language = new Language()
             {
-                Name = "English",
+                Name = "Danish",
                 Culture = new CultureInfo("da-DK")
             };
 
