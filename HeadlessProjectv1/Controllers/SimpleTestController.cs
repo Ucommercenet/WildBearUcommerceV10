@@ -13,7 +13,7 @@ namespace HeadlessProjectv1.Controllers
         }
 
         [HttpGet("BestAnswerGet")]
-        public ActionResult<string> BestAnswerGet(int guess)
+        public string BestAnswerGet(int guess)
         {
             return guess == 42 ? "Correct" : "Incorrect";
         }
