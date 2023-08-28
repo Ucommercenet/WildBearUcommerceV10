@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace HeadlessProjectv1.Controllers
 {
@@ -6,6 +7,7 @@ namespace HeadlessProjectv1.Controllers
     [ApiController]
     public class AlphaWorkaroundController : ControllerBase
     {
+        [SwaggerOperation(Summary = "The button to index data to the search engine is missing.")]
         [HttpPost("PostScratchIndexRequest")]
         public string PostScratchIndexRequest()
         {
