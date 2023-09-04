@@ -12,6 +12,8 @@ namespace HeadlessProjectv1.Controllers
         [HttpGet("GetCoffeeProduct")]
         public ProductSearchModel GetCoffeeProduct()
         {
+            var coffeeCatogory = "TODO:GUID";
+
             throw new NotImplementedException();
         }
 

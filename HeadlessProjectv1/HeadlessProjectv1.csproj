@@ -13,4 +13,8 @@
     <PackageReference Include="Ucommerce.Web.WebSite" Version="10.0.0-alpha3027" />
     <PackageReference Include="Ucommerce.Search.Elastic" Version="10.0.0-alpha1267" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\CoffeeScenarioControllers\" />
+  </ItemGroup>
 </Project>
