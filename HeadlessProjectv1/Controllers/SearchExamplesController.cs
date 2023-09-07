@@ -47,7 +47,6 @@ namespace HeadlessProjectv1.Controllers
 
             var searchable = _indexCatalog.AsSearchable(culture);
 
-            //var result = searchable.Where(x => true).ToResultSet(token).Result.FirstOrDefault();
             var result = searchable.FirstOrDefault(token).Result;
 
             return result;
