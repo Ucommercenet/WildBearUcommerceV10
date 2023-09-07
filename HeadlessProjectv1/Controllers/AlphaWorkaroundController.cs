@@ -16,7 +16,6 @@ namespace HeadlessProjectv1.Controllers
 
             var client = new HttpClient();
 
-            //TODO: call the transaction API
             using var request = new HttpRequestMessage(
                 new HttpMethod(method: "POST"), requestUri: $"https://{host}:{port}/ucommerce/api/v1/search");
 

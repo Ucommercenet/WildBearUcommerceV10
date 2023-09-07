@@ -11,16 +11,17 @@ namespace HeadlessProjectv1.Controllers
     [ApiController]
     public class SearchExamplesController : ControllerBase
     {
-        private readonly IIndex _index;
+        private readonly IIndex<ProductSearchModel> _indexProduct;
+        private readonly IIndex<CatalogSearchModel> _indexCatalog;
 
-        public SearchExamplesController(IIndex index)
+        public SearchExamplesController(IIndex index, IIndex<CatalogSearchModel> indexCatalog, IIndex<ProductSearchModel> indexProduct)
         {
-            _index = index;
+            _indexCatalog = indexCatalog;
+            _indexProduct = indexProduct;
         }
 
-
         [HttpGet("GetProductNameForA001")]
-        public string GetProductNameForA001()
+        public string GetProductNameForA001(CancellationToken token)
         {
             var language = new Language()
             {
@@ -28,32 +29,27 @@ namespace HeadlessProjectv1.Controllers
                 Culture = new CultureInfo("da-DK")
             };
 
-            var indexSearch = _index.AsSearchable<ProductSearchModel>(language.Culture);
+            var indexSearch = _indexProduct.AsSearchable(language.Culture);
 
             var productResultSet = indexSearch.Where(x => x.Sku == "A001")
-                .ToResultSet(new CancellationToken()).Result;
-
+                .ToResultSet(token).Result;
 
             var result = productResultSet.FirstOrDefault()?.Name;
 
             return result ??= "No product found";
         }
 
-
-        [SwaggerOperation(Summary = "DOES NOT WORK! Because search is not feature complete. Try again in next alpha build")]
+        [SwaggerOperation(Summary = "Gets the first Catalog, which on a fresh install would be the Ucommerce Catalog.")]
         [HttpGet("GetDefaultCatalog")]
-        public CatalogSearchModel? GetDefaultCatalog()
+        public CatalogSearchModel? GetDefaultCatalog(CancellationToken token)
         {
             var culture = new CultureInfo("da-DK");
 
-            var searchable = _index.AsSearchable<CatalogSearchModel>(culture);
+            var searchable = _indexCatalog.AsSearchable(culture);
 
-            var catalogSearchModel = searchable.FirstOrDefault(new CancellationToken()).Result;
+            var result = searchable.FirstOrDefault(token).Result;
 
-
-            return catalogSearchModel;
+            return result;
         }
-
-
     }
 }
