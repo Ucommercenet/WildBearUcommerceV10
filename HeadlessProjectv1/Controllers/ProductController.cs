@@ -10,11 +10,11 @@ namespace HeadlessProjectv1.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IIndex _index;
+        private readonly IIndex<ProductSearchModel> _indexProduct;
 
-        public ProductController(IIndex index)
+        public ProductController(IIndex<ProductSearchModel> indexProduct)
         {
-            _index = index;
+            _indexProduct = indexProduct;
         }
 
         //test with product A001
@@ -27,11 +27,10 @@ namespace HeadlessProjectv1.Controllers
                 Culture = new CultureInfo("da-DK")
             };
 
-            var indexSearch = _index.AsSearchable<ProductSearchModel>(language.Culture);
+            var indexSearch = _indexProduct.AsSearchable(language.Culture);
 
             var productResultSet = indexSearch.Where(x => x.Sku == searchSku)
                 .ToResultSet(new CancellationToken()).Result;
-
 
             var result = productResultSet.FirstOrDefault()?.Name;
 
