@@ -14,6 +14,10 @@ namespace WildBearAdventuresMVC.Controllers
             var ucommerceResponse = CallUcommerceApi();
 
 
+            //Do Deserialize ucommerceResponse into model
+
+
+
 
 
             //TODO: Create View
@@ -23,20 +27,25 @@ namespace WildBearAdventuresMVC.Controllers
 
 
         //Make it work first, then make it pretty, Then make it dynamic
-        private HttpResponseMessage CallUcommerceApi()
+        private async string CallUcommerceApi()
         {
+            var token = new CancellationToken();
             var host = HttpContext.Request.Host.Host;
             var port = HttpContext.Request.Host.Port;
 
             var client = new HttpClient();
             var request = new HttpRequestMessage(new HttpMethod(
                                 method: "GET"),
-                            requestUri: @$"https://localhost:44381/api/CoffeeScenarios/GetAllProductsFromCategoryWildCoffee");
+                            requestUri: @$"https://localhost:7255/api/Product/WildCoffee");
 
 
-            var response = client.Send(request);
+            var response = client.GetAsync("https://localhost:7255/api/Product/WildCoffee");
 
-            return response;
+
+
+            var content = await response.Result.Content.ReadAsStringAsync();
+
+
 
 
 

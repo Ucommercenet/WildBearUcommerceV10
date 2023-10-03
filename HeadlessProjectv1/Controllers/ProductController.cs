@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Globalization;
 using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
-using Ucommerce.Web.Infrastructure.Core.Models;
 
 namespace HeadlessProjectv1.Controllers
 {
@@ -11,30 +11,36 @@ namespace HeadlessProjectv1.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IIndex<ProductSearchModel> _indexProduct;
+        private readonly CultureInfo _CurrenCulture;
+        private readonly IIndex<CategorySearchModel> _indexCategory;
 
-        public ProductController(IIndex<ProductSearchModel> indexProduct)
+        public ProductController(IIndex<CategorySearchModel> indexCategory, IIndex<ProductSearchModel> indexProduct)
         {
+            _indexCategory = indexCategory;
             _indexProduct = indexProduct;
+            _CurrenCulture = MockData.GetDanishLangauge().Culture;
         }
 
-        //test with product A001
-        [HttpGet("GetProductName")]
-        public string GetProductName(string searchSku)
+
+        [SwaggerOperation(Summary = "Example: categoryName = WildCoffee")]
+        [HttpGet("{categoryName}")]
+        public async Task<IActionResult> GetAllProductsFromCategory(string categoryName, CancellationToken token)
         {
-            var language = new Language()
-            {
-                Name = "Danish",
-                Culture = new CultureInfo("da-DK")
-            };
 
-            var indexSearch = _indexProduct.AsSearchable(language.Culture);
+            var category = await _indexCategory.AsSearchable(_CurrenCulture).Where(x => x.Name == categoryName).FirstOrDefault(token);
 
-            var productResultSet = indexSearch.Where(x => x.Sku == searchSku)
-                .ToResultSet(new CancellationToken()).Result;
+            if (category == null) { return NotFound(); }
 
-            var result = productResultSet.FirstOrDefault()?.Name;
+            var resultSet = await _indexProduct.AsSearchable(_CurrenCulture).Where(x => x.CategoryIds.Contains(category.Id)).ToResultSet(token);
 
-            return result ??= "No product found";
+            if (resultSet.Any() == false) { return NotFound(); }
+
+
+            return Ok(resultSet.Results);
         }
+
+
+
+
     }
 }

@@ -47,6 +47,8 @@ namespace HeadlessProjectv1.Controllers.CoffeeScenarioControllers
 
             var result = await _indexProduct.AsSearchable(_language.Culture).Where(x => x.CategoryIds.Contains(category.Id)).ToResultSet(token);
 
+
+
             return result;
         }
 
