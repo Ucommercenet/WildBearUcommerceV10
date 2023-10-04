@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using WildBearAdventuresMVC.Models.WildBearCoffee;
+using WildBearAdventuresMVC.WildBearRelated.DTO;
 
 namespace WildBearAdventuresMVC.Controllers
 {
@@ -8,16 +10,17 @@ namespace WildBearAdventuresMVC.Controllers
 
         public IActionResult Index()
         {
-            var model = new CoffeeViewModel();
+            var coffeeViewModel = new CoffeeViewModel();
 
 
-            var ucommerceResponse = CallUcommerceApi();
+            var ucommerceResponse = CallApiForProducts();
 
 
             //Do Deserialize ucommerceResponse into model
 
+            var deserializedObject = JsonConvert.DeserializeObject<SimpleUcommerceProductDTO>(ucommerceResponse);
 
-
+            coffeeViewModel.Name = deserializedObject?.name;
 
 
             //TODO: Create View
@@ -27,7 +30,7 @@ namespace WildBearAdventuresMVC.Controllers
 
 
         //Make it work first, then make it pretty, Then make it dynamic
-        private async string CallUcommerceApi()
+        private string CallApiForProducts()
         {
             var token = new CancellationToken();
             var host = HttpContext.Request.Host.Host;
@@ -39,11 +42,13 @@ namespace WildBearAdventuresMVC.Controllers
                             requestUri: @$"https://localhost:7255/api/Product/WildCoffee");
 
 
-            var response = client.GetAsync("https://localhost:7255/api/Product/WildCoffee");
+            var response = client.GetAsync("https://localhost:7255/api/Product/WildCoffee").Result;
 
 
 
-            var content = await response.Result.Content.ReadAsStringAsync();
+
+            return response.Content.ReadAsStringAsync().Result;
+
 
 
 
