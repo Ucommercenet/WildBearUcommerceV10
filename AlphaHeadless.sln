@@ -12,6 +12,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WildBearAdventuresMVC", "Wi
 		{5CF5EF04-C6CA-470F-A932-35C4EAD01518} = {5CF5EF04-C6CA-470F-A932-35C4EAD01518}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UcommerceDTO", "UcommerceDTO\UcommerceDTO.csproj", "{22313907-1341-4077-83AF-2216CC66E4B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{04AEDE96-810D-4102-BE98-CB3B19AE29DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04AEDE96-810D-4102-BE98-CB3B19AE29DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04AEDE96-810D-4102-BE98-CB3B19AE29DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22313907-1341-4077-83AF-2216CC66E4B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22313907-1341-4077-83AF-2216CC66E4B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22313907-1341-4077-83AF-2216CC66E4B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22313907-1341-4077-83AF-2216CC66E4B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

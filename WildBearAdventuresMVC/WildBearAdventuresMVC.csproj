@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Ucommerce.Extensions.Search.Abstractions" Version="10.0.0-alpha3027" />
   </ItemGroup>
 
 </Project>
