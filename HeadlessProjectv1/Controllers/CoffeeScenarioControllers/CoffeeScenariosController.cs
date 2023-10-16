@@ -6,7 +6,6 @@ using Ucommerce.Extensions.Search.Abstractions;
 using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 using Ucommerce.Web.Infrastructure.Core.Models;
-using Ucommerce.Web.Infrastructure.Persistence;
 
 namespace HeadlessProjectv1.Controllers.CoffeeScenarioControllers
 {
@@ -19,15 +18,14 @@ namespace HeadlessProjectv1.Controllers.CoffeeScenarioControllers
         private readonly IIndex<ProductSearchModel> _indexProduct;
         private readonly IIndex<CategorySearchModel> _indexCategory;
 
-        private readonly IRepository _repository;
+
 
         private readonly Language _language;
 
-        public CoffeeScenariosController(IIndex<ProductSearchModel> indexProduct, IIndex<CategorySearchModel> indexCategory, IRepository repository)
+        public CoffeeScenariosController(IIndex<ProductSearchModel> indexProduct, IIndex<CategorySearchModel> indexCategory)
         {
             _indexProduct = indexProduct;
             _indexCategory = indexCategory;
-            _repository = repository;
 
             _language = new Language()
             {

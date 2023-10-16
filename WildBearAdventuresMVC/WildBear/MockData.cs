@@ -1,11 +1,11 @@
 ﻿using System.Globalization;
-using Ucommerce.Web.Infrastructure.Core.Models;
+
 
 namespace HeadlessProjectv1
 {
     public static class MockData
     {
-        public static Language GetDanishLangauge()
+        public static Language GetDanishLanguage()
         {
             return new Language()
             {
@@ -14,10 +14,12 @@ namespace HeadlessProjectv1
             };
         }
 
+    }
 
+    public class Language
+    {
+        public string? Name { get; set; }
 
-
-
-
+        public required CultureInfo Culture { get; set; }
     }
 }

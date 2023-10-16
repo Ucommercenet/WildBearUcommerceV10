@@ -11,27 +11,26 @@ namespace HeadlessProjectv1.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IIndex<ProductSearchModel> _indexProduct;
-        private readonly CultureInfo _CurrenCulture;
         private readonly IIndex<CategorySearchModel> _indexCategory;
 
         public ProductController(IIndex<CategorySearchModel> indexCategory, IIndex<ProductSearchModel> indexProduct)
         {
             _indexCategory = indexCategory;
             _indexProduct = indexProduct;
-            _CurrenCulture = MockData.GetDanishLangauge().Culture;
+
         }
 
 
         [SwaggerOperation(Summary = "Example: categoryName = WildCoffee")]
         [HttpGet("{categoryName}")]
-        public async Task<IActionResult> GetAllProductsFromCategory(string categoryName, CancellationToken token)
+        public async Task<IActionResult> GetAllProductsFromCategory(string categoryName, CultureInfo culture, CancellationToken token)
         {
 
-            var category = await _indexCategory.AsSearchable(_CurrenCulture).Where(x => x.Name == categoryName).FirstOrDefault(token);
+            var category = await _indexCategory.AsSearchable(culture).Where(x => x.Name == categoryName).FirstOrDefault(token);
 
             if (category == null) { return NotFound(); }
 
-            var resultSet = await _indexProduct.AsSearchable(_CurrenCulture).Where(x => x.CategoryIds.Contains(category.Id)).ToResultSet(token);
+            var resultSet = await _indexProduct.AsSearchable(culture).Where(x => x.CategoryIds.Contains(category.Id)).ToResultSet(token);
 
             if (resultSet.Any() == false) { return NotFound(); }
 
