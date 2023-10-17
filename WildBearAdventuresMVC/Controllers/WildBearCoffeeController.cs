@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using WildBearAdventuresMVC.Models.WildBearCoffee;
+using WildBearAdventuresMVC.WildBear;
 
 namespace WildBearAdventuresMVC.Controllers
 {
@@ -9,28 +9,31 @@ namespace WildBearAdventuresMVC.Controllers
 
     public class WildBearCoffeeController : Controller
     {
-        private class ProductDTO
+        private readonly WildBearApiClient _wildBearApiClient;
+
+
+        public WildBearCoffeeController(WildBearApiClient wildBearApiClient)
         {
-
-
-            public string Name { get; set; }
-
+            _wildBearApiClient = wildBearApiClient;
         }
 
 
         public IActionResult Index()
         {
-            var coffeeViewModel = new CoffeeViewModel();
+
+            //TODO: replace dummy token
+            var token = new CancellationToken();
 
 
-            var ucommerceResponse = CallApiForProducts();
+            var productDto = _wildBearApiClient.GetRandomCoffeeProduct(token);
+
+            var coffeeViewModel = new CoffeeViewModel()
+            {
+                Name = productDto.Name,
+
+            };
 
 
-            //Do Deserialize ucommerceResponse into model
-
-            var deserializedObject = JsonConvert.DeserializeObject<List<ProductDTO>>(ucommerceResponse);
-
-            coffeeViewModel.Name = deserializedObject.FirstOrDefault().Name;
 
 
             //TODO: Create View
@@ -40,26 +43,6 @@ namespace WildBearAdventuresMVC.Controllers
 
 
         //Make it work first, then make it pretty, Then make it dynamic
-        private string CallApiForProducts()
-        {
-            var token = new CancellationToken();
-            var host = HttpContext.Request.Host.Host;
-            var port = HttpContext.Request.Host.Port;
 
-            var client = new HttpClient();
-            var response = client.GetAsync("https://localhost:7255/api/Product/WildCoffee").Result;
-
-
-
-
-            return response.Content.ReadAsStringAsync().Result;
-
-
-
-
-
-
-
-        }
     }
 }

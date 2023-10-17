@@ -3,6 +3,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using System.Globalization;
 using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
+using Ucommerce.Web.Common.Extensions;
 
 namespace HeadlessProjectv1.Controllers
 {
@@ -21,10 +22,18 @@ namespace HeadlessProjectv1.Controllers
         }
 
 
-        [SwaggerOperation(Summary = "Example: categoryName = WildCoffee")]
+        [SwaggerOperation(Summary = "Example: categoryName = 'WildCoffee', Culture = 'da-DK'")]
         [HttpGet("{categoryName}")]
-        public async Task<IActionResult> GetAllProductsFromCategory(string categoryName, CultureInfo culture, CancellationToken token)
+        public async Task<IActionResult> GetAllProductsFromCategory(string categoryName, string? cultureInput, CancellationToken token)
         {
+
+            if (cultureInput.IsNullOrWhiteSpace())
+            { cultureInput = "da-DK"; }
+            var culture = new CultureInfo(cultureInput);
+
+            if (culture == null)
+            { return NotFound(); }
+
 
             var category = await _indexCategory.AsSearchable(culture).Where(x => x.Name == categoryName).FirstOrDefault(token);
 
@@ -37,6 +46,9 @@ namespace HeadlessProjectv1.Controllers
 
             return Ok(resultSet.Results);
         }
+
+
+
 
 
 

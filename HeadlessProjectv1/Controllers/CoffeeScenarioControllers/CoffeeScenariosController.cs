@@ -5,10 +5,10 @@ using System.Globalization;
 using Ucommerce.Extensions.Search.Abstractions;
 using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
-using Ucommerce.Web.Infrastructure.Core.Models;
 
 namespace HeadlessProjectv1.Controllers.CoffeeScenarioControllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class CoffeeScenariosController : ControllerBase
@@ -17,8 +17,6 @@ namespace HeadlessProjectv1.Controllers.CoffeeScenarioControllers
 
         private readonly IIndex<ProductSearchModel> _indexProduct;
         private readonly IIndex<CategorySearchModel> _indexCategory;
-
-
 
         private readonly Language _language;
 
@@ -41,7 +39,7 @@ namespace HeadlessProjectv1.Controllers.CoffeeScenarioControllers
             var category = await _indexCategory.AsSearchable(_language.Culture).Where(x => x.Name == "WildCoffee").FirstOrDefault(token);
 
             // ***THIS IS NOT ProductIds but Product RelationIds***
-            var productRelationGuids = category?.ProductIds;
+            //var productRelationGuids = category?.ProductIds;
 
             var result = await _indexProduct.AsSearchable(_language.Culture).Where(x => x.CategoryIds.Contains(category.Id)).ToResultSet(token);
 
@@ -50,22 +48,6 @@ namespace HeadlessProjectv1.Controllers.CoffeeScenarioControllers
             return result;
         }
 
-        [HttpPost("AddProductToCart")]
-        public ProductSearchModel AddProductToCart()
-        {
-            throw new NotImplementedException();
-        }
 
-        [HttpPost("CheckoutCart")]
-        public ProductSearchModel CheckoutCart()
-        {
-            throw new NotImplementedException();
-        }
-
-        [HttpPost("GetOrders")]
-        public ProductSearchModel GetOrders()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
