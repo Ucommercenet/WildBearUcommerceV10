@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WildBearAdventuresMVC.Models;
+using WildBearAdventuresMVC.Models.WildBearCoffee;
 using WildBearAdventuresMVC.WildBear;
 
 namespace WildBearAdventuresMVC.Controllers
@@ -17,10 +18,22 @@ namespace WildBearAdventuresMVC.Controllers
         }
         public IActionResult Index()
         {
-            var productDto = _wildBearApiClient.GetRandomCoffeeProduct(new CancellationToken());
-            ViewBag.CoffeeName = productDto.Name;
 
-            return View();
+
+
+            var productDto = _wildBearApiClient.GetRandomProductFromCategory("WildCoffee", new CancellationToken());
+
+            var coffeeViewModel = new CoffeeViewModel()
+            {
+                Name = productDto.Name,
+                Price = productDto.PricesInclTax.FirstOrDefault().Value,
+                Description = productDto.ShortDescription
+
+            };
+
+
+
+            return View(coffeeViewModel);
         }
 
         public IActionResult Privacy()
