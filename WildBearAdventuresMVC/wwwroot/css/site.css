@@ -20,3 +20,12 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.coffee-box {
+    border: 2px solid black; /* Add a black border around the box */
+    padding: 5px; /* Add some padding inside the box for spacing */
+    /*background-color: #A66A2E;*/ /* Optional: Add a background color to the box */
+}
+
+

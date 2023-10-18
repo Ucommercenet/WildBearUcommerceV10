@@ -1,18 +1,15 @@
 ﻿@model WildBearAdventuresMVC.Models.WildBearCoffee.CoffeeViewModel
 
-@{ ViewData["Title"] = "Home Page";}
-
+@{
+    ViewData["Title"] = "Home Page";
+}
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
 
-    <p><strong>Today's Coffee: @Model.Name</strong></p>
-    <p>@Model.Description</p>
-
-    <p><strong>Price:</strong> @Model.Price</p>
-
-
-
-
-    
+    <div class="coffee-box">
+        <p><strong>Today's Coffee: @Model.Name</strong></p>
+        <p>@Model.Description</p>
+        <p><strong>Price:</strong> @Model.Price</p>
+    </div>
 </div>

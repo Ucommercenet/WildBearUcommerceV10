@@ -6,7 +6,7 @@ using Ucommerce.Extensions.Search.Abstractions;
 using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 
-namespace HeadlessProjectv1.Controllers.CoffeeScenarioControllers
+namespace HeadlessProjectv1.Controllers.ScenarioControllers
 {
 
     [Route("api/[controller]")]

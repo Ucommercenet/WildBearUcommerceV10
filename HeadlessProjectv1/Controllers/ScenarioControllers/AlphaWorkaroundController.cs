@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace HeadlessProjectv1.Controllers
+namespace HeadlessProjectv1.Controllers.ScenarioControllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class AlphaWorkaroundController : ControllerBase

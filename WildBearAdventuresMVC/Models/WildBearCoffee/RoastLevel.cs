@@ -2,9 +2,7 @@
 {
     public enum RoastLevel
     {
-        ExtraLight,
         Light,
-        Medium,
         WildAndWellDone,
         Dark,
         ExtraDark,
