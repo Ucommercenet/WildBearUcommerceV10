@@ -12,7 +12,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WildBearAdventuresMVC", "Wi
 		{5CF5EF04-C6CA-470F-A932-35C4EAD01518} = {5CF5EF04-C6CA-470F-A932-35C4EAD01518}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UcommerceWildBearDTO", "UcommerceWildBearDTO\UcommerceWildBearDTO.csproj", "{96F43A14-5634-4ACA-8A73-BAC9FC2D968C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UcommerceWildBearDTO", "UcommerceWildBearDTO\UcommerceWildBearDTO.csproj", "{96F43A14-5634-4ACA-8A73-BAC9FC2D968C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

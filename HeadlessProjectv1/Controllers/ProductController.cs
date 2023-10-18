@@ -18,7 +18,6 @@ namespace HeadlessProjectv1.Controllers
         {
             _indexCategory = indexCategory;
             _indexProduct = indexProduct;
-
         }
 
 
@@ -26,14 +25,12 @@ namespace HeadlessProjectv1.Controllers
         [HttpGet("{categoryName}")]
         public async Task<IActionResult> GetAllProductsFromCategoryName(string categoryName, string? cultureInput, CancellationToken token)
         {
-
             //Culture
             if (cultureInput.IsNullOrWhiteSpace())
             { cultureInput = "da-DK"; }
             var culture = new CultureInfo(cultureInput);
             if (culture == null)
             { return NotFound(); }
-
 
             var category = await _indexCategory.AsSearchable(culture).Where(x => x.Name == categoryName).FirstOrDefault(token);
             if (category == null) { return NotFound(); }
@@ -44,11 +41,6 @@ namespace HeadlessProjectv1.Controllers
 
             return Ok(resultSet.Results);
         }
-
-
-
-
-
 
 
     }

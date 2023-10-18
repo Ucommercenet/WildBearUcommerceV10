@@ -5,6 +5,8 @@ namespace WildBearAdventuresMVC.WildBear
 {
     public class WildBearApiClient
     {
+
+        //Product Related
         public ProductDto GetRandomProductFromCategory(string categoryInput, CancellationToken token)
         {
 
@@ -24,6 +26,23 @@ namespace WildBearAdventuresMVC.WildBear
 
         }
 
+        //Category Related
+        public List<CategoryDto> GetAllCategoriesFromCatalog(string catalogInput, CancellationToken token)
+        {
+
+            var client = new HttpClient();
+
+            var uri = $"https://localhost:44381/api/Category/{catalogInput}";
+
+            var response = client.GetAsync(uri, token).Result;
+            var result = response.Content.ReadFromJsonAsync<List<CategoryDto>>().Result;
+
+
+            return result;
+
+
+
+        }
 
     }
 }

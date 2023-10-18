@@ -2,13 +2,12 @@
 
 namespace WildBearAdventuresMVC.Controllers
 {
-    public class CategoryController : Controller
+    public class TestController : Controller
     {
         public IActionResult Index()
         {
 
-
-
+            var test = "Hello";
 
             return View();
         }

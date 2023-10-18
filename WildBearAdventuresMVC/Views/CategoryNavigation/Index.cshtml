@@ -1,0 +1,26 @@
+﻿@model WildBearAdventuresMVC.Models.WildBearCoffee.CategoryNavigationViewModel
+
+<h1>Categories</h1>
+
+<div class="text-center">
+   
+    <div class="all-categories">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+
+            <ul class="list-group border-0 bg-light">
+                @foreach (var category in Model.categoryDtos)
+                {
+                    <div class="col">
+                        <p><strong>@category.Name</strong></p>
+                    </div>
+                }
+            </ul>
+
+
+           
+        </div>
+
+    </div>
+</div>
+        
+
