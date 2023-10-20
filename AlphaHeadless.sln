@@ -5,14 +5,14 @@ VisualStudioVersion = 17.7.33927.210
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeadlessProjectv1", "HeadlessProjectv1\HeadlessProjectv1.csproj", "{5CF5EF04-C6CA-470F-A932-35C4EAD01518}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppBasic", "ConsoleAppBasic\ConsoleAppBasic.csproj", "{11858229-4A63-48EA-ACB4-00BE359A62A1}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WildBearAdventuresMVC", "WildBearAdventuresMVC\WildBearAdventuresMVC.csproj", "{04AEDE96-810D-4102-BE98-CB3B19AE29DC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5CF5EF04-C6CA-470F-A932-35C4EAD01518} = {5CF5EF04-C6CA-470F-A932-35C4EAD01518}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UcommerceWildBearDTO", "UcommerceWildBearDTO\UcommerceWildBearDTO.csproj", "{96F43A14-5634-4ACA-8A73-BAC9FC2D968C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WildBearAdventuresBootstrap", "WildBearAdventuresBootstrap\WildBearAdventuresBootstrap.csproj", "{D9FFCFBA-C357-4BF4-B962-49F6EC13BA70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,10 +24,6 @@ Global
 		{5CF5EF04-C6CA-470F-A932-35C4EAD01518}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CF5EF04-C6CA-470F-A932-35C4EAD01518}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CF5EF04-C6CA-470F-A932-35C4EAD01518}.Release|Any CPU.Build.0 = Release|Any CPU
-		{11858229-4A63-48EA-ACB4-00BE359A62A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{11858229-4A63-48EA-ACB4-00BE359A62A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{11858229-4A63-48EA-ACB4-00BE359A62A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{11858229-4A63-48EA-ACB4-00BE359A62A1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{04AEDE96-810D-4102-BE98-CB3B19AE29DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{04AEDE96-810D-4102-BE98-CB3B19AE29DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04AEDE96-810D-4102-BE98-CB3B19AE29DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -36,6 +32,10 @@ Global
 		{96F43A14-5634-4ACA-8A73-BAC9FC2D968C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96F43A14-5634-4ACA-8A73-BAC9FC2D968C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96F43A14-5634-4ACA-8A73-BAC9FC2D968C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9FFCFBA-C357-4BF4-B962-49F6EC13BA70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9FFCFBA-C357-4BF4-B962-49F6EC13BA70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9FFCFBA-C357-4BF4-B962-49F6EC13BA70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9FFCFBA-C357-4BF4-B962-49F6EC13BA70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
