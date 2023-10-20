@@ -6,7 +6,7 @@ using Ucommerce.Web.Common.Extensions;
 
 namespace HeadlessProjectv1.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[Controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace HeadlessProjectv1.Controllers
             _indexCatalog = indexCatalog;
         }
 
-        [HttpGet("{catalogName}")]
+        [HttpGet("GetAllCategoriesFromCatalog")]
         public async Task<IActionResult> GetAllCategoriesFromCatalog(string? catalogName, string? cultureInput, CancellationToken token)
         {
             //Culture

@@ -7,12 +7,12 @@ namespace WildBearAdventuresMVC.WildBear
     {
 
         //Product Related
-        public ProductDto GetRandomProductFromCategory(string categoryInput, CancellationToken token)
+        public ProductDto GetRandomProductFromCategory(Guid categoryGuid, CancellationToken token)
         {
 
             var client = new HttpClient();
 
-            var uri = $"https://localhost:44381/api/Product/{categoryInput}";
+            var uri = $"https://localhost:44381/api/Product/{categoryGuid}";
 
             var response = client.GetAsync(uri, token).Result;
             var result = response.Content.ReadFromJsonAsync<List<ProductDto>>().Result;
@@ -22,7 +22,18 @@ namespace WildBearAdventuresMVC.WildBear
 
             return result[randomIndex];
 
+        }
+        public List<ProductDto> GetAllProductsFromCategoryByGuid(Guid categoryGuid, CancellationToken token)
+        {
 
+            var client = new HttpClient();
+
+            var uri = $"https://localhost:44381/api/Product/{categoryGuid}";
+
+            var response = client.GetAsync(uri, token).Result;
+            var result = response.Content.ReadFromJsonAsync<List<ProductDto>>().Result;
+
+            return result;
 
         }
 
@@ -32,7 +43,8 @@ namespace WildBearAdventuresMVC.WildBear
 
             var client = new HttpClient();
 
-            var uri = $"https://localhost:44381/api/Category/{catalogInput}";
+            var uri = $"https://localhost:44381/api/Category/GetAllCategoriesFromCatalog?catalogName={catalogInput}";
+
 
             var response = client.GetAsync(uri, token).Result;
             var result = response.Content.ReadFromJsonAsync<List<CategoryDto>>().Result;
@@ -43,6 +55,7 @@ namespace WildBearAdventuresMVC.WildBear
 
 
         }
+
 
     }
 }

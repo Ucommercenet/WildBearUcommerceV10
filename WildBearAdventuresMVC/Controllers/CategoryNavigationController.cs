@@ -26,5 +26,8 @@ namespace WildBearAdventuresMVC.Controllers
 
             return View(categoryNavigationViewModel);
         }
+
+
+
     }
 }

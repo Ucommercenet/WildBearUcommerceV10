@@ -21,7 +21,7 @@ namespace WildBearAdventuresMVC.Controllers
 
 
 
-            var productDto = _wildBearApiClient.GetRandomProductFromCategory("WildCoffee", new CancellationToken());
+            var productDto = _wildBearApiClient.GetRandomProductFromCategory(new Guid("7040940e-eab1-4a72-85b5-867905b7d94a"), new CancellationToken());
 
             var coffeeViewModel = new CoffeeViewModel()
             {
