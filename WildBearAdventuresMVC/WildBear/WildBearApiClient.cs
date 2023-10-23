@@ -36,6 +36,23 @@ namespace WildBearAdventuresMVC.WildBear
             return result;
 
         }
+        public ProductDto GetSingleProductByGuid(Guid categoryGuid, CancellationToken token)
+        {
+
+            var client = new HttpClient();
+
+            var uri = $"TODO";
+
+            var response = client.GetAsync(uri, token).Result;
+            var result = response.Content.ReadFromJsonAsync<ProductDto>().Result;
+
+
+            return result;
+        }
+
+
+
+
 
         //Category Related
         public List<CategoryDto> GetAllCategoriesFromCatalog(string catalogInput, CancellationToken token)

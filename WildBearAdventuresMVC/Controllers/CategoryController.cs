@@ -17,10 +17,24 @@ namespace WildBearAdventuresMVC.Controllers
         public IActionResult Index(CancellationToken token)
         {
 
-            //TODO: Model must have all sup-catogire if any
-            //TODO: Model must have all prodcuts -- ok?
+            //TODO: Show sub-Categories
+
+
+            //Figure out currentCategory based on route values            
+            var ableToGetCurrent = HttpContext.Request.RouteValues.TryGetValue("id", out var value);
+            var currentCategory = value?.ToString();
+
+
+
+
+
+
+
 
             var WildCoffeeCategory = new Guid("7040940e-eab1-4a72-85b5-867905b7d94a");
+
+            //TODO: Do not  just show WildCoffee Category -- Make this dynamic
+            //currentCategory = WildCoffeeCategory;
 
             var productDtos = _wildBearApiClient.GetAllProductsFromCategoryByGuid(WildCoffeeCategory, token);
 
@@ -28,6 +42,13 @@ namespace WildBearAdventuresMVC.Controllers
             {
                 ProductDtos = productDtos,
             };
+
+
+
+            //TODO: save currenctProduct in cookie
+            HttpContext.Response.Cookies.Append("ProductId", "42");
+
+
 
 
 

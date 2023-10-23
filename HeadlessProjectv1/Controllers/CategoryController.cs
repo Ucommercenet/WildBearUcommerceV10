@@ -20,6 +20,49 @@ namespace HeadlessProjectv1.Controllers
             _indexCatalog = indexCatalog;
         }
 
+
+        [HttpGet("GetCategoryByName")]
+        public async Task<IActionResult> GetCategoryTest(string name, string? cultureInput, CancellationToken token)
+        {
+            //Culture
+            if (cultureInput.IsNullOrWhiteSpace())
+            { cultureInput = "da-DK"; }
+            var culture = new CultureInfo(cultureInput);
+            if (culture == null)
+            { return NotFound(); }
+
+
+            var searchCategory = await _indexCategory.AsSearchable(culture).Where(category => category.Name == name)
+               .ToResultSet(token);
+            var result = searchCategory.SingleOrDefault();
+
+
+            return Ok(result);
+
+        }
+
+        [HttpGet("GetCategoryByGuid")]
+        public async Task<IActionResult> GetCategoryByGuid(Guid searchGuid, string? cultureInput, CancellationToken token)
+        {
+            //Culture
+            if (cultureInput.IsNullOrWhiteSpace())
+            { cultureInput = "da-DK"; }
+            var culture = new CultureInfo(cultureInput);
+            if (culture == null)
+            { return NotFound(); }
+
+
+            var searchCategory = await _indexCategory.AsSearchable(culture).Where(category => category.Id == searchGuid)
+               .ToResultSet(token);
+            var result = searchCategory.SingleOrDefault();
+
+
+            return (result is null) ? NotFound() : Ok(result);
+        }
+
+
+
+
         [HttpGet("GetAllCategoriesFromCatalog")]
         public async Task<IActionResult> GetAllCategoriesFromCatalog(string? catalogName, string? cultureInput, CancellationToken token)
         {

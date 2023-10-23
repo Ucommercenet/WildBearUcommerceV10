@@ -1,6 +1,8 @@
-﻿@model WildBearAdventuresMVC.Models.WildBearCoffee.CategoryNavigationViewModel
+﻿@model WildBearAdventuresMVC.Models.CategoryViewModel
 
 <h1>Categories</h1>
+
+
 
 <div class="text-center">
 
@@ -8,15 +10,18 @@
         <div class="row row-cols-1 row-cols-md-3 g-4">
 
             <ul class="list-group border-0 bg-light">
-                @foreach (var category in Model.categoryDtos)
+                @foreach (var product in Model.ProductDtos)
                 {
-
-                    <li class="text-start">
-                        <a asp-controller="Category"
-                           asp-action="Index"
-                           asp-route-id="@category.Id."
-                           class="text-black">@category.Name</a>
-                    </li>
+                        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                            <div class="container-fluid">
+                            <a class="navbar-brand" asp-area="" asp-controller="Product" asp-action="Index">@product.Name</a>
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                        aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>                                
+                            </div>
+                        </nav>
+                    
 
                 }
             </ul>
@@ -24,5 +29,6 @@
 
     </div>
 </div>
+
 
 
