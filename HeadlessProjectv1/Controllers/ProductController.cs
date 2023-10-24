@@ -7,7 +7,7 @@ using Ucommerce.Web.Common.Extensions;
 
 namespace HeadlessProjectv1.Controllers
 {
-    [Route("api/Product")]
+    [Route("api/[Controller]")]
     [ApiController]
     public class ProductController : ControllerBase
     {
@@ -20,33 +20,31 @@ namespace HeadlessProjectv1.Controllers
             _indexProduct = indexProduct;
         }
 
+        [HttpGet("GetTest")]
+        public async Task<IActionResult> GetTest(string name, string? cultureInput, CancellationToken token)
+        {
+            //Culture
+            if (cultureInput.IsNullOrWhiteSpace())
+            { cultureInput = "da-DK"; }
+            var culture = new CultureInfo(cultureInput);
+            if (culture == null)
+            { return NotFound(); }
 
 
-        //[SwaggerOperation(Summary = "Example: categoryName = 'WildCoffee', Culture = 'da-DK'")]
-        //[HttpGet("{categoryName}")]
-        //public async Task<IActionResult> GetAllProductsFromCategoryName(string categoryName, string? cultureInput, CancellationToken token)
-        //{
-        //    //Culture
-        //    if (cultureInput.IsNullOrWhiteSpace())
-        //    { cultureInput = "da-DK"; }
-        //    var culture = new CultureInfo(cultureInput);
-        //    if (culture == null)
-        //    { return NotFound(); }
-
-        //    var category = await _indexCategory.AsSearchable(culture).Where(x => x.Name == categoryName).FirstOrDefault(token);
-        //    if (category == null) { return NotFound(); }
-
-        //    var resultSet = await _indexProduct.AsSearchable(culture).Where(x => x.CategoryIds.Contains(category.Id)).ToResultSet(token);
-        //    if (resultSet.Any() == false) { return NotFound(); }
+            var searchCategory = await _indexCategory.AsSearchable(culture).Where(category => category.Name == name)
+               .ToResultSet(token);
+            var result = searchCategory.SingleOrDefault();
 
 
-        //    return Ok(resultSet.Results);
-        //}
+            return (result is null) ? NotFound() : Ok(result);
+
+        }
+
 
         //TEST with Wild Coffee: 7040940e-eab1-4a72-85b5-867905b7d94a        
-        [SwaggerOperation(Summary = "GetAllProductsFromCategoryId,Example: 7040940e-eab1-4a72-85b5-867905b7d94a")]
-        [HttpGet("{categoryId}")]
-        public async Task<IActionResult> GetAllProductsFromCategoryId(Guid categoryId, string? cultureInput, CancellationToken token)
+        [SwaggerOperation(Summary = "Example: 7040940e-eab1-4a72-85b5-867905b7d94a")]
+        [HttpGet("GetAllProductsFromCategoryGuid")]
+        public async Task<IActionResult> GetAllProductsFromCategoryGuid(Guid categoryId, string? cultureInput, CancellationToken token)
         {
             //Culture
             if (cultureInput.IsNullOrWhiteSpace())

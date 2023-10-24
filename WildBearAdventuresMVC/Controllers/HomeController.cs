@@ -9,12 +9,13 @@ namespace WildBearAdventuresMVC.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly WildBearApiClient _wildBearApiClient;
+        private readonly IWildBearApiClient _wildBearApiClient;
 
-        public HomeController(ILogger<HomeController> logger)
+
+        public HomeController(ILogger<HomeController> logger, IWildBearApiClient wildBearApiClient)
         {
             _logger = logger;
-            _wildBearApiClient = new WildBearApiClient();
+            _wildBearApiClient = wildBearApiClient;
         }
         public IActionResult Index()
         {

@@ -7,11 +7,11 @@ namespace WildBearAdventuresMVC.Controllers
 
     public class ProductController : Controller
     {
-        private readonly WildBearApiClient _wildBearApiClient;
+        private readonly IWildBearApiClient _wildBearApiClient;
 
-        public ProductController()
+        public ProductController(IWildBearApiClient wildBearApiClient)
         {
-            _wildBearApiClient = new WildBearApiClient();
+            _wildBearApiClient = wildBearApiClient;
         }
 
         public IActionResult Index()

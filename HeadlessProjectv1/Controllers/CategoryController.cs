@@ -22,7 +22,7 @@ namespace HeadlessProjectv1.Controllers
 
 
         [HttpGet("GetCategoryByName")]
-        public async Task<IActionResult> GetCategoryTest(string name, string? cultureInput, CancellationToken token)
+        public async Task<IActionResult> GetCategoryByName(string name, string? cultureInput, CancellationToken token)
         {
             //Culture
             if (cultureInput.IsNullOrWhiteSpace())
@@ -37,7 +37,7 @@ namespace HeadlessProjectv1.Controllers
             var result = searchCategory.SingleOrDefault();
 
 
-            return Ok(result);
+            return (result is null) ? NotFound() : Ok(result);
 
         }
 
@@ -55,6 +55,26 @@ namespace HeadlessProjectv1.Controllers
             var searchCategory = await _indexCategory.AsSearchable(culture).Where(category => category.Id == searchGuid)
                .ToResultSet(token);
             var result = searchCategory.SingleOrDefault();
+
+
+            return (result is null) ? NotFound() : Ok(result);
+        }
+
+        //Optimize: is this fast?
+        [HttpGet("GetOnlyGuidByName")]
+        public async Task<IActionResult> GetOnlyGuidByName(string searchName, string? cultureInput, CancellationToken token)
+        {
+            //Culture
+            if (cultureInput.IsNullOrWhiteSpace())
+            { cultureInput = "da-DK"; }
+            var culture = new CultureInfo(cultureInput);
+            if (culture == null)
+            { return NotFound(); }
+
+
+            var searchCategory = await _indexCategory.AsSearchable(culture).Where(category => category.Name == searchName)
+               .ToResultSet(token);
+            var result = searchCategory.SingleOrDefault()?.Id;
 
 
             return (result is null) ? NotFound() : Ok(result);

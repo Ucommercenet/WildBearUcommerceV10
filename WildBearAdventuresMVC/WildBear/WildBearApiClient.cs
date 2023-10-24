@@ -3,7 +3,7 @@ namespace WildBearAdventuresMVC.WildBear
 
 
 {
-    public class WildBearApiClient
+    public class WildBearApiClient : IWildBearApiClient
     {
 
         //Product Related
@@ -12,7 +12,7 @@ namespace WildBearAdventuresMVC.WildBear
 
             var client = new HttpClient();
 
-            var uri = $"https://localhost:44381/api/Product/{categoryGuid}";
+            var uri = $"https://localhost:44381/api/Product/GetAllProductsFromCategoryGuid?categoryId={categoryGuid}";
 
             var response = client.GetAsync(uri, token).Result;
             var result = response.Content.ReadFromJsonAsync<List<ProductDto>>().Result;
@@ -23,12 +23,11 @@ namespace WildBearAdventuresMVC.WildBear
             return result[randomIndex];
 
         }
-        public List<ProductDto> GetAllProductsFromCategoryByGuid(Guid categoryGuid, CancellationToken token)
+        public List<ProductDto> GetAllProductsFromCategoryGuid(Guid categoryGuid, CancellationToken token)
         {
 
             var client = new HttpClient();
-
-            var uri = $"https://localhost:44381/api/Product/{categoryGuid}";
+            var uri = $"https://localhost:44381/api/Product/GetAllProductsFromCategoryGuid?categoryId={categoryGuid}";
 
             var response = client.GetAsync(uri, token).Result;
             var result = response.Content.ReadFromJsonAsync<List<ProductDto>>().Result;
@@ -65,6 +64,24 @@ namespace WildBearAdventuresMVC.WildBear
 
             var response = client.GetAsync(uri, token).Result;
             var result = response.Content.ReadFromJsonAsync<List<CategoryDto>>().Result;
+
+
+            return result;
+
+
+
+        }
+
+        public Guid GetOnlyGuidByName(string nameInput, CancellationToken token)
+        {
+
+            var client = new HttpClient();
+
+            var uri = $"https://localhost:44381/api/Category/GetOnlyGuidByName?searchName={nameInput}";
+
+
+            var response = client.GetAsync(uri, token).Result;
+            var result = response.Content.ReadFromJsonAsync<Guid>().Result;
 
 
             return result;

@@ -6,12 +6,11 @@ namespace WildBearAdventuresMVC.Controllers
 {
     public class CategoryController : Controller
     {
-        //TODO: Update to DI insted for new class
-        private readonly WildBearApiClient _wildBearApiClient;
+        private readonly IWildBearApiClient _wildBearApiClient;
 
-        public CategoryController()
+        public CategoryController(IWildBearApiClient wildBearApiClient)
         {
-            _wildBearApiClient = new WildBearApiClient();
+            _wildBearApiClient = wildBearApiClient;
         }
 
         public IActionResult Index(CancellationToken token)
@@ -26,17 +25,17 @@ namespace WildBearAdventuresMVC.Controllers
 
 
 
+            var currentCategoryGuid = _wildBearApiClient.GetOnlyGuidByName(currentCategory, token);
 
 
 
 
-
-            var WildCoffeeCategory = new Guid("7040940e-eab1-4a72-85b5-867905b7d94a");
+            //var WildCoffeeCategory = new Guid("7040940e-eab1-4a72-85b5-867905b7d94a");
 
             //TODO: Do not  just show WildCoffee Category -- Make this dynamic
             //currentCategory = WildCoffeeCategory;
 
-            var productDtos = _wildBearApiClient.GetAllProductsFromCategoryByGuid(WildCoffeeCategory, token);
+            var productDtos = _wildBearApiClient.GetAllProductsFromCategoryGuid(currentCategoryGuid, token);
 
             var CategoryViewModel = new CategoryViewModel
             {
