@@ -7,49 +7,43 @@ namespace WildBearAdventuresMVC.Controllers
     public class CategoryController : Controller
     {
         private readonly IWildBearApiClient _wildBearApiClient;
+        private readonly IContextHelper _contextHelper;
 
-        public CategoryController(IWildBearApiClient wildBearApiClient)
+
+        public CategoryController(IWildBearApiClient wildBearApiClient, IContextHelper contextHelper)
         {
             _wildBearApiClient = wildBearApiClient;
+            _contextHelper = contextHelper;
         }
 
         public IActionResult Index(CancellationToken token)
         {
 
+
             //TODO: Show sub-Categories
 
-
-            //Figure out currentCategory based on route values            
-            var ableToGetCurrent = HttpContext.Request.RouteValues.TryGetValue("id", out var value);
-            var currentCategory = value?.ToString();
-
+            //Test 0
+            HttpContext.Session.SetString("TestKey", "42");
+            var testValue = HttpContext.Session.GetString("TestKey");
 
 
-            var currentCategoryGuid = _wildBearApiClient.GetOnlyGuidByName(currentCategory, token);
+            //Figure out currentCategory based on route values aka. how did we get here.
+            //TODO: include the get Route in SetCurrentCategory()
+            var ableToGetRoute = HttpContext.Request.RouteValues.TryGetValue("id", out var value);
+            if (ableToGetRoute) { _contextHelper.SetCurrentCategory(value?.ToString()); }
+
+            var currentCategoryGuid = _contextHelper.GetCurrentCategory();
 
 
+            if (currentCategoryGuid is null)
+            { return View(); }
 
-
-            //var WildCoffeeCategory = new Guid("7040940e-eab1-4a72-85b5-867905b7d94a");
-
-            //TODO: Do not  just show WildCoffee Category -- Make this dynamic
-            //currentCategory = WildCoffeeCategory;
-
-            var productDtos = _wildBearApiClient.GetAllProductsFromCategoryGuid(currentCategoryGuid, token);
+            var productDtos = _wildBearApiClient.GetAllProductsFromCategoryGuid((Guid)currentCategoryGuid, token);
 
             var CategoryViewModel = new CategoryViewModel
             {
                 ProductDtos = productDtos,
             };
-
-
-
-            //TODO: save currenctProduct in cookie
-            HttpContext.Response.Cookies.Append("ProductId", "42");
-
-
-
-
 
             return View(CategoryViewModel);
         }

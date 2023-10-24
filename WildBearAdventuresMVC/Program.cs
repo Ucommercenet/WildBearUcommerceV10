@@ -9,15 +9,22 @@ namespace WildBearAdventuresMVC
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+
             builder.Services.AddControllersWithViews();
+
             // Custom services
-            //QUEST: AddTransient or AddScoped?
+            //QUEST: AddTransient or AddScoped, need to understand scopes
             builder.Services.AddTransient<IWildBearApiClient, WildBearApiClient>();
+            builder.Services.AddTransient<IContextHelper, ContextHelper>();
 
 
             //For now Sessions are used for the cart
-            builder.Services.AddSession();
             builder.Services.AddHttpContextAccessor();
+            builder.Services.AddSession();
+
+
+
 
 
             var app = builder.Build();
@@ -34,8 +41,12 @@ namespace WildBearAdventuresMVC
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthorization();
-            app.MapDefaultControllerRoute();
 
+            app.UseSession();
+
+
+
+            app.MapDefaultControllerRoute();
             //app.MapControllerRoute(
             //    name: "default",
             //    pattern: "{controller=Home}/{action=Index}/{id?}");
