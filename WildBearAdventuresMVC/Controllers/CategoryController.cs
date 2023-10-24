@@ -18,14 +18,7 @@ namespace WildBearAdventuresMVC.Controllers
 
         public IActionResult Index(CancellationToken token)
         {
-
-
-            //TODO: Show sub-Categories
-
-            //Test 0
-            HttpContext.Session.SetString("TestKey", "42");
-            var testValue = HttpContext.Session.GetString("TestKey");
-
+            //TODO: Show sub-Categories                        
 
             //Figure out currentCategory based on route values aka. how did we get here.
             //TODO: include the get Route in SetCurrentCategory()
@@ -38,11 +31,15 @@ namespace WildBearAdventuresMVC.Controllers
             if (currentCategoryGuid is null)
             { return View(); }
 
+
+            var currentCategoryDto = _wildBearApiClient.GetSingleCategoryByGuid((Guid)currentCategoryGuid, token);
+
             var productDtos = _wildBearApiClient.GetAllProductsFromCategoryGuid((Guid)currentCategoryGuid, token);
 
             var CategoryViewModel = new CategoryViewModel
             {
                 ProductDtos = productDtos,
+                CategoryName = (currentCategoryDto is not null) ? currentCategoryDto?.Name : "No currentCategory",
             };
 
             return View(CategoryViewModel);

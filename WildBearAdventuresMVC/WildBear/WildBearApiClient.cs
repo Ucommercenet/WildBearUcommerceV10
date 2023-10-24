@@ -5,8 +5,7 @@ namespace WildBearAdventuresMVC.WildBear
 {
     public class WildBearApiClient : IWildBearApiClient
     {
-
-        //Product Related
+        #region Product Related
         public ProductDto GetRandomProductFromCategory(Guid categoryGuid, CancellationToken token)
         {
 
@@ -35,7 +34,7 @@ namespace WildBearAdventuresMVC.WildBear
             return result;
 
         }
-        public ProductDto GetSingleProductByGuid(Guid categoryGuid, CancellationToken token)
+        public ProductDto GetSingleProductByGuid(Guid guid, CancellationToken token)
         {
 
             var client = new HttpClient();
@@ -48,12 +47,10 @@ namespace WildBearAdventuresMVC.WildBear
 
             return result;
         }
+        #endregion
 
 
-
-
-
-        //Category Related
+        #region Category Related
         public List<CategoryDto> GetAllCategoriesFromCatalog(string catalogInput, CancellationToken token)
         {
 
@@ -89,6 +86,21 @@ namespace WildBearAdventuresMVC.WildBear
 
 
         }
+
+        public CategoryDto GetSingleCategoryByGuid(Guid categoryGuid, CancellationToken token)
+        {
+
+            var client = new HttpClient();
+
+            var uri = $"https://localhost:44381/api/Category/GetCategoryByGuid?searchGuid={categoryGuid}";
+
+            var response = client.GetAsync(uri, token).Result;
+            var result = response.Content.ReadFromJsonAsync<CategoryDto>().Result;
+
+
+            return result;
+        }
+        #endregion
 
 
     }

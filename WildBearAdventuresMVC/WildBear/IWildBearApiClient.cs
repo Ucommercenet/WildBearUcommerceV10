@@ -8,6 +8,7 @@ namespace WildBearAdventuresMVC.WildBear
         List<ProductDto> GetAllProductsFromCategoryGuid(Guid categoryGuid, CancellationToken token);
         Guid GetOnlyGuidByName(string nameInput, CancellationToken token);
         ProductDto GetRandomProductFromCategory(Guid categoryGuid, CancellationToken token);
-        ProductDto GetSingleProductByGuid(Guid categoryGuid, CancellationToken token);
+        CategoryDto GetSingleCategoryByGuid(Guid categoryGuid, CancellationToken token);
+        ProductDto GetSingleProductByGuid(Guid guid, CancellationToken token);
     }
 }

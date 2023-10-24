@@ -24,8 +24,6 @@
 
             var isGuidFound = Guid.TryParse(categoryGuid, out var result);
 
-            //Test 1
-            var testValue = session.GetString("TestKey");
 
             return (isGuidFound) ? result : null;
         }
@@ -34,15 +32,8 @@
         {
             var session = _httpContextAccessor.HttpContext?.Session;
 
-
             var CategoryGuid = _wildBearApiClient.GetOnlyGuidByName(currentCategoryName, new CancellationToken());
             session?.SetString(KEY_CategoryGuid, CategoryGuid.ToString());
-
-            //Test 1
-            var testValue = session.GetString("TestKey");
-
-            //Test 2
-            var categoryGuid = session?.GetString(KEY_CategoryGuid);
 
 
         }

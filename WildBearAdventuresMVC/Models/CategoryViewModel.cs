@@ -10,6 +10,8 @@ namespace WildBearAdventuresMVC.Models
 
         public int CategoryProductCount { get; set; }
 
+
+        //TODO: update to using ProductViewModel
         public List<ProductDto>? ProductDtos { get; set; }
 
 
