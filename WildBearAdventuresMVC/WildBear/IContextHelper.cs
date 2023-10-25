@@ -2,7 +2,9 @@
 {
     public interface IContextHelper
     {
-        Guid? GetCurrentCategory();
-        void SetCurrentCategory(string currentCategoryName);
+        Guid? GetCurrentCategoryGuid();
+        Guid? GetCurrentProductGuid();
+        void SetCurrentCategoryByName(string currentCategoryName);
+        void SetCurrentProductByName(string currentProductName);
     }
 }

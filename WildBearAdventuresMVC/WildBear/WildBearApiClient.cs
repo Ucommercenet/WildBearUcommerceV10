@@ -34,12 +34,12 @@ namespace WildBearAdventuresMVC.WildBear
             return result;
 
         }
-        public ProductDto GetSingleProductByGuid(Guid guid, CancellationToken token)
+        public ProductDto GetSingleProductByGuid(Guid productGuid, CancellationToken token)
         {
 
             var client = new HttpClient();
 
-            var uri = $"TODO";
+            var uri = $"https://localhost:44381/api/Product/GetProductByGuid?searchGuid={productGuid}";
 
             var response = client.GetAsync(uri, token).Result;
             var result = response.Content.ReadFromJsonAsync<ProductDto>().Result;
@@ -47,6 +47,22 @@ namespace WildBearAdventuresMVC.WildBear
 
             return result;
         }
+
+        public ProductDto GetSingleProductByName(string searchName, CancellationToken token)
+        {
+
+            var client = new HttpClient();
+
+            var uri = $"https://localhost:44381/api/Product/GetProductByName?searchName={searchName}";
+
+            var response = client.GetAsync(uri, token).Result;
+            var result = response.Content.ReadFromJsonAsync<ProductDto>().Result;
+
+
+            return result;
+        }
+
+
         #endregion
 
 
@@ -69,7 +85,8 @@ namespace WildBearAdventuresMVC.WildBear
 
         }
 
-        public Guid GetOnlyGuidByName(string nameInput, CancellationToken token)
+        //Optimize: Shoudl I just do better select on GetCategoryByName 
+        public Guid GetOnlyCategoryGuidByName(string nameInput, CancellationToken token)
         {
 
             var client = new HttpClient();

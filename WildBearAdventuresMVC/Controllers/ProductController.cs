@@ -8,27 +8,42 @@ namespace WildBearAdventuresMVC.Controllers
     public class ProductController : Controller
     {
         private readonly IWildBearApiClient _wildBearApiClient;
+        private readonly IContextHelper _contextHelper;
 
-        public ProductController(IWildBearApiClient wildBearApiClient)
+        public ProductController(IWildBearApiClient wildBearApiClient, IContextHelper contextHelper)
         {
             _wildBearApiClient = wildBearApiClient;
+            _contextHelper = contextHelper;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(CancellationToken token)
         {
 
-            var Request = HttpContext.Request;
+            var ableToGetRoute = HttpContext.Request.RouteValues.TryGetValue("id", out var name);
+            if (ableToGetRoute)
+            {
+                _contextHelper.SetCurrentProductByName(name.ToString());
+            }
+
+            var currentproductGuid = _contextHelper.GetCurrentProductGuid();
+
+            if (currentproductGuid is null)
+            { return View(); }
+
+            var currentprodcutDto = _wildBearApiClient.GetSingleProductByGuid((Guid)currentproductGuid, token);
 
 
-            //Byte-Size Espresso -- "2d18ae3e-aa99-4246-8cec-9b027b7c1f13"
 
-            var currenctProduct = "";
+            var productViewModel = new ProductViewModel()
+            {
+                Name = currentprodcutDto.Name,
+                ShortDescription = currentprodcutDto?.ShortDescription,
+                Price = currentprodcutDto.UnitPrices.FirstOrDefault().Value,
+            };
 
-            var productViewModel = new ProductViewModel() { };
 
 
-
-            return View();
+            return View(productViewModel);
         }
     }
 }

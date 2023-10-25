@@ -22,10 +22,14 @@ namespace WildBearAdventuresMVC.Controllers
 
             //Figure out currentCategory based on route values aka. how did we get here.
             //TODO: include the get Route in SetCurrentCategory()
-            var ableToGetRoute = HttpContext.Request.RouteValues.TryGetValue("id", out var value);
-            if (ableToGetRoute) { _contextHelper.SetCurrentCategory(value?.ToString()); }
+            var ableToGetRoute = HttpContext.Request.RouteValues.TryGetValue("id", out var name);
+            if (ableToGetRoute)
+            {
+                _contextHelper.SetCurrentCategoryByName(name?.ToString());
+            }
 
-            var currentCategoryGuid = _contextHelper.GetCurrentCategory();
+
+            var currentCategoryGuid = _contextHelper.GetCurrentCategoryGuid();
 
 
             if (currentCategoryGuid is null)

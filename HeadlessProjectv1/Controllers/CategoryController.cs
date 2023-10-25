@@ -60,7 +60,7 @@ namespace HeadlessProjectv1.Controllers
             return (result is null) ? NotFound() : Ok(result);
         }
 
-        //Optimize: is this fast?
+        //Optimize: is this fast? or should I solved this in WildbearClient
         [HttpGet("GetOnlyGuidByName")]
         public async Task<IActionResult> GetOnlyGuidByName(string searchName, string? cultureInput, CancellationToken token)
         {

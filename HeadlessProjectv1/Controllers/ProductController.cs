@@ -20,8 +20,8 @@ namespace HeadlessProjectv1.Controllers
             _indexProduct = indexProduct;
         }
 
-        [HttpGet("GetTest")]
-        public async Task<IActionResult> GetTest(string name, string? cultureInput, CancellationToken token)
+        [HttpGet("GetProductByGuid")]
+        public async Task<IActionResult> GetProductByGuid(Guid searchGuid, string? cultureInput, CancellationToken token)
         {
             //Culture
             if (cultureInput.IsNullOrWhiteSpace())
@@ -31,14 +31,35 @@ namespace HeadlessProjectv1.Controllers
             { return NotFound(); }
 
 
-            var searchCategory = await _indexCategory.AsSearchable(culture).Where(category => category.Name == name)
+            var searchroduct = await _indexProduct.AsSearchable(culture).Where(p => p.Id == searchGuid)
                .ToResultSet(token);
-            var result = searchCategory.SingleOrDefault();
+            var result = searchroduct.SingleOrDefault();
 
 
             return (result is null) ? NotFound() : Ok(result);
 
         }
+
+        [HttpGet("GetProductByName")]
+        public async Task<IActionResult> GetProductByName(string searchName, string? cultureInput, CancellationToken token)
+        {
+            //Culture
+            if (cultureInput.IsNullOrWhiteSpace())
+            { cultureInput = "da-DK"; }
+            var culture = new CultureInfo(cultureInput);
+            if (culture == null)
+            { return NotFound(); }
+
+
+            var searchroduct = await _indexProduct.AsSearchable(culture).Where(p => p.Name == searchName)
+               .ToResultSet(token);
+            var result = searchroduct.SingleOrDefault();
+
+
+            return (result is null) ? NotFound() : Ok(result);
+
+        }
+
 
 
         //TEST with Wild Coffee: 7040940e-eab1-4a72-85b5-867905b7d94a        
