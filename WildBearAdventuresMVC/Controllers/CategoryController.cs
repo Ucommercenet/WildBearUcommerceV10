@@ -16,7 +16,7 @@ namespace WildBearAdventuresMVC.Controllers
             _contextHelper = contextHelper;
         }
 
-        public IActionResult Index(CancellationToken token)
+        public IActionResult Index(string name1, CancellationToken token)
         {
             //TODO: Show sub-Categories                        
 
