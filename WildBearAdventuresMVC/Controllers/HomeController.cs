@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using WildBearAdventuresMVC.Models;
 using WildBearAdventuresMVC.Models.WildBearCoffee;
-using WildBearAdventuresMVC.WildBear;
+using WildBearAdventuresMVC.WildBear.Interfaces;
 
 namespace WildBearAdventuresMVC.Controllers
 {
@@ -10,17 +10,17 @@ namespace WildBearAdventuresMVC.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IWildBearApiClient _wildBearApiClient;
+        private readonly IConfiguration _configuration;
 
 
-        public HomeController(ILogger<HomeController> logger, IWildBearApiClient wildBearApiClient)
+        public HomeController(ILogger<HomeController> logger, IWildBearApiClient wildBearApiClient, IConfiguration configuration)
         {
             _logger = logger;
             _wildBearApiClient = wildBearApiClient;
+            _configuration = configuration;
         }
         public IActionResult Index()
         {
-
-
 
             var productDto = _wildBearApiClient.GetRandomProductFromCategory(new Guid("7040940e-eab1-4a72-85b5-867905b7d94a"), new CancellationToken());
 

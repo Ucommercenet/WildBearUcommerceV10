@@ -1,4 +1,6 @@
 ﻿using UcommerceWildBearDTO;
+using WildBearAdventuresMVC.WildBear.Interfaces;
+
 namespace WildBearAdventuresMVC.WildBear
 
 

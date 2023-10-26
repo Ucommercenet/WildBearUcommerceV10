@@ -1,4 +1,5 @@
 using WildBearAdventuresMVC.WildBear;
+using WildBearAdventuresMVC.WildBear.Interfaces;
 
 namespace WildBearAdventuresMVC
 {
@@ -25,8 +26,6 @@ namespace WildBearAdventuresMVC
 
 
 
-
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -40,7 +39,7 @@ namespace WildBearAdventuresMVC
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseAuthorization();
+            //app.UseAuthorization();
 
             app.UseSession();
 

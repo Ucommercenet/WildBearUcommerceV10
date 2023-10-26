@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WildBearAdventuresMVC.Models;
-using WildBearAdventuresMVC.WildBear;
+using WildBearAdventuresMVC.WildBear.Interfaces;
 
 namespace WildBearAdventuresMVC.Controllers
 {
