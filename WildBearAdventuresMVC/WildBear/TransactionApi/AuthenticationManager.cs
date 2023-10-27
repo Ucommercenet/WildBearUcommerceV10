@@ -2,6 +2,8 @@
 
 namespace WildBearAdventuresMVC.WildBear.TransactionApi
 {
+    //TODO: Make AuthenticationManager is implimented useing a singleton patten
+
     public class AuthenticationManager
     {
         private readonly IConfiguration _configuration;
@@ -12,17 +14,15 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
         }
 
 
-        //TODO: Make AuthenticationManager is implimented useing a singleton patten
 
 
         //TODO: Dynamic get Redirect Url via AuthenticationRedirectUrlEntity for Redirect Url
         //TODO: Dynamic get _PrimarySecret via uCommerce_ProductCatalogGroup
 
-        private List<AuthenticationModel>? authenticationModels;
+        private List<AuthenticationModel>? _authenticationModels;
 
 
         //DRAFT notes: make it work for one store, then more.
-
 
 
         /// <summary>
@@ -45,12 +45,6 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
 
 
             return result;
-        }
-
-        private string GetStoreGuid()
-
-        {
-
         }
 
 
