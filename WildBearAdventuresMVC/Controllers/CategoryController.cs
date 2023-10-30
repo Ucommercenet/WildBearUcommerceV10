@@ -16,16 +16,16 @@ namespace WildBearAdventuresMVC.Controllers
             _contextHelper = contextHelper;
         }
 
-        public IActionResult Index(string name1, CancellationToken token)
+        public IActionResult Index(string id, CancellationToken token)
         {
             //TODO: Show sub-Categories                        
 
             //Figure out currentCategory based on route values aka. how did we get here.
             //TODO: include the get Route in SetCurrentCategory()
-            var ableToGetRoute = HttpContext.Request.RouteValues.TryGetValue("id", out var name);
+            var ableToGetRoute = HttpContext.Request.RouteValues.TryGetValue("id", out var routeName);
             if (ableToGetRoute)
             {
-                _contextHelper.SetCurrentCategoryByName(name?.ToString());
+                _contextHelper.SetCurrentCategoryByName(routeName?.ToString());
             }
 
 
@@ -43,7 +43,7 @@ namespace WildBearAdventuresMVC.Controllers
             var CategoryViewModel = new CategoryViewModel
             {
                 ProductDtos = productDtos,
-                CategoryName = (currentCategoryDto is not null) ? currentCategoryDto?.Name : "No currentCategory",
+                CurrentCategoryName = (currentCategoryDto is not null) ? currentCategoryDto?.Name : "No currentCategory",
             };
 
             return View(CategoryViewModel);

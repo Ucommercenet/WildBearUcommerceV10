@@ -4,7 +4,7 @@ namespace WildBearAdventuresMVC.Models
 {
     public class CategoryViewModel
     {
-        public string CategoryName { get; set; }
+        public string CurrentCategoryName { get; set; }
 
         public string Description { get; set; }
 
