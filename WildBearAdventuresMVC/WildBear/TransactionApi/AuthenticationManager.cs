@@ -25,37 +25,35 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
         //DRAFT notes: make it work for one store, then more.
 
 
+
         /// <summary>
-        /// If no AuthenticationModel for store is found, a new will be created and returned.
+        /// Authentication is per store the store Id is used as clientID
         /// </summary>
         /// <param name="TODO_storeId"></param>
+        /// <remark>There might be more then one store per solution, this method if more stores needs authentication</remark>
         /// <returns></returns>
-        public AuthenticationModel DRAFT_GetAuthenticationModelForStore(string TODO_storeId)
+        public AuthenticationModel GetAuthenticationModelForStore()
         {
+            var storeGuid = _configuration.GetValue<string>("Authentication:WildBearStore:Guid");
+            var clientSecret = _configuration.GetValue<string>("Authentication:WildBearStore:Secret");
 
-            var foo = _configuration.GetValue<string>("TestValue");
-
-
-            var result = new AuthenticationModel()
+            if (string.IsNullOrWhiteSpace(storeGuid) || string.IsNullOrWhiteSpace(clientSecret))
             {
-                StoreGuid = "c9baba06-d0d7-4f60-812a-f9d16b3f098c",
-                authenticationDetails = new AuthenticationDetails()
-                { }
+                throw new Exception("Missing authentication information");
+            }
+
+
+
+            var authenticationModel = new AuthenticationModel()
+            {
+                StoreGuid = storeGuid,
+                ClientSecret = clientSecret,
+                authenticationToken = new AuthenticationTokenDetails() { }
             };
 
 
-            return result;
+            return authenticationModel;
         }
-
-
-
-        //Authentication is per store the store Id is used as clientID  
-        private readonly string _clientID = "c9baba06-d0d7-4f60-812a-f9d16b3f098c";
-
-        private readonly string _PrimarySecret = "99F0E112-586E-44B4-A22B-F5C687E76889pkPdRblQH1i389c7wJG4gsLcpTDKouTLPZ6630T8hXDa7uTBvuxUYC1QEQn6cLGfdNCKTEj9Gu7SSe2XKRFsvL9Es6INsCO7OTUCuI8c55uKhtNz58KhFzG0DpjW2C2BkN";
-
-
-
 
     }
 }

@@ -7,9 +7,9 @@
     public class AuthenticationModel
     {
         public string StoreGuid { get; init; }
+        public string ClientSecret { get; init; }
 
-
-        public AuthenticationDetails authenticationDetails { get; init; }
+        public AuthenticationTokenDetails authenticationToken { get; init; }
 
 
     }
