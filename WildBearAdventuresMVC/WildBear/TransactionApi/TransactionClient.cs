@@ -17,51 +17,46 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
 
         public async Task<string> CreateBasket(string currency, string cultureCode, CancellationToken token)
         {
-            if (AuthorizeRequest(token) == false)
-            {
-                throw new Exception("authorization failed");
-            }
+
+
 
             return "TODO_BasketID";
         }
 
-
+        //Optimize: throw Exception not just return null
         /// <summary>
         /// Success returns true
         /// </summary>
         /// <remarks></remarks>
         /// <returns></returns>
-        private bool AuthorizeRequest(CancellationToken token)
+        private AuthorizeResponseModel? AuthorizeRequest(CancellationToken token)
         {
-
-
-
-
-
-            //STEP 1: Create authorizationCode based on StoreAuthenticationModel Ucommerce authentication call
-            var client = new HttpClient();
+            //STEP 1: Create authorizationCode based on StoreAuthenticationModel Ucommerce authentication call         
             var storeAuthenticationModel = _storeAuthentication.GetAuthenticationModelForStore();
-            var uri = $"{storeAuthenticationModel.BaseUrl}/api/v1/oauth/connect?client_id={storeAuthenticationModel.ClientGuid}&redirect_uri={storeAuthenticationModel.RedirectUrl}&response_type=code";
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri(storeAuthenticationModel.BaseUrl)
+            };
 
+            var uri = $"/api/v1/oauth/connect?client_id={storeAuthenticationModel.ClientGuid}&redirect_uri={storeAuthenticationModel.RedirectUrl}&response_type=code";
             var connectResponse = client.GetAsync(uri, token).Result;
 
             if (connectResponse.StatusCode is not System.Net.HttpStatusCode.Found)
-            { return false; }
+            { return null; }
 
 
             //Get the authorizationCode ready for later use in HttpMessage.Content
             var targetUrlUri = new Uri(connectResponse.Headers.Location.OriginalString);
             var authorizationCode = HttpUtility.ParseQueryString(targetUrlUri.Query).Get("code");
             if (authorizationCode is null)
-            { return false; }
-
+            { return null; }
 
 
             //STEP 2: Prepare and Send authorizationCode to Ucommerce
             var authorizeRequest = new HttpRequestMessage(new HttpMethod("POST"), "/api/v1/oauth/token");
             var authorizationToHeadersSuccessful = AddAuthorizationToHeaders(storeAuthenticationModel, authorizeRequest.Headers);
             if (authorizationToHeadersSuccessful is not true)
-            { return false; }
+            { return null; }
 
 
             //Prepares the data and assigns it to HttpRequstMessage.Content
@@ -76,21 +71,17 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
             authorizeRequest.Content = new FormUrlEncodedContent(dictionary);
             authorizeRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
 
-            var debug1 = authorizeRequest.RequestUri;
-
-
-
-            //TODO: Do I need a BaseUrl like on the GET????
-
-            //Sends the authorizeRequest
             var authorizeResponse = client.SendAsync(authorizeRequest, token).Result;
 
 
             //STEP 3: Save the returned Authentication token in AuthorizationTokenDetails
 
-            var authorizationDic = authorizeResponse.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+            var authorizationModel = authorizeResponse.Content.ReadAsAsync<AuthorizeResponseModel>().Result;
+            //Update ExpiresAt
+            authorizationModel.ExpiresAt = DateTime.UtcNow.AddSeconds(authorizationModel.ExpiresIn);
 
-            return true;
+
+            return authorizationModel;
         }
 
 
@@ -121,4 +112,5 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
 
 
     }
+
 }
