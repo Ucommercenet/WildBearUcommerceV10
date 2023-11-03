@@ -8,7 +8,7 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
     public class TransactionClient : ITransactionClient
     {
 
-        private readonly TransactionApi.IStoreAuthentication _storeAuthentication;
+        private readonly IStoreAuthentication _storeAuthentication;
 
         public TransactionClient(IStoreAuthentication storeAuthentication)
         {
@@ -17,11 +17,47 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
 
         public async Task<string> CreateBasket(string currency, string cultureCode, CancellationToken token)
         {
+            AuthorizeCheck(token);
+
 
 
 
             return "TODO_BasketID";
         }
+
+
+        private void AuthorizeCheck(CancellationToken cancellationToken)
+        {
+
+            if (_storeAuthentication.GetAuthenticationModelForStore().authorizationTokenDetails is null)
+            {
+                RetrievalAuthorizeRequest(cancellationToken);
+            }
+
+            var expiresAt = _storeAuthentication.GetAuthenticationModelForStore().authorizationTokenDetails?.ExpiresAt;
+            //A small buffer as been added
+            //Note: Comparing datetime with null always produces false, which is what we want here.
+            var tokenIsValid = DateTime.UtcNow.AddSeconds(30) < expiresAt;
+
+
+            if (tokenIsValid is not true)
+            {
+                RefreshAuthorizationToken(cancellationToken);
+            }
+
+            //Note: If none of the above are true, the authorizationToken is still valid and no action needed
+
+        }
+
+        private AuthorizeResponseModel RefreshAuthorizationToken(CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+
+
+
+
 
         //Optimize: throw Exception not just return null
         /// <summary>
@@ -29,7 +65,7 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
         /// </summary>
         /// <remarks></remarks>
         /// <returns></returns>
-        private AuthorizeResponseModel? AuthorizeRequest(CancellationToken token)
+        private AuthorizeResponseModel RetrievalAuthorizeRequest(CancellationToken token)
         {
             //STEP 1: Create authorizationCode based on StoreAuthenticationModel Ucommerce authentication call         
             var storeAuthenticationModel = _storeAuthentication.GetAuthenticationModelForStore();
@@ -53,7 +89,7 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
 
 
             //STEP 2: Prepare and Send authorizationCode to Ucommerce
-            var authorizeRequest = new HttpRequestMessage(new HttpMethod("POST"), "/api/v1/oauth/token");
+            var authorizeRequest = new HttpRequestMessage(new HttpMethod("POST"), "/api/v1/oauth/cancellationToken");
             var authorizationToHeadersSuccessful = AddAuthorizationToHeaders(storeAuthenticationModel, authorizeRequest.Headers);
             if (authorizationToHeadersSuccessful is not true)
             { return null; }
@@ -75,7 +111,6 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
 
 
             //STEP 3: Save the returned Authentication token in AuthorizationTokenDetails
-
             var authorizationModel = authorizeResponse.Content.ReadAsAsync<AuthorizeResponseModel>().Result;
             //Update ExpiresAt
             authorizationModel.ExpiresAt = DateTime.UtcNow.AddSeconds(authorizationModel.ExpiresIn);
@@ -93,14 +128,14 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
         /// <returns>Returns true if successful</returns>
         private static bool AddAuthorizationToHeaders(StoreAuthenticationModel authentication, HttpRequestHeaders authorizeRequestHeaders)
         {
-            var Base64CredentialsValue = GenerateBase64CredentialsForAuthorizationHeaderValue(authentication.ClientGuid, authentication.ClientSecret);
+            var Base64CredentialsValue = GenerateBase64CredentialsForAuthorizationHeader(authentication.ClientGuid, authentication.ClientSecret);
 
             var isAuthAdded = authorizeRequestHeaders.TryAddWithoutValidation(name: "Authorization", value: Base64CredentialsValue);
 
             return isAuthAdded;
         }
 
-        private static string GenerateBase64CredentialsForAuthorizationHeaderValue(string clientId, string clientSecret)
+        private static string GenerateBase64CredentialsForAuthorizationHeader(string clientId, string clientSecret)
         {
             var credentials = $"{clientId}:{clientSecret}";
             var credentialsByteData = Encoding.GetEncoding("iso-8859-1").GetBytes(credentials);
