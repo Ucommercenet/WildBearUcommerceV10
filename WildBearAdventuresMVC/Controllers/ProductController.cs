@@ -32,15 +32,12 @@ namespace WildBearAdventuresMVC.Controllers
 
             var currentprodcutDto = _wildBearApiClient.GetSingleProductByGuid((Guid)currentproductGuid, token);
 
-
-
             var productViewModel = new ProductViewModel()
             {
                 Name = currentprodcutDto.Name,
                 ShortDescription = currentprodcutDto?.ShortDescription,
                 Price = currentprodcutDto.UnitPrices.FirstOrDefault().Value,
             };
-
 
 
             return View(productViewModel);

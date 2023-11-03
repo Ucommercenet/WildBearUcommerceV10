@@ -1,5 +1,6 @@
 using WildBearAdventuresMVC.WildBear;
 using WildBearAdventuresMVC.WildBear.Interfaces;
+using WildBearAdventuresMVC.WildBear.TransactionApi;
 
 namespace WildBearAdventuresMVC
 {
@@ -18,9 +19,14 @@ namespace WildBearAdventuresMVC
             //QUEST: AddTransient or AddScoped, need to understand scopes
             builder.Services.AddTransient<IWildBearApiClient, WildBearApiClient>();
             builder.Services.AddTransient<IContextHelper, ContextHelper>();
+            builder.Services.AddTransient<ITransactionClient, TransactionClient>();
+
+            //QUEST: I only ever need one StoreAuthentication
+            builder.Services.AddSingleton<IStoreAuthentication, StoreAuthentication>();
 
 
-            //For now Sessions are used for the cart
+
+
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddSession();
 

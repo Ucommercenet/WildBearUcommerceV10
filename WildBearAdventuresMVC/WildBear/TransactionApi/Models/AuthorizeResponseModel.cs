@@ -2,7 +2,7 @@
 
 namespace WildBearAdventuresMVC.WildBear.TransactionApi.Models
 {
-    public class AuthenticationTokenDetails
+    public class AuthorizeResponseModel
     {
         [JsonProperty("access_token")]
         public string AccessToken { get; set; }

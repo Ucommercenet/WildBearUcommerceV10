@@ -4,25 +4,15 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
 {
     //TODO: Make AuthenticationManager is implimented useing a singleton patten
 
-    public class AuthenticationManager
+    public class StoreAuthentication : IStoreAuthentication
+
     {
         private readonly IConfiguration _configuration;
 
-        public AuthenticationManager(IConfiguration configuration)
+        public StoreAuthentication(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-
-
-
-
-        //TODO: Dynamic get Redirect Url via AuthenticationRedirectUrlEntity for Redirect Url
-        //TODO: Dynamic get _PrimarySecret via uCommerce_ProductCatalogGroup
-
-        private List<AuthenticationModel>? _authenticationModels;
-
-
-        //DRAFT notes: make it work for one store, then more.
 
 
 
@@ -32,23 +22,32 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
         /// <param name="TODO_storeId"></param>
         /// <remark>There might be more then one store per solution, this method if more stores needs authentication</remark>
         /// <returns></returns>
-        public AuthenticationModel GetAuthenticationModelForStore()
+        public StoreAuthenticationModel GetAuthenticationModelForStore()
         {
             var storeGuid = _configuration.GetValue<string>("Authentication:WildBearStore:Guid");
             var clientSecret = _configuration.GetValue<string>("Authentication:WildBearStore:Secret");
+            var redirectUrl = _configuration.GetValue<string>("Authentication:WildBearStore:RedirectUrl");
+            var BaseUrl = _configuration.GetValue<string>("Authentication:WildBearStore:BaseUrl");
 
-            if (string.IsNullOrWhiteSpace(storeGuid) || string.IsNullOrWhiteSpace(clientSecret))
+
+            if (string.IsNullOrWhiteSpace(storeGuid) ||
+                string.IsNullOrWhiteSpace(clientSecret) ||
+                string.IsNullOrWhiteSpace(redirectUrl) ||
+                string.IsNullOrWhiteSpace(BaseUrl))
             {
                 throw new Exception("Missing authentication information");
             }
 
 
 
-            var authenticationModel = new AuthenticationModel()
+            var authenticationModel = new StoreAuthenticationModel()
             {
-                StoreGuid = storeGuid,
+                ClientGuid = storeGuid,
                 ClientSecret = clientSecret,
-                authenticationToken = new AuthenticationTokenDetails() { }
+                RedirectUrl = redirectUrl,
+                BaseUrl = BaseUrl
+
+
             };
 
 
