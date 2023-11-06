@@ -17,7 +17,10 @@ namespace WildBearAdventuresMVC
 
             // Custom services
             //QUEST: AddTransient or AddScoped, need to understand scopes
+
+            //QUEST: Could also be Singleton
             builder.Services.AddTransient<IWildBearApiClient, WildBearApiClient>();
+
             builder.Services.AddTransient<IContextHelper, ContextHelper>();
             builder.Services.AddTransient<ITransactionClient, TransactionClient>();
 

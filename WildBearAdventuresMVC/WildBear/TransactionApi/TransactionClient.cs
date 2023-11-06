@@ -20,8 +20,6 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
             AuthorizeCheck(token);
 
 
-
-
             return "TODO_BasketID";
         }
 
@@ -29,12 +27,13 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
         private void AuthorizeCheck(CancellationToken cancellationToken)
         {
 
-            if (_storeAuthentication.GetAuthenticationModelForStore().authorizationTokenDetails is null)
+
+            if (_storeAuthentication.AuthenticationModel.authorizationDetails is null)
             {
-                RetrievalAuthorizeRequest(cancellationToken);
+                RequestAuthorization(cancellationToken);
             }
 
-            var expiresAt = _storeAuthentication.GetAuthenticationModelForStore().authorizationTokenDetails?.ExpiresAt;
+            var expiresAt = _storeAuthentication.AuthenticationModel.authorizationDetails?.ExpiresAt;
             //A small buffer as been added
             //Note: Comparing datetime with null always produces false, which is what we want here.
             var tokenIsValid = DateTime.UtcNow.AddSeconds(30) < expiresAt;
@@ -42,15 +41,18 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
 
             if (tokenIsValid is not true)
             {
-                RefreshAuthorizationToken(cancellationToken);
+                RefreshAuthorization(cancellationToken);
             }
 
             //Note: If none of the above are true, the authorizationToken is still valid and no action needed
 
         }
 
-        private AuthorizeResponseModel RefreshAuthorizationToken(CancellationToken cancellationToken)
+        private AuthorizationDetails RefreshAuthorization(CancellationToken cancellationToken)
         {
+
+
+
             throw new NotImplementedException();
         }
 
@@ -65,43 +67,43 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
         /// </summary>
         /// <remarks></remarks>
         /// <returns></returns>
-        private AuthorizeResponseModel RetrievalAuthorizeRequest(CancellationToken token)
+        private bool RequestAuthorization(CancellationToken token)
         {
             //STEP 1: Create authorizationCode based on StoreAuthenticationModel Ucommerce authentication call         
-            var storeAuthenticationModel = _storeAuthentication.GetAuthenticationModelForStore();
+            var authentication = _storeAuthentication.AuthenticationModel;
             var client = new HttpClient
             {
-                BaseAddress = new Uri(storeAuthenticationModel.BaseUrl)
+                BaseAddress = new Uri(_storeAuthentication.AuthenticationModel.BaseUrl)
             };
 
-            var uri = $"/api/v1/oauth/connect?client_id={storeAuthenticationModel.ClientGuid}&redirect_uri={storeAuthenticationModel.RedirectUrl}&response_type=code";
+            var uri = $"/api/v1/oauth/connect?client_id={authentication.ClientGuid}&redirect_uri={authentication.RedirectUrl}&response_type=code";
             var connectResponse = client.GetAsync(uri, token).Result;
 
             if (connectResponse.StatusCode is not System.Net.HttpStatusCode.Found)
-            { return null; }
+            { return false; }
 
 
             //Get the authorizationCode ready for later use in HttpMessage.Content
             var targetUrlUri = new Uri(connectResponse.Headers.Location.OriginalString);
             var authorizationCode = HttpUtility.ParseQueryString(targetUrlUri.Query).Get("code");
             if (authorizationCode is null)
-            { return null; }
+            { return false; }
 
 
             //STEP 2: Prepare and Send authorizationCode to Ucommerce
             var authorizeRequest = new HttpRequestMessage(new HttpMethod("POST"), "/api/v1/oauth/cancellationToken");
-            var authorizationToHeadersSuccessful = AddAuthorizationToHeaders(storeAuthenticationModel, authorizeRequest.Headers);
+            var authorizationToHeadersSuccessful = AddAuthorizationToHeaders(authentication, authorizeRequest.Headers);
             if (authorizationToHeadersSuccessful is not true)
-            { return null; }
+            { return false; }
 
 
             //Prepares the data and assigns it to HttpRequstMessage.Content
             //According to connect flow documentation: https://docs.ucommerce.net/ucommerce/v9.7/headless/getting-started/quick-start.html
             var dictionary = new Dictionary<string, string>
-                        {
+            {
                             { "code", authorizationCode },
                             { "grant_type", "authorization_code" },
-                            { "redirect_uri", storeAuthenticationModel.RedirectUrl }
+                            { "redirect_uri", authentication.RedirectUrl }
             };
 
             authorizeRequest.Content = new FormUrlEncodedContent(dictionary);
@@ -110,13 +112,15 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
             var authorizeResponse = client.SendAsync(authorizeRequest, token).Result;
 
 
-            //STEP 3: Save the returned Authentication token in AuthorizationTokenDetails
-            var authorizationModel = authorizeResponse.Content.ReadAsAsync<AuthorizeResponseModel>().Result;
-            //Update ExpiresAt
-            authorizationModel.ExpiresAt = DateTime.UtcNow.AddSeconds(authorizationModel.ExpiresIn);
+            //STEP 3: Save the returned authorizationDetails
+            var authorizationDetails = authorizeResponse.Content.ReadAsAsync<AuthorizationDetails>().Result;
+            //Update ExpiresAt before save.
+            authorizationDetails.ExpiresAt = DateTime.UtcNow.AddSeconds(authorizationDetails.ExpiresIn);
+            //Saves the token and other details
+            authentication.authorizationDetails = authorizationDetails;
 
 
-            return authorizationModel;
+            return true;
         }
 
 

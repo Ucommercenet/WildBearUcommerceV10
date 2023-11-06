@@ -4,6 +4,6 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
 {
     public interface IStoreAuthentication
     {
-        StoreAuthenticationModel GetAuthenticationModelForStore();
+        StoreAuthenticationModel AuthenticationModel { get; }
     }
 }

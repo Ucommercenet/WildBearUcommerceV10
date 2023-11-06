@@ -20,7 +20,7 @@
 
         public required string BaseUrl { get; init; }
 
-        public AuthorizeResponseModel? authorizationTokenDetails { get; set; }
+        public AuthorizationDetails? authorizationDetails { get; set; }
 
 
     }

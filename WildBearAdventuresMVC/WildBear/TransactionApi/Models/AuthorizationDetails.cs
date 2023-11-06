@@ -2,20 +2,18 @@
 
 namespace WildBearAdventuresMVC.WildBear.TransactionApi.Models
 {
-    public class AuthorizeResponseModel
+    public class AuthorizationDetails
     {
         [JsonProperty("access_token")]
-        public string AccessToken { get; set; }
+        public required string AccessToken { get; set; }
 
         [JsonProperty("expires_in")]
         public int ExpiresIn { get; set; }
 
-        [JsonProperty("redirect_uri")]
-        public string RedirectUri { get; set; }
-
         [JsonProperty("refresh_token")]
-        public string RefreshToken { get; set; }
+        public string? RefreshToken { get; set; }
 
+        //TODO: This is not a JsonProperty?
         [JsonProperty("expires_at")]
         public DateTime ExpiresAt { get; set; }
 
