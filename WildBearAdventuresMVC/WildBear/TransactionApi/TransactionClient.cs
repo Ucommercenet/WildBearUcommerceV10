@@ -91,7 +91,7 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
 
 
             //STEP 2: Prepare and Send authorizationCode to Ucommerce
-            var authorizeRequest = new HttpRequestMessage(new HttpMethod("POST"), "/api/v1/oauth/cancellationToken");
+            var authorizeRequest = new HttpRequestMessage(new HttpMethod("POST"), "/api/v1/oauth/token");
             var authorizationToHeadersSuccessful = AddAuthorizationToHeaders(authentication, authorizeRequest.Headers);
             if (authorizationToHeadersSuccessful is not true)
             { return false; }
