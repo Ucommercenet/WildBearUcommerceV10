@@ -7,11 +7,18 @@ namespace WildBearAdventuresMVC.WildBear
 {
     public class WildBearApiClient : IWildBearApiClient
     {
+        private readonly IHttpClientFactory _httpClientFactory;
+
+        public WildBearApiClient(IHttpClientFactory httpClientFactory)
+        {
+            _httpClientFactory = httpClientFactory;
+        }
+
         #region Product Related
         public ProductDto GetRandomProductFromCategory(Guid categoryGuid, CancellationToken token)
         {
 
-            var client = new HttpClient();
+            using var client = _httpClientFactory.CreateClient();
 
             var uri = $"https://localhost:44381/api/Product/GetAllProductsFromCategoryGuid?categoryId={categoryGuid}";
 
@@ -27,7 +34,7 @@ namespace WildBearAdventuresMVC.WildBear
         public List<ProductDto> GetAllProductsFromCategoryGuid(Guid categoryGuid, CancellationToken token)
         {
 
-            var client = new HttpClient();
+            using var client = _httpClientFactory.CreateClient();
             var uri = $"https://localhost:44381/api/Product/GetAllProductsFromCategoryGuid?categoryId={categoryGuid}";
 
             var response = client.GetAsync(uri, token).Result;
@@ -39,7 +46,7 @@ namespace WildBearAdventuresMVC.WildBear
         public ProductDto GetSingleProductByGuid(Guid productGuid, CancellationToken token)
         {
 
-            var client = new HttpClient();
+            using var client = _httpClientFactory.CreateClient();
 
             var uri = $"https://localhost:44381/api/Product/GetProductByGuid?searchGuid={productGuid}";
 
@@ -53,7 +60,7 @@ namespace WildBearAdventuresMVC.WildBear
         public ProductDto GetSingleProductByName(string searchName, CancellationToken token)
         {
 
-            var client = new HttpClient();
+            using var client = _httpClientFactory.CreateClient();
 
             var uri = $"https://localhost:44381/api/Product/GetProductByName?searchName={searchName}";
 
@@ -72,7 +79,7 @@ namespace WildBearAdventuresMVC.WildBear
         public List<CategoryDto> GetAllCategoriesFromCatalog(string catalogInput, CancellationToken token)
         {
 
-            var client = new HttpClient();
+            using var client = _httpClientFactory.CreateClient();
 
             var uri = $"https://localhost:44381/api/Category/GetAllCategoriesFromCatalog?catalogName={catalogInput}";
 
@@ -91,7 +98,7 @@ namespace WildBearAdventuresMVC.WildBear
         public Guid GetOnlyCategoryGuidByName(string nameInput, CancellationToken token)
         {
 
-            var client = new HttpClient();
+            using var client = _httpClientFactory.CreateClient();
 
             var uri = $"https://localhost:44381/api/Category/GetOnlyGuidByName?searchName={nameInput}";
 
@@ -109,7 +116,7 @@ namespace WildBearAdventuresMVC.WildBear
         public CategoryDto GetSingleCategoryByGuid(Guid categoryGuid, CancellationToken token)
         {
 
-            var client = new HttpClient();
+            using var client = _httpClientFactory.CreateClient();
 
             var uri = $"https://localhost:44381/api/Category/GetCategoryByGuid?searchGuid={categoryGuid}";
 

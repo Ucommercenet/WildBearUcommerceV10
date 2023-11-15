@@ -14,10 +14,10 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
 
         public StoreAuthentication(IConfiguration configuration)
         {
-            AuthenticationModel = GetAuthenticationModelForWildBearStore(configuration);
+            WildBearStore = GetAuthenticationModelForWildBearStore(configuration);
         }
 
-        public StoreAuthenticationModel AuthenticationModel { get; }
+        public StoreAuthenticationModel WildBearStore { get; }
 
 
 

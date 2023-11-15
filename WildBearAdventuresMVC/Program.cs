@@ -10,10 +10,10 @@ namespace WildBearAdventuresMVC
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
 
 
-            builder.Services.AddControllersWithViews();
+
+
 
             // Custom services
             //QUEST: AddTransient or AddScoped, need to understand scopes
@@ -29,10 +29,10 @@ namespace WildBearAdventuresMVC
 
 
 
-
+            builder.Services.AddControllersWithViews();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddSession();
-
+            builder.Services.AddHttpClient();
 
 
             var app = builder.Build();

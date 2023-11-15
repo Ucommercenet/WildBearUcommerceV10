@@ -8,14 +8,14 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi.Models
         public required string AccessToken { get; set; }
 
         [JsonProperty("expires_in")]
-        public int ExpiresIn { get; set; }
+        public int AccessTokenExpiresIn { get; set; }
 
         [JsonProperty("refresh_token")]
         public string? RefreshToken { get; set; }
 
         //TODO: This is not a JsonProperty?
         [JsonProperty("expires_at")]
-        public DateTime ExpiresAt { get; set; }
+        public DateTime AccessTokenExpiresAt { get; set; }
 
     }
 }

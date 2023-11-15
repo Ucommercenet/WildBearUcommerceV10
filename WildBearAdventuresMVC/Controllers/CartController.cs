@@ -20,7 +20,12 @@ namespace WildBearAdventuresMVC.Controllers
         {
             //TODO: AddToCart (if no Cart call CreateCart)
 
-            var basketGuid = _transactionClient.CreateBasket("Todo", "todo", token);
+            var currency = "DKK";
+            var cultureCode = "en-DK";
+
+            var currentproduct = _contextHelper.GetCurrentProductGuid();
+
+            var basketGuid = _transactionClient.CreateBasket(currency, cultureCode, token).Result;
 
 
             return View();
