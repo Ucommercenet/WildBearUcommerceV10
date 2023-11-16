@@ -9,6 +9,11 @@
 
         public string Currency { get; set; }
 
+        public Guid ProductGuid { get; set; }
+
+        public int Quantity { get; set; } = 0;
+
+
 
 
     }

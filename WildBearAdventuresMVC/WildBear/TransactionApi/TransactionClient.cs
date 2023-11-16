@@ -30,9 +30,8 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
             using var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_storeAuthentication.WildBearStore.BaseUrl);
 
-
-            client.DefaultRequestHeaders.Authorization =
-                new AuthenticationHeaderValue(scheme: "Bearer", parameter: _storeAuthentication.WildBearStore.authorizationDetails.AccessToken);
+            var accessToken = _storeAuthentication.WildBearStore.authorizationDetails.AccessToken;
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Bearer", parameter: accessToken);
 
             var payload = new Dictionary<string, string> { { "currency", currency }, { "cultureCode", cultureCode } };
             var createBasketResponse = await client.PostAsJsonAsync("/api/v1/baskets", payload);

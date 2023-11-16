@@ -16,16 +16,14 @@ namespace WildBearAdventuresMVC.Controllers
             _transactionClient = transactionClient;
         }
 
-        public IActionResult Index(CancellationToken token)
+        public IActionResult Index(Guid productToAdd, CancellationToken token)
         {
-            //TODO: AddToCart (if no Cart call CreateCart)
 
-            var currency = "DKK";
-            var cultureCode = "en-DK";
+            //TODO: Show Basket Details
 
-            var currentproduct = _contextHelper.GetCurrentProductGuid();
 
-            var basketGuid = _transactionClient.CreateBasket(currency, cultureCode, token).Result;
+
+
 
 
             return View();
