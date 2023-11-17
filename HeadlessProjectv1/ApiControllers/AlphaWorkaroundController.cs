@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace HeadlessProjectv1.Controllers.ScenarioControllers
+namespace HeadlessProjectv1.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]

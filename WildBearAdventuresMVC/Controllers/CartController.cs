@@ -16,10 +16,10 @@ namespace WildBearAdventuresMVC.Controllers
             _transactionClient = transactionClient;
         }
 
-        public IActionResult Index(Guid productToAdd, CancellationToken token)
+        public IActionResult Index(CancellationToken token)
         {
 
-            //TODO: Show Basket Details
+            //TODO: Show Basket Details - Load up Cart.Lines 
 
 
 

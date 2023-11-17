@@ -26,13 +26,10 @@ namespace WildBearAdventuresMVC.Controllers
 
             var ableToGetRoute = HttpContext.Request.RouteValues.TryGetValue("id", out var name);
             if (ableToGetRoute)
-            {
-                _contextHelper.SetCurrentProductByName(name.ToString());
-            }
+            { _contextHelper.SetCurrentProductByName(name.ToString()); }
 
             var productViewModel = CreateProductViewModel(ct);
 
-            //TODOD: Update mini basket count
 
             return View(productViewModel);
         }
@@ -41,14 +38,14 @@ namespace WildBearAdventuresMVC.Controllers
         public RedirectToActionResult AddToCart(CancellationToken ct)
         {
 
-
             var currency = "DKK";
             var cultureCode = "en-DK";
 
             var currentproduct = _contextHelper.GetCurrentProductGuid();
-            var basketGuid = _transactionClient.CreateBasket(currency, cultureCode, ct).Result;
 
+            var basketGuid = _transactionClient.CreateBasket(currency, cultureCode, ct).Result;
             _contextHelper.SetCurrentCart(basketGuid);
+
 
 
 

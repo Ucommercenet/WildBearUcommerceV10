@@ -5,7 +5,7 @@ using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 using Ucommerce.Web.Common.Extensions;
 
-namespace HeadlessProjectv1.Controllers
+namespace HeadlessProjectv1.ApiControllers
 {
     [Route("api/[Controller]")]
     [ApiController]
@@ -36,7 +36,7 @@ namespace HeadlessProjectv1.Controllers
             var result = searchroduct.SingleOrDefault();
 
 
-            return (result is null) ? NotFound() : Ok(result);
+            return result is null ? NotFound() : Ok(result);
 
         }
 
@@ -56,7 +56,7 @@ namespace HeadlessProjectv1.Controllers
             var result = searchroduct.SingleOrDefault();
 
 
-            return (result is null) ? NotFound() : Ok(result);
+            return result is null ? NotFound() : Ok(result);
 
         }
 

@@ -4,7 +4,7 @@ using System.Globalization;
 using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 
-namespace HeadlessProjectv1.Controllers.ScenarioControllers
+namespace HeadlessProjectv1.ApiControllers.ScenarioControllers
 {
     [Route("api/[controller]")]
     [ApiController]
