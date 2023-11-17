@@ -2,6 +2,6 @@
 {
     public interface ITransactionClient
     {
-        Task<string> CreateBasket(string currency, string cultureCode, CancellationToken token);
+        Task<Guid> CreateBasket(string currency, string cultureCode, CancellationToken token);
     }
 }

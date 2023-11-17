@@ -1,4 +1,5 @@
-﻿using WildBearAdventuresMVC.WildBear.TransactionApi.Models;
+﻿using WildBearAdventuresMVC.WildBear.Interfaces;
+using WildBearAdventuresMVC.WildBear.TransactionApi.Models;
 
 namespace WildBearAdventuresMVC.WildBear.TransactionApi
 {

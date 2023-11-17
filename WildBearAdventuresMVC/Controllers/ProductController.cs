@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WildBearAdventuresMVC.Models;
+using WildBearAdventuresMVC.WildBear;
 using WildBearAdventuresMVC.WildBear.Interfaces;
 using WildBearAdventuresMVC.WildBear.TransactionApi;
 
@@ -39,7 +40,7 @@ namespace WildBearAdventuresMVC.Controllers
         [HttpPost]
         public RedirectToActionResult AddToCart(CancellationToken ct)
         {
-            //TODO: Add to basket or create new basket
+
 
             var currency = "DKK";
             var cultureCode = "en-DK";
@@ -47,10 +48,16 @@ namespace WildBearAdventuresMVC.Controllers
             var currentproduct = _contextHelper.GetCurrentProductGuid();
             var basketGuid = _transactionClient.CreateBasket(currency, cultureCode, ct).Result;
 
+            _contextHelper.SetCurrentCart(basketGuid);
 
 
-            var productViewModel = CreateProductViewModel(ct);
 
+
+            //TODO: Add to basket or create new basket
+            //TODO: Must also handel if there is a cart allready
+            //TODO: add currentproduct to cart
+
+            //After the product has been added, show the product again.
             return RedirectToAction("Index");
         }
 

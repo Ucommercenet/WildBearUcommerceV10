@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WildBearAdventuresMVC.WildBear.Interfaces;
+using WildBearAdventuresMVC.WildBear;
 using WildBearAdventuresMVC.WildBear.TransactionApi;
 
 namespace WildBearAdventuresMVC.Controllers

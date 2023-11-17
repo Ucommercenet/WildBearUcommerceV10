@@ -19,7 +19,7 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<string> CreateBasket(string currency, string cultureCode, CancellationToken cancellationToken)
+        public async Task<Guid> CreateBasket(string currency, string cultureCode, CancellationToken cancellationToken)
         {
             AuthorizeFlow(cancellationToken);
 
@@ -39,10 +39,9 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
             if (createBasketResponse.IsSuccessStatusCode is false)
             { throw new Exception($"Couldn't create new Basket"); }
 
-            var httpContent = createBasketResponse.Content;
+            var output = await createBasketResponse.Content.ReadAsAsync<ApiOutputCreateBasket>();
 
-
-            return "TODO_BasketID";
+            return output.BasketId;
         }
 
 
