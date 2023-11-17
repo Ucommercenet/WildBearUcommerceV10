@@ -37,7 +37,7 @@ namespace WildBearAdventuresMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddToCart(CancellationToken ct)
+        public RedirectToActionResult AddToCart(CancellationToken ct)
         {
             //TODO: Add to basket or create new basket
 
@@ -51,7 +51,7 @@ namespace WildBearAdventuresMVC.Controllers
 
             var productViewModel = CreateProductViewModel(ct);
 
-            return View("/Views/Product/Index.cshtml", productViewModel);
+            return RedirectToAction("Index");
         }
 
         /// <summary>
