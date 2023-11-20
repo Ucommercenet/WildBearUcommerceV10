@@ -19,19 +19,17 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
             _httpClientFactory = httpClientFactory;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="currency"></param>
+        /// <param name="cultureCode"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>The guid of the basket just created</returns>
+        /// <exception cref="Exception"></exception>
         public async Task<Guid> CreateBasket(string currency, string cultureCode, CancellationToken cancellationToken)
         {
-            AuthorizeFlow(cancellationToken);
-
-            if (_storeAuthentication.WildBearStore.authorizationDetails.AccessToken is null)
-            { throw new SecurityException(); }
-
-            //TODO: make wrapper method that retruns a client with baseAdress
-            using var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_storeAuthentication.WildBearStore.BaseUrl);
-
-            var accessToken = _storeAuthentication.WildBearStore.authorizationDetails.AccessToken;
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Bearer", parameter: accessToken);
+            using HttpClient client = GetTransactionReadyClient(cancellationToken);
 
             var payload = new Dictionary<string, string> { { "currency", currency }, { "cultureCode", cultureCode } };
             var createBasketResponse = await client.PostAsJsonAsync("/api/v1/baskets", payload);
@@ -44,7 +42,46 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
             return output.BasketId;
         }
 
+        //public async string GetBasket(Guid basketGuid, CancellationToken cancellationToken)
+        //{
+        //    using HttpClient client = GetTransactionReadyClient(cancellationToken);
 
+
+
+        //    var BasketResponse = await client.GetAsync($"/api/v1/baskets/{basketGuid}");
+
+
+        //    return "todo";
+        //}
+
+
+
+
+        /// <summary>
+        /// Returns client with accessToken and configured BaseAddress 
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="SecurityException"></exception>
+        /// <remarks>In a multi store setup this would need an update. Because not its only works for WildBearStore</remarks>
+        private HttpClient GetTransactionReadyClient(CancellationToken cancellationToken)
+        {
+            AuthorizeFlow(cancellationToken);
+
+            if (_storeAuthentication.WildBearStore.authorizationDetails.AccessToken is null)
+            { throw new SecurityException(); }
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_storeAuthentication.WildBearStore.BaseUrl);
+
+            var accessToken = _storeAuthentication.WildBearStore.authorizationDetails.AccessToken;
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Bearer", parameter: accessToken);
+            return client;
+        }
+
+
+
+
+        //TODO: Move its own Auth Client?
         #region Authorize Related
         private void AuthorizeFlow(CancellationToken cancellationToken)
         {

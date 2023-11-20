@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WildBearAdventuresMVC.Models;
-using WildBearAdventuresMVC.WildBear;
 using WildBearAdventuresMVC.WildBear.Interfaces;
 using WildBearAdventuresMVC.WildBear.TransactionApi;
 
@@ -46,7 +45,7 @@ namespace WildBearAdventuresMVC.Controllers
             var basketGuid = _transactionClient.CreateBasket(currency, cultureCode, ct).Result;
             _contextHelper.SetCurrentCart(basketGuid);
 
-
+            //TODO Improve also take product agrment
 
 
 

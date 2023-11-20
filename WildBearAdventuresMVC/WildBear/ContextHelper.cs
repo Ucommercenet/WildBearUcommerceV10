@@ -90,7 +90,6 @@ namespace WildBearAdventuresMVC.WildBear
             var count = session?.GetInt32(KEY_BasketCount);
             //Remark if no value can be found just retrun 0
             return (count.HasValue) ? count.Value : 0;
-
         }
 
 
