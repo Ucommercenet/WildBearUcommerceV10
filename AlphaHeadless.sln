@@ -12,8 +12,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WildBearAdventuresMVC", "Wi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UcommerceWildBearDTO", "UcommerceWildBearDTO\UcommerceWildBearDTO.csproj", "{96F43A14-5634-4ACA-8A73-BAC9FC2D968C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WildBearAdventuresBootstrap", "WildBearAdventuresBootstrap\WildBearAdventuresBootstrap.csproj", "{D9FFCFBA-C357-4BF4-B962-49F6EC13BA70}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,10 +30,6 @@ Global
 		{96F43A14-5634-4ACA-8A73-BAC9FC2D968C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96F43A14-5634-4ACA-8A73-BAC9FC2D968C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96F43A14-5634-4ACA-8A73-BAC9FC2D968C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D9FFCFBA-C357-4BF4-B962-49F6EC13BA70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D9FFCFBA-C357-4BF4-B962-49F6EC13BA70}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D9FFCFBA-C357-4BF4-B962-49F6EC13BA70}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D9FFCFBA-C357-4BF4-B962-49F6EC13BA70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

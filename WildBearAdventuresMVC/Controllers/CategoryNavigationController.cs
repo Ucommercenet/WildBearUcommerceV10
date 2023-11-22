@@ -6,9 +6,9 @@ namespace WildBearAdventuresMVC.Controllers
 {
     public class CategoryNavigationController : Controller
     {
-        private readonly IWildBearApiClient _wildBearApiClient;
+        private readonly IStoreApiClient _wildBearApiClient;
 
-        public CategoryNavigationController(IWildBearApiClient wildBearApiClient)
+        public CategoryNavigationController(IStoreApiClient wildBearApiClient)
         {
             _wildBearApiClient = wildBearApiClient;
         }

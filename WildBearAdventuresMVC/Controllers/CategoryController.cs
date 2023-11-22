@@ -6,11 +6,11 @@ namespace WildBearAdventuresMVC.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly IWildBearApiClient _wildBearApiClient;
+        private readonly IStoreApiClient _wildBearApiClient;
         private readonly IContextHelper _contextHelper;
 
 
-        public CategoryController(IWildBearApiClient wildBearApiClient, IContextHelper contextHelper)
+        public CategoryController(IStoreApiClient wildBearApiClient, IContextHelper contextHelper)
         {
             _wildBearApiClient = wildBearApiClient;
             _contextHelper = contextHelper;

@@ -5,10 +5,10 @@ namespace WildBearAdventuresMVC.WildBear
     public class ContextHelper : IContextHelper
     {
 
-        private readonly IWildBearApiClient _wildBearApiClient;
+        private readonly IStoreApiClient _wildBearApiClient;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ContextHelper(IWildBearApiClient wildBearApiClient, IHttpContextAccessor httpContextAccessor)
+        public ContextHelper(IStoreApiClient wildBearApiClient, IHttpContextAccessor httpContextAccessor)
         {
             _wildBearApiClient = wildBearApiClient;
             _httpContextAccessor = httpContextAccessor;

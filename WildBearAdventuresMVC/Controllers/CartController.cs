@@ -7,10 +7,10 @@ namespace WildBearAdventuresMVC.Controllers
     public class CartController : Controller
     {
         private readonly IContextHelper _contextHelper;
-        private readonly ITransactionClient _transactionClient;
+        private readonly TransactionClient _transactionClient;
 
 
-        public CartController(IContextHelper contextHelper, ITransactionClient transactionClient)
+        public CartController(IContextHelper contextHelper, TransactionClient transactionClient)
         {
             _contextHelper = contextHelper;
             _transactionClient = transactionClient;

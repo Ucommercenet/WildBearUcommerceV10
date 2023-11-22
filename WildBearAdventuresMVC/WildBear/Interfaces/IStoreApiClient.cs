@@ -2,7 +2,7 @@
 
 namespace WildBearAdventuresMVC.WildBear.Interfaces
 {
-    public interface IWildBearApiClient
+    public interface IStoreApiClient
     {
         List<CategoryDto> GetAllCategoriesFromCatalog(string catalogInput, CancellationToken token);
         List<ProductDto> GetAllProductsFromCategoryGuid(Guid categoryGuid, CancellationToken token);

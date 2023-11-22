@@ -5,7 +5,7 @@ namespace WildBearAdventuresMVC.WildBear
 
 
 {
-    public class WildBearApiClient : IWildBearApiClient
+    public class WildBearApiClient : IStoreApiClient
     {
         private readonly IHttpClientFactory _httpClientFactory;
 

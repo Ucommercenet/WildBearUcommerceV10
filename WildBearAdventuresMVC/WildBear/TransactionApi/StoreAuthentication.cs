@@ -1,5 +1,4 @@
-﻿using WildBearAdventuresMVC.WildBear.Interfaces;
-using WildBearAdventuresMVC.WildBear.TransactionApi.Models;
+﻿using WildBearAdventuresMVC.WildBear.TransactionApi.Models;
 
 namespace WildBearAdventuresMVC.WildBear.TransactionApi
 {
@@ -10,7 +9,7 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
     /// In this demo, we only have theWildBearStore
     /// Authentication is per store, the store Id is used as clientID
     /// </summary>
-    public class StoreAuthentication : IStoreAuthentication
+    public class StoreAuthentication
     {
 
         public StoreAuthentication(IConfiguration configuration)

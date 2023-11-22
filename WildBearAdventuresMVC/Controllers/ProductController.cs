@@ -8,11 +8,11 @@ namespace WildBearAdventuresMVC.Controllers
 
     public class ProductController : Controller
     {
-        private readonly IWildBearApiClient _wildBearApiClient;
+        private readonly IStoreApiClient _wildBearApiClient;
         private readonly IContextHelper _contextHelper;
-        private readonly ITransactionClient _transactionClient;
+        private readonly TransactionClient _transactionClient;
 
-        public ProductController(IWildBearApiClient wildBearApiClient, IContextHelper contextHelper, ITransactionClient transactionClient)
+        public ProductController(IStoreApiClient wildBearApiClient, IContextHelper contextHelper, TransactionClient transactionClient)
         {
             _wildBearApiClient = wildBearApiClient;
             _contextHelper = contextHelper;
@@ -34,18 +34,18 @@ namespace WildBearAdventuresMVC.Controllers
         }
 
         [HttpPost]
-        public RedirectToActionResult AddToCart(CancellationToken ct)
+        public RedirectToActionResult AddToCart(Guid? productGuid, CancellationToken ct)
         {
-
             var currency = "DKK";
             var cultureCode = "en-DK";
 
-            var currentproduct = _contextHelper.GetCurrentProductGuid();
+
+            var currentproduct = productGuid ?? _contextHelper.GetCurrentProductGuid();
+
 
             var basketGuid = _transactionClient.CreateBasket(currency, cultureCode, ct).Result;
             _contextHelper.SetCurrentCart(basketGuid);
 
-            //TODO Improve also take product agrment
 
 
 
