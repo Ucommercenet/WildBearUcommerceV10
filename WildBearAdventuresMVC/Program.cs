@@ -1,6 +1,7 @@
 using WildBearAdventuresMVC.WildBear;
 using WildBearAdventuresMVC.WildBear.Interfaces;
 using WildBearAdventuresMVC.WildBear.TransactionApi;
+using WildBearAdventuresMVC.WildBear.WildBearApi;
 
 namespace WildBearAdventuresMVC
 {
@@ -23,7 +24,7 @@ namespace WildBearAdventuresMVC
 
             //Only ever need one StoreAuthentication
             builder.Services.AddSingleton<StoreAuthentication>();
-            builder.Services.AddSingleton<StoreAuthorizationFlow>();
+            builder.Services.AddSingleton<StoreAuthorization>();
 
 
 

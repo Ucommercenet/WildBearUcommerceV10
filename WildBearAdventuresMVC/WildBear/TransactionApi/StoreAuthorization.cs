@@ -6,20 +6,16 @@ using WildBearAdventuresMVC.WildBear.TransactionApi.Models;
 
 namespace WildBearAdventuresMVC.WildBear.TransactionApi
 {
-    public class StoreAuthorizationFlow
+    public class StoreAuthorization
     {
         private readonly StoreAuthentication _storeAuthentication;
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public StoreAuthorizationFlow(StoreAuthentication storeAuthentication, IHttpClientFactory httpClientFactory)
+        public StoreAuthorization(StoreAuthentication storeAuthentication, IHttpClientFactory httpClientFactory)
         {
             _storeAuthentication = storeAuthentication;
             _httpClientFactory = httpClientFactory;
         }
-
-
-
-
 
         /// <summary>
         /// Returns client with accessToken and configured BaseAddress 
