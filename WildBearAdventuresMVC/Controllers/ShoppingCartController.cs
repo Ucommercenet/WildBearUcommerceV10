@@ -4,13 +4,13 @@ using WildBearAdventuresMVC.WildBear.TransactionApi;
 
 namespace WildBearAdventuresMVC.Controllers
 {
-    public class CartController : Controller
+    public class ShoppingCartController : Controller
     {
         private readonly IContextHelper _contextHelper;
         private readonly TransactionClient _transactionClient;
 
 
-        public CartController(IContextHelper contextHelper, TransactionClient transactionClient)
+        public ShoppingCartController(IContextHelper contextHelper, TransactionClient transactionClient)
         {
             _contextHelper = contextHelper;
             _transactionClient = transactionClient;
@@ -22,7 +22,7 @@ namespace WildBearAdventuresMVC.Controllers
             //TODO: Show Basket Details - Load up Cart.Lines 
 
 
-
+            //var ShoppingCartViewModel = new Sh
 
 
 

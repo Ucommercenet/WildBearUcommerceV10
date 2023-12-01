@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="WildBear\WildBearApi\Dto Models\" />
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 

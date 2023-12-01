@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WildBearAdventuresMVC.Models.WildBearCoffee;
+using WildBearAdventuresMVC.Models;
 using WildBearAdventuresMVC.WildBear.Interfaces;
 
 namespace WildBearAdventuresMVC.Controllers

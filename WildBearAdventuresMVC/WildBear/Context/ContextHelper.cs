@@ -72,15 +72,15 @@ namespace WildBearAdventuresMVC.WildBear
         /// <summary>
         /// Remark if no value found, just retrun the updateValue
         /// </summary>
-        /// <param name="updatevalue"></param>
+        /// <param name="updateValue"></param>
         /// <returns>The value after the update</returns>
         /// <remarks>Optimize: in some edge cases the cart count could be negative</remarks>
-        public int UpdateCurrentCartCount(int updatevalue)
+        public int UpdateCurrentShoppingCartCount(int updateValue)
         {
             var session = _httpContextAccessor.HttpContext?.Session;
             var oldValue = session?.GetInt32(KEY_BasketCount);
 
-            return (oldValue.HasValue) ? oldValue.Value + updatevalue : updatevalue;
+            return (oldValue.HasValue) ? oldValue.Value + updateValue : updateValue;
 
         }
 

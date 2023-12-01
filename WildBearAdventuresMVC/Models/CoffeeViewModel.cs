@@ -1,4 +1,6 @@
-﻿namespace WildBearAdventuresMVC.Models.WildBearCoffee
+﻿using WildBearAdventuresMVC.Models.WildBearCoffee;
+
+namespace WildBearAdventuresMVC.Models
 {
     public partial class CoffeeViewModel
     {

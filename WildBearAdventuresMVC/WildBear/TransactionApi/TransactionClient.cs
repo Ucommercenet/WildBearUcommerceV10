@@ -13,9 +13,6 @@ public class TransactionClient
     }
 
 
-
-
-
     /// <summary>
     /// 
     /// </summary>
@@ -77,15 +74,6 @@ public class TransactionClient
 
         return;
     }
-
-
-
-
-
-
-
-
-
 
 
 }

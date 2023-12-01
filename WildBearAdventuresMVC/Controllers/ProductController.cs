@@ -35,37 +35,40 @@ namespace WildBearAdventuresMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<RedirectToActionResult> AddToCart(Guid? productGuid, CancellationToken ct)
+        public async Task<RedirectToActionResult> AddToCart(Guid? productGuid, CancellationToken ct, int quantity = 1)
         {
-            var currency = "EUR";
-            var cultureCode = "da-DK";
+            var currency = "EUR"; //TODO: Get dynamic
+            var cultureCode = "da-DK"; //TODO: Get dynamic
 
-            var priceGroupGuid = new Guid("8769e717-08d2-4313-82a9-30d4f4886663"); //EUR 15 pct //Optimize: Get from endpoint
-            var catalog = new Guid("1e2b7c56-9ebd-4443-86ab-6224105836ad"); //MainProductCatalog //TODO: Get this somehow
 
-            var currentproduct = productGuid ?? _contextHelper.GetCurrentProductGuid();
+            var currentCategory = _contextHelper.GetCurrentCategoryGuid() ?? throw new Exception("No Category found");
+            var currentCatalog = _wildBearApiClient.GetSingleCategoryByGuid(currentCategory, ct).CatalogId;
+
+
 
             var basketGuid = _transactionClient.CreateBasket(currency, cultureCode, ct).Result;
             _contextHelper.SetCurrentCart(basketGuid);
 
-
-            //TODO: Get sku and VariantSKu via GetproductByGuid
+            var currentProductGuid = (productGuid ?? _contextHelper.GetCurrentProductGuid()) ?? throw new Exception("No product found");
+            var product = _wildBearApiClient.GetSingleProductByGuid(currentProductGuid, ct);
+            var priceGroupGuid = product.PriceGroupIds.First();
 
 
             var request = new UpdateOrderLineQuantityRequest
             {
-                ShoppingCart = basketGuid, //OK from CreateBasket endpoint
-                CultureCode = cultureCode, //OK same as endpoint               
-                Quantity = 1,
-                PriceGroupGuid = priceGroupGuid, //OK 
-                Catalog = catalog, //OK
-                Sku = "A001",
-                VariantSku = "AS1"      //What is a good way of getting Sku dynamic?
+                ShoppingCart = basketGuid,
+                CultureCode = cultureCode,
+                Quantity = quantity,
+                PriceGroupGuid = priceGroupGuid,
+                Catalog = currentCatalog,
+                Sku = product.Sku,
+                VariantSku = product.VariantSku
             };
 
             await _transactionClient.UpdateOrderLineQuantity(request, ct);
 
 
+            _contextHelper.UpdateCurrentShoppingCartCount(quantity);
             //After the product has been added, show the product again.
             return RedirectToAction("Index");
         }

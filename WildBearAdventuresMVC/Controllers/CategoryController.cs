@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WildBearAdventuresMVC.Models;
-using WildBearAdventuresMVC.WildBear;
 using WildBearAdventuresMVC.WildBear.Interfaces;
 
 namespace WildBearAdventuresMVC.Controllers
@@ -38,6 +37,8 @@ namespace WildBearAdventuresMVC.Controllers
 
 
             var currentCategoryDto = _wildBearApiClient.GetSingleCategoryByGuid((Guid)currentCategoryGuid, token);
+
+
 
             var productDtos = _wildBearApiClient.GetAllProductsFromCategoryGuid((Guid)currentCategoryGuid, token);
 

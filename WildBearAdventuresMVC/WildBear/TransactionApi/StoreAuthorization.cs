@@ -49,7 +49,7 @@ namespace WildBearAdventuresMVC.WildBear.TransactionApi
             var expiresAt = _storeAuthentication.WildBearStore.authorizationDetails?.AccessTokenExpiresAt;
             //A small buffer as been added
             //Note: Comparing datetime with null always produces false, which is what we want here.
-            var tokenIsValid = DateTime.UtcNow.AddSeconds(30) < expiresAt;
+            var tokenIsValid = DateTime.UtcNow.AddSeconds(10) < expiresAt;
 
             if (tokenIsValid is not true)
             {

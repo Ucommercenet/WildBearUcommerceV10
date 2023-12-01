@@ -11,11 +11,6 @@ namespace WildBearAdventuresMVC
         {
             var builder = WebApplication.CreateBuilder(args);
 
-
-
-
-
-
             // Custom services                      
             builder.Services.AddTransient<IStoreApiClient, WildBearApiClient>();
 

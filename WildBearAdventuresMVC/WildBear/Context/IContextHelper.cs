@@ -9,6 +9,6 @@
         void SetCurrentCart(Guid basket, int startingItemCount = 1);
         void SetCurrentCategoryByName(string currentCategoryName);
         void SetCurrentProductByName(string currentProductName);
-        int UpdateCurrentCartCount(int updatevalue);
+        int UpdateCurrentShoppingCartCount(int updatevalue);
     }
 }
