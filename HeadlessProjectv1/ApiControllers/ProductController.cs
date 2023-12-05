@@ -78,7 +78,7 @@ namespace HeadlessProjectv1.ApiControllers
             if (category == null) { return NotFound(); }
 
             var resultSet = await _indexProduct.AsSearchable(culture).Where(x => x.CategoryIds.Contains(category.Id)).ToResultSet(token);
-            if (resultSet.Any() == false) { return NotFound(); }
+            if (resultSet.Any() == false) { return new EmptyResult(); }
 
 
             return Ok(resultSet.Results);

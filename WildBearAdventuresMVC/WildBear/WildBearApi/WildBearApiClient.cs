@@ -38,9 +38,16 @@ public class WildBearApiClient : IStoreApiClient
         var uri = $"https://localhost:44381/api/Product/GetAllProductsFromCategoryGuid?categoryId={categoryGuid}";
 
         var response = client.GetAsync(uri, token).Result;
-        var result = response.Content.ReadFromJsonAsync<List<ProductDto>>().Result;
 
-        return result;
+        //IMPROVE: Fix breaks if the there is zero products in the list
+        //var result = response.Content.ReadFromJsonAsync<List<ProductDto?>>().Result;
+        var allProducts = response.Content.ReadFromJsonAsync<List<ProductDto?>>().Result;
+
+        var productsVariants = allProducts.Where(x => x.ParentProductId != null).ToList();
+
+
+
+        return productsVariants;
 
     }
     public ProductDto GetSingleProductByGuid(Guid productGuid, CancellationToken token)

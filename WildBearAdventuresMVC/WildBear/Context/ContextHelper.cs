@@ -62,11 +62,11 @@ namespace WildBearAdventuresMVC.WildBear
         /// Sets the currentBasketGuid and updates the CurrentBasketCount
         /// </summary>
         /// <param name="basket"></param>
-        public void SetCurrentCart(Guid basket, int startingItemCount = 1)
+        public void SetCurrentCart(Guid basket)
         {
             var session = _httpContextAccessor.HttpContext?.Session;
             session?.SetString(KEY_BasketGuid, basket.ToString());
-            session?.SetInt32(KEY_BasketCount, startingItemCount);
+
         }
 
         /// <summary>
@@ -75,13 +75,22 @@ namespace WildBearAdventuresMVC.WildBear
         /// <param name="updateValue"></param>
         /// <returns>The value after the update</returns>
         /// <remarks>Optimize: in some edge cases the cart count could be negative</remarks>
-        public int UpdateCurrentShoppingCartCount(int updateValue)
+        public void UpdateCurrentShoppingCartCount(int updateValue)
         {
             var session = _httpContextAccessor.HttpContext?.Session;
             var oldValue = session?.GetInt32(KEY_BasketCount);
 
-            return (oldValue.HasValue) ? oldValue.Value + updateValue : updateValue;
+            int newValue;
+            if (oldValue.HasValue)
+            {
+                newValue = oldValue.Value + updateValue;
+            }
+            else
+            {
+                newValue = updateValue;
+            }
 
+            session?.SetInt32(KEY_BasketCount, newValue);
         }
 
         public int GetCurrentCartCount()
