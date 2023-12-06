@@ -43,11 +43,7 @@ namespace WildBearAdventuresMVC.Controllers
 
             var currentCategory = _contextHelper.GetCurrentCategoryGuid() ?? throw new Exception("No Category found");
             var currentCatalog = _wildBearApiClient.GetSingleCategoryByGuid(currentCategory, ct).CatalogId;
-
-
-
-            var basketGuid = _transactionClient.CreateBasket(currency, cultureCode, ct).Result;
-            _contextHelper.SetCurrentCart(basketGuid);
+            var basketGuid = FindCurrentCartOrCreateNew(currency, cultureCode, ct);
 
             var currentProductGuid = (productGuid ?? _contextHelper.GetCurrentProductGuid()) ?? throw new Exception("No product found");
             var product = _wildBearApiClient.GetSingleProductByGuid(currentProductGuid, ct);
@@ -73,6 +69,21 @@ namespace WildBearAdventuresMVC.Controllers
             return RedirectToAction("Index");
         }
 
+        private Guid FindCurrentCartOrCreateNew(string currency, string cultureCode, CancellationToken ct)
+        {
+            var currentBasketGuid = _contextHelper.GetCurrentCartGuid();
+
+            //currentBasket did exists
+            if (currentBasketGuid.HasValue is true)
+            { return (Guid)currentBasketGuid; }
+
+            //currentBasket did not exists
+            var basketGuid = _transactionClient.CreateBasket(currency, cultureCode, ct).Result;
+            _contextHelper.SetCurrentCart(basketGuid);
+            return basketGuid;
+
+        }
+
         /// <summary>
         /// Uses the ContextHelper to find current product
         /// </summary>
@@ -91,6 +102,7 @@ namespace WildBearAdventuresMVC.Controllers
             };
             return productViewModel;
         }
+
 
 
 
