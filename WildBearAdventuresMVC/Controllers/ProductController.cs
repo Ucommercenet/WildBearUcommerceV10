@@ -43,8 +43,12 @@ namespace WildBearAdventuresMVC.Controllers
 
             var currentCategory = _contextHelper.GetCurrentCategoryGuid() ?? throw new Exception("No Category found");
             var currentCatalog = _wildBearApiClient.GetSingleCategoryByGuid(currentCategory, ct).CatalogId;
-            var basketGuid = FindCurrentCartOrCreateNew(currency, cultureCode, ct);
 
+            //Note: does also use the _transactionClient
+            var basketGuid = FindCurrentShoppingCartOrCreateNew(currency, cultureCode, ct);
+            _contextHelper.SetCurrentCart(basketGuid);
+
+            //CurrentProduct
             var currentProductGuid = (productGuid ?? _contextHelper.GetCurrentProductGuid()) ?? throw new Exception("No product found");
             var product = _wildBearApiClient.GetSingleProductByGuid(currentProductGuid, ct);
             var priceGroupGuid = product.PriceGroupIds.First();
@@ -61,7 +65,7 @@ namespace WildBearAdventuresMVC.Controllers
                 VariantSku = product.VariantSku
             };
 
-            await _transactionClient.UpdateOrderLineQuantity(request, ct);
+            await _transactionClient.PostShoppingCartLine(request, ct);
 
 
             _contextHelper.UpdateCurrentShoppingCartCount(quantity);
@@ -69,7 +73,7 @@ namespace WildBearAdventuresMVC.Controllers
             return RedirectToAction("Index");
         }
 
-        private Guid FindCurrentCartOrCreateNew(string currency, string cultureCode, CancellationToken ct)
+        private Guid FindCurrentShoppingCartOrCreateNew(string currency, string cultureCode, CancellationToken ct)
         {
             var currentBasketGuid = _contextHelper.GetCurrentCartGuid();
 
@@ -78,7 +82,7 @@ namespace WildBearAdventuresMVC.Controllers
             { return (Guid)currentBasketGuid; }
 
             //currentBasket did not exists
-            var basketGuid = _transactionClient.CreateBasket(currency, cultureCode, ct).Result;
+            var basketGuid = _transactionClient.PostCreateBasket(currency, cultureCode, ct).Result;
             _contextHelper.SetCurrentCart(basketGuid);
             return basketGuid;
 

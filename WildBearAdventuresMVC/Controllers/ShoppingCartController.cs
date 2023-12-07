@@ -16,13 +16,14 @@ namespace WildBearAdventuresMVC.Controllers
             _transactionClient = transactionClient;
         }
 
-        public IActionResult Index(CancellationToken token)
+        public IActionResult Index(CancellationToken ct)
         {
 
-            //TODO: Show Basket Details - Load up Cart.Lines 
+            //TODO: STEPS: Get Current Cart , use GetCart on Transaction client
 
+            var CurrentCart = _contextHelper.GetCurrentCartGuid();
 
-            //var ShoppingCartViewModel = new Sh
+            var DRAFT_result = _transactionClient.GetShoppingCart((Guid)CurrentCart, ct).Result;
 
 
 

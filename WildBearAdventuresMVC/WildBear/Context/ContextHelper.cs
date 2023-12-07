@@ -59,7 +59,7 @@ namespace WildBearAdventuresMVC.WildBear
         }
 
         /// <summary>
-        /// Sets the currentBasketGuid and updates the CurrentBasketCount
+        /// Sets the currentBasketGuid
         /// </summary>
         /// <param name="basket"></param>
         public void SetCurrentCart(Guid basket)

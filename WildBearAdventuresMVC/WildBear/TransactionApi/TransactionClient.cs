@@ -21,7 +21,7 @@ public class TransactionClient
     /// <param name="cancellationToken"></param>
     /// <returns>The guid of the basket just created</returns>
     /// <exception cref="Exception"></exception>
-    public async Task<Guid> CreateBasket(string currency, string cultureCode, CancellationToken cancellationToken)
+    public async Task<Guid> PostCreateBasket(string currency, string cultureCode, CancellationToken cancellationToken)
     {
         using var client = _storeAuthorizationFlow.GetTransactionReadyClient(cancellationToken);
 
@@ -44,7 +44,7 @@ public class TransactionClient
 
 
 
-    public async Task UpdateOrderLineQuantity(UpdateOrderLineQuantityRequest request, CancellationToken ct)
+    public async Task PostShoppingCartLine(UpdateOrderLineQuantityRequest request, CancellationToken ct)
     {
         using var client = _storeAuthorizationFlow.GetTransactionReadyClient(ct);
 
@@ -65,15 +65,25 @@ public class TransactionClient
 
         var contentString = response.Content.ReadAsStringAsync().Result;
 
-
-
-
-
         if (response.IsSuccessStatusCode is false)
         { throw new Exception($"Could not UpdateOrderLineQuantity"); }
 
         return;
     }
+
+
+    public async Task<string> GetShoppingCart(Guid shoppingCartGuid, CancellationToken ct)
+    {
+        using var client = _storeAuthorizationFlow.GetTransactionReadyClient(ct);
+
+        var response = await client.GetAsync(requestUri: $"/api/v1/carts/{shoppingCartGuid}");
+
+        var contentString = response.Content.ReadAsStringAsync().Result;
+
+        return contentString;
+
+    }
+
 
 
 }
