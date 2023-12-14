@@ -1,4 +1,4 @@
-﻿using WildBearAdventuresMVC.WildBear.TransactionApi.Models;
+﻿using WildBearAdventuresMVC.WildBear.Models.Authorization;
 
 namespace WildBearAdventuresMVC.WildBear.TransactionApi
 {

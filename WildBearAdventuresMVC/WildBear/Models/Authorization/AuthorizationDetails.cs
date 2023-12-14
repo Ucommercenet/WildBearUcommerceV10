@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace WildBearAdventuresMVC.WildBear.TransactionApi.Models
+namespace WildBearAdventuresMVC.WildBear.Models
 {
     public class AuthorizationDetails
     {

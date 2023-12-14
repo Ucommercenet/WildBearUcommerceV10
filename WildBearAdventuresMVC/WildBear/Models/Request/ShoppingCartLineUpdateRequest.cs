@@ -1,6 +1,6 @@
-﻿namespace WildBearAdventuresMVC.WildBear.TransactionApi.Models
+﻿namespace WildBearAdventuresMVC.WildBear.Models.APIRequest
 {
-    public class UpdateOrderLineQuantityRequest
+    public class ShoppingCartLineUpdateRequest
     {
 
         public required Guid ShoppingCart { get; set; }

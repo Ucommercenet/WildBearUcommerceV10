@@ -1,4 +1,4 @@
-﻿namespace WildBearAdventuresMVC.WildBear.TransactionApi.Models
+﻿namespace WildBearAdventuresMVC.WildBear.Models
 {
 
     /// <summary>

@@ -1,4 +1,5 @@
-﻿using WildBearAdventuresMVC.WildBear.TransactionApi.Models;
+﻿using WildBearAdventuresMVC.WildBear.Models.APIRequest;
+using WildBearAdventuresMVC.WildBear.Models.DTOs;
 
 namespace WildBearAdventuresMVC.WildBear.TransactionApi;
 
@@ -36,7 +37,7 @@ public class TransactionClient
         if (createBasketResponse.IsSuccessStatusCode is false)
         { throw new Exception($"Could not create new Basket"); }
 
-        var responseResult = await createBasketResponse.Content.ReadAsAsync<ApiOutputCreateBasket>();
+        var responseResult = await createBasketResponse.Content.ReadAsAsync<CreateShoppingCartDto>();
 
         return responseResult.BasketId;
     }
@@ -44,7 +45,7 @@ public class TransactionClient
 
 
 
-    public async Task PostShoppingCartLine(UpdateOrderLineQuantityRequest request, CancellationToken ct)
+    public async Task PostShoppingCartLine(ShoppingCartLineUpdateRequest request, CancellationToken ct)
     {
         using var client = _storeAuthorizationFlow.GetTransactionReadyClient(ct);
 
@@ -72,15 +73,15 @@ public class TransactionClient
     }
 
 
-    public async Task<string> GetShoppingCart(Guid shoppingCartGuid, CancellationToken ct)
+    public async Task<ShoppingCartDto> GetShoppingCart(Guid shoppingCartGuid, CancellationToken ct)
     {
         using var client = _storeAuthorizationFlow.GetTransactionReadyClient(ct);
 
         var response = await client.GetAsync(requestUri: $"/api/v1/carts/{shoppingCartGuid}");
 
-        var contentString = response.Content.ReadAsStringAsync().Result;
+        var shoppingCart = response.Content.ReadAsAsync<ShoppingCartDto>().Result;
 
-        return contentString;
+        return shoppingCart;
 
     }
 

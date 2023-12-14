@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WildBearAdventuresMVC.Models;
 using WildBearAdventuresMVC.WildBear.Interfaces;
+using WildBearAdventuresMVC.WildBear.Models;
 using WildBearAdventuresMVC.WildBear.TransactionApi;
-using WildBearAdventuresMVC.WildBear.TransactionApi.Models;
+
 
 namespace WildBearAdventuresMVC.Controllers
 {
@@ -54,7 +55,7 @@ namespace WildBearAdventuresMVC.Controllers
             var priceGroupGuid = product.PriceGroupIds.First();
 
 
-            var request = new UpdateOrderLineQuantityRequest
+            var request = new ShoppingCartLineUpdateRequest
             {
                 ShoppingCart = basketGuid,
                 CultureCode = cultureCode,
