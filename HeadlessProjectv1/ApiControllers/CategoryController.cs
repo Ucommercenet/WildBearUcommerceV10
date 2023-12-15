@@ -93,30 +93,20 @@ namespace HeadlessProjectv1.ApiControllers
             if (culture == null)
             { return NotFound(); }
 
-            //Catalog: A conmen use case is that there is only 1 store with 1 catalog. catalog is therefor optional
+            //Catalog: A common use case is that there is only 1 store with 1 catalog. catalog is therefor optional and in this case the first will be 
 
             //Optimize: by not searching only if catalogName is not null or whitespace
             var targetCatalog = await _indexCatalog.AsSearchable(culture).Where(x => x.Name == catalogName).FirstOrDefault(token)
                 ?? await _indexCatalog.AsSearchable(culture).FirstOrDefault(token);
 
-            #region Showcase 1: On purpose showing each step of search in its own variable for better debugging
-            //var searchCategories = _indexCategory.AsSearchable(culture).Where(category => category.CatalogId == targetCatalog.Id);
 
-            //var taskOfResultSet = searchCategories.ToResultSet(token);
-
-            //var resultSetOfCategorySearchModel = taskOfResultSet.Result;
-
-            //return Ok(resultSetOfCategorySearchModel);
-            #endregion
-
-            #region Showcase 2: 
             var searchCategories = await _indexCategory
                 .AsSearchable(culture)
                 .Where(category => category.CatalogId == targetCatalog.Id)
                 .ToResultSet(token);
 
             return Ok(searchCategories);
-            #endregion
+
 
 
 

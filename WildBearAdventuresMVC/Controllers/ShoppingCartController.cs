@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WildBearAdventuresMVC.Models;
 using WildBearAdventuresMVC.WildBear.Interfaces;
 using WildBearAdventuresMVC.WildBear.TransactionApi;
 
@@ -23,11 +24,28 @@ namespace WildBearAdventuresMVC.Controllers
 
             var CurrentCart = _contextHelper.GetCurrentCartGuid();
 
-            var DRAFT_result = _transactionClient.GetShoppingCart((Guid)CurrentCart, ct).Result;
+            var shoppingCartDto = _transactionClient.GetShoppingCart((Guid)CurrentCart, ct).Result;
+
+            var shoppingCartViewModel = new ShoppingCartViewModel()
+            {
+                ShoppingChartOrderLineViewModels = new List<OrderLineViewModel>()
+            };
+
+            foreach (var orderline in shoppingCartDto.orderLines)
+            {
+                var orderLineViewModel = new OrderLineViewModel()
+                {
+                    productName = orderline.productName,
+                    quantity = orderline.quantity,
+                    price = orderline.price,
+                    total = orderline.total
+                };
+                shoppingCartViewModel.ShoppingChartOrderLineViewModels.Add(orderLineViewModel);
+            }
 
 
 
-            return View();
+            return View(shoppingCartViewModel);
         }
     }
 }

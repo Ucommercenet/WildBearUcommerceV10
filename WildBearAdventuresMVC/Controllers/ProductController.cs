@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WildBearAdventuresMVC.Models;
 using WildBearAdventuresMVC.WildBear.Interfaces;
-using WildBearAdventuresMVC.WildBear.Models;
+using WildBearAdventuresMVC.WildBear.Models.APIRequest;
 using WildBearAdventuresMVC.WildBear.TransactionApi;
 
 

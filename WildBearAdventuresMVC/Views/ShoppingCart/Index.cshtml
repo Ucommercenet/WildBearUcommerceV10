@@ -1,8 +1,40 @@
-﻿
+﻿@model WildBearAdventuresMVC.Models.ShoppingCartViewModel
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Cart Template</h1>
+<div>
+    <h4>This is your ShoppingCart</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ShoppingCartOrderTotal)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ShoppingCartOrderTotal)
+        </dd>
+    </dl>
 
+
+</div>
+@foreach (var orderline in Model.ShoppingChartOrderLineViewModels)
+{
+    <li class="text-start">
+        <dl class="row">
+         Product Name: @orderline.productName
+        </dl>
+        <dl class="row">
+            Quantity @orderline.quantity
+        </dl>
+        <dl class="row">
+         Orderline Total @orderline.total
+        </dl>
+    </li>
+
+}
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

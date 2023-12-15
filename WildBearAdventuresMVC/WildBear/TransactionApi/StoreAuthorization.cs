@@ -2,7 +2,7 @@
 using System.Security;
 using System.Text;
 using System.Web;
-using WildBearAdventuresMVC.WildBear.Models.Authorization;
+using WildBearAdventuresMVC.WildBear.Models;
 
 namespace WildBearAdventuresMVC.WildBear.TransactionApi
 {
