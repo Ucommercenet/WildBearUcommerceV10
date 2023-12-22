@@ -1,5 +1,5 @@
-﻿using UcommerceWildBearDTO;
-using WildBearAdventuresMVC.WildBear.Interfaces;
+﻿using WildBearAdventuresMVC.WildBear.Interfaces;
+using WildBearAdventuresMVC.WildBear.Models.DTOs;
 
 namespace WildBearAdventuresMVC.WildBear.WildBearApi;
 
@@ -23,6 +23,9 @@ public class WildBearApiClient : IStoreApiClient
         var uri = $"https://localhost:44381/api/Product/GetAllProductsFromCategoryGuid?categoryId={categoryGuid}";
 
         var response = client.GetAsync(uri, token).Result;
+
+        var resultTEMP = response.Content.ReadAsStringAsync().Result;
+
         var result = response.Content.ReadFromJsonAsync<List<ProductDto>>().Result;
 
 
@@ -92,10 +95,11 @@ public class WildBearApiClient : IStoreApiClient
 
 
         var response = client.GetAsync(uri, token).Result;
-        var result = response.Content.ReadFromJsonAsync<List<CategoryDto>>().Result;
+               
 
-
-        return result;
+        var contentResult = response.Content.ReadFromJsonAsync<List<CategoryDto>>().Result;
+        
+        return contentResult;
 
 
 

@@ -24,8 +24,8 @@ namespace WildBearAdventuresMVC.Controllers
 
             var coffeeViewModel = new CoffeeViewModel()
             {
-                Name = productDto.Name,
-                Price = productDto.PricesInclTax.FirstOrDefault().Value,
+                Name = productDto.Name,                
+                Price = productDto.PricesInclTax.EUR15pct,
                 Description = productDto.ShortDescription
 
             };

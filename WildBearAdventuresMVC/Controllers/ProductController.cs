@@ -42,7 +42,7 @@ namespace WildBearAdventuresMVC.Controllers
 
 
             var currentCategory = _contextHelper.GetCurrentCategoryGuid() ?? throw new Exception("No Category found");
-            var currentCatalog = _wildBearApiClient.GetSingleCategoryByGuid(currentCategory, ct).CatalogId;
+            var currentCatalog = _wildBearApiClient.GetSingleCategoryByGuid(currentCategory, ct).CatalogId;            
 
             //Note: does also use the _transactionClient
             var basketGuid = FindCurrentShoppingCartOrCreateNew(currency, cultureCode, ct);
@@ -59,8 +59,8 @@ namespace WildBearAdventuresMVC.Controllers
                 ShoppingCart = basketGuid,
                 CultureCode = cultureCode,
                 Quantity = quantity,
-                PriceGroupGuid = priceGroupGuid,
-                Catalog = currentCatalog,
+                PriceGroupGuid = new Guid(priceGroupGuid),
+                Catalog = new Guid(currentCatalog),
                 Sku = product.Sku,
                 VariantSku = product.VariantSku
             };
@@ -102,7 +102,7 @@ namespace WildBearAdventuresMVC.Controllers
             {
                 Name = currentprodcutDto.Name,
                 ShortDescription = currentprodcutDto?.ShortDescription,
-                Price = currentprodcutDto.UnitPrices.FirstOrDefault().Value,
+                Price = currentprodcutDto.UnitPrices.EUR15pct,
             };
             return productViewModel;
         }

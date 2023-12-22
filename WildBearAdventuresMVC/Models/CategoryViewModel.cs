@@ -1,4 +1,4 @@
-﻿using UcommerceWildBearDTO;
+﻿using WildBearAdventuresMVC.WildBear.Models.DTOs;
 
 namespace WildBearAdventuresMVC.Models
 {
@@ -9,9 +9,7 @@ namespace WildBearAdventuresMVC.Models
         public string Description { get; set; }
 
         public int CategoryProductCount { get; set; }
-
-
-        //TODO: update to using ProductViewModel
+                
         public List<ProductDto>? ProductDtos { get; set; }
 
 

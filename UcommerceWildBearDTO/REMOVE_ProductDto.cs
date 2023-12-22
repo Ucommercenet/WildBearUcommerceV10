@@ -2,11 +2,5 @@
 
 namespace UcommerceWildBearDTO
 {
-    public class ProductDto : ProductSearchModel
-    {
-
-
-
-
-    }
+   
 }
