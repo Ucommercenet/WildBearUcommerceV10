@@ -30,8 +30,7 @@ namespace WildBearAdventuresMVC.Controllers
             { _contextHelper.SetCurrentProductByName(name.ToString()); }
 
             var productViewModel = CreateProductViewModel(ct);
-
-
+            
             return View(productViewModel);
         }
 
