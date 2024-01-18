@@ -15,12 +15,18 @@ namespace WildBearAdventuresMVC.Controllers
 
         public IActionResult Index()
         {
-
-
             var categoryDtoCollection = _wildBearApiClient.GetAllCategoriesFromCatalog("MainProductCatalog", new CancellationToken());
+
+            var categoryNames = new List<string>();
+
+            foreach (var categoryDto in categoryDtoCollection)
+            {
+                categoryNames.Add(categoryDto.Name);                
+            }
+
             var categoryNavigationViewModel = new CategoryNavigationViewModel
             {
-                categoryDtos = categoryDtoCollection
+                categoryNames = categoryNames
             };
 
 

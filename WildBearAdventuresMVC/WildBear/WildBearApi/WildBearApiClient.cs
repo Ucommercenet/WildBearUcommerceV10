@@ -86,6 +86,8 @@ public class WildBearApiClient : IStoreApiClient
 
 
     #region Category Related
+
+    //MasterClass first encounter with the Api client keep this as scaffolding   
     public List<CategoryDto> GetAllCategoriesFromCatalog(string catalogInput, CancellationToken token)
     {
 

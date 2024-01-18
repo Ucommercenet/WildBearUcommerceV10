@@ -4,7 +4,7 @@ namespace WildBearAdventuresMVC.Models.WildBearCoffee
 {
     public class CategoryNavigationViewModel
     {
-        public List<CategoryDto> categoryDtos { get; set; }
+        public required List<string> categoryNames { get; set; }
 
 
     }

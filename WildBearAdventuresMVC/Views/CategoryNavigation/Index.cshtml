@@ -6,13 +6,13 @@
     <div class="all-categories">
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <ul class="list-group border-0 bg-light">
-                @foreach (var category in Model.categoryDtos)
+                @foreach (var categoryName in Model.categoryNames)
                 {
                     <li class="text-start">
                         <a asp-controller="Category"
-                           asp-action="Index"                          
-                           asp-route-id="@category.Name"
-                           class="text-black">@category.Name</a>
+                           asp-action="Index"
+                           asp-route-id="@categoryName"
+                           class="text-black">@categoryName</a>
                     </li>                                        
                 }
             </ul>
