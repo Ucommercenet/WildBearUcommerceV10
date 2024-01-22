@@ -38,7 +38,8 @@ namespace WildBearAdventuresMVC.Controllers
                     productName = orderline.productName,
                     quantity = orderline.quantity,
                     price = orderline.price,
-                    total = orderline.total
+                    //total = orderline.total
+                    total = 5000
                 };
                 shoppingCartViewModel.ShoppingChartOrderLineViewModels.Add(orderLineViewModel);
             }
