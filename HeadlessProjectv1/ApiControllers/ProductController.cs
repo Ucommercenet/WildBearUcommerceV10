@@ -4,6 +4,7 @@ using System.Globalization;
 using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 using Ucommerce.Web.Common.Extensions;
+using Ucommerce.Web.WebSite.Controllers;
 
 namespace HeadlessProjectv1.ApiControllers
 {

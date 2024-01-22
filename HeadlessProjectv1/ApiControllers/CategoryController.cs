@@ -3,11 +3,13 @@ using System.Globalization;
 using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 using Ucommerce.Web.Common.Extensions;
+using Ucommerce.Web.WebSite.Controllers;
 
 namespace HeadlessProjectv1.ApiControllers
 {
     [Route("api/[Controller]")]
     [ApiController]
+    
     public class CategoryController : ControllerBase
     {
         private readonly IIndex<CategorySearchModel> _indexCategory;

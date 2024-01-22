@@ -1,5 +1,6 @@
 ﻿using WildBearAdventuresMVC.WildBear.Interfaces;
 using WildBearAdventuresMVC.WildBear.Models.DTOs;
+using WildBearAdventuresMVC.WildBear.TransactionApi;
 
 namespace WildBearAdventuresMVC.WildBear.WildBearApi;
 
@@ -7,18 +8,18 @@ namespace WildBearAdventuresMVC.WildBear.WildBearApi;
 
 public class WildBearApiClient : IStoreApiClient
 {
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly StoreAuthorization _storeAuthorizationFlow;
 
-    public WildBearApiClient(IHttpClientFactory httpClientFactory)
+    public WildBearApiClient(StoreAuthorization storeAuthorizationFlow)
     {
-        _httpClientFactory = httpClientFactory;
+        _storeAuthorizationFlow = storeAuthorizationFlow;
     }
 
     #region Product Related
     public ProductDto GetRandomProductFromCategory(Guid categoryGuid, CancellationToken token)
     {
 
-        using var client = _httpClientFactory.CreateClient();
+        using var client = _storeAuthorizationFlow.GetTransactionReadyClient(token);
 
         var uri = $"https://localhost:44381/api/Product/GetAllProductsFromCategoryGuid?categoryId={categoryGuid}";
 
@@ -37,7 +38,7 @@ public class WildBearApiClient : IStoreApiClient
     public List<ProductDto> GetAllProductsFromCategoryGuid(Guid categoryGuid, CancellationToken token)
     {
 
-        using var client = _httpClientFactory.CreateClient();
+        using var client = _storeAuthorizationFlow.GetTransactionReadyClient(token);
         var uri = $"https://localhost:44381/api/Product/GetAllProductsFromCategoryGuid?categoryId={categoryGuid}";
 
         var response = client.GetAsync(uri, token).Result;
@@ -56,7 +57,7 @@ public class WildBearApiClient : IStoreApiClient
     public ProductDto GetSingleProductByGuid(Guid productGuid, CancellationToken token)
     {
 
-        using var client = _httpClientFactory.CreateClient();
+        using var client = _storeAuthorizationFlow.GetTransactionReadyClient(token);
 
         var uri = $"https://localhost:44381/api/Product/GetProductByGuid?searchGuid={productGuid}";
 
@@ -70,7 +71,7 @@ public class WildBearApiClient : IStoreApiClient
     public ProductDto GetSingleProductByName(string searchName, CancellationToken token)
     {
 
-        using var client = _httpClientFactory.CreateClient();
+        using var client = _storeAuthorizationFlow.GetTransactionReadyClient(token);
 
         var uri = $"https://localhost:44381/api/Product/GetProductByName?searchName={searchName}";
 
@@ -91,7 +92,7 @@ public class WildBearApiClient : IStoreApiClient
     public List<CategoryDto> GetAllCategoriesFromCatalog(string catalogInput, CancellationToken token)
     {
 
-        using var client = _httpClientFactory.CreateClient();
+        using var client = _storeAuthorizationFlow.GetTransactionReadyClient(token);
 
         var uri = $"https://localhost:44381/api/Category/GetAllCategoriesFromCatalog?catalogName={catalogInput}";
 
@@ -111,7 +112,7 @@ public class WildBearApiClient : IStoreApiClient
     public Guid GetOnlyCategoryGuidByName(string nameInput, CancellationToken token)
     {
 
-        using var client = _httpClientFactory.CreateClient();
+        using var client = _storeAuthorizationFlow.GetTransactionReadyClient(token);
 
         var uri = $"https://localhost:44381/api/Category/GetOnlyGuidByName?searchName={nameInput}";
 
@@ -129,7 +130,7 @@ public class WildBearApiClient : IStoreApiClient
     public CategoryDto GetSingleCategoryByGuid(Guid categoryGuid, CancellationToken token)
     {
 
-        using var client = _httpClientFactory.CreateClient();
+        using var client = _storeAuthorizationFlow.GetTransactionReadyClient(token);
 
         var uri = $"https://localhost:44381/api/Category/GetCategoryByGuid?searchGuid={categoryGuid}";
 
