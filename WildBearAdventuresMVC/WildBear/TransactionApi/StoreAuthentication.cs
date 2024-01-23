@@ -1,7 +1,6 @@
-﻿using WildBearAdventuresMVC.WildBear.Models;
+﻿using WildBearAdventures.MVC.WildBear.Models.Authorization;
 
-
-namespace WildBearAdventuresMVC.WildBear.TransactionApi
+namespace WildBearAdventures.MVC.WildBear.TransactionApi
 {
 
     /// <summary>

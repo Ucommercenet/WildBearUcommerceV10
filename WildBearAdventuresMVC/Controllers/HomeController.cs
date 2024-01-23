@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WildBearAdventuresMVC.Models;
-using WildBearAdventuresMVC.WildBear.Interfaces;
+using WildBearAdventures.MVC.WildBear.TransactionApi;
+using WildBearAdventures.MVC.Models;
 
-namespace WildBearAdventuresMVC.Controllers
+namespace WildBearAdventures.MVC.Controllers
 {
     public class HomeController : Controller
     {
@@ -24,7 +24,7 @@ namespace WildBearAdventuresMVC.Controllers
 
             var coffeeViewModel = new CoffeeViewModel()
             {
-                Name = productDto.Name,                
+                Name = productDto.Name,
                 Price = productDto.PricesInclTax.EUR15pct,
                 Description = productDto.ShortDescription
 

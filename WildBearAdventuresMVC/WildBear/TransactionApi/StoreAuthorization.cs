@@ -2,9 +2,9 @@
 using System.Security;
 using System.Text;
 using System.Web;
-using WildBearAdventuresMVC.WildBear.Models;
+using WildBearAdventures.MVC.WildBear.Models.Authorization;
 
-namespace WildBearAdventuresMVC.WildBear.TransactionApi
+namespace WildBearAdventures.MVC.WildBear.TransactionApi
 {
     public class StoreAuthorization
     {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
-namespace HeadlessProjectv1;
+namespace WildBearAdventures.API;
 
 /// <summary>
 /// Middleware for setting the test user

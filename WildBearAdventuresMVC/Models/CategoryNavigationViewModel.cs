@@ -1,6 +1,6 @@
-﻿using WildBearAdventuresMVC.WildBear.Models.DTOs;
+﻿using WildBearAdventures.MVC.WildBear.Models.DTOs;
 
-namespace WildBearAdventuresMVC.Models.WildBearCoffee
+namespace WildBearAdventures.MVC.Models
 {
     public class CategoryNavigationViewModel
     {

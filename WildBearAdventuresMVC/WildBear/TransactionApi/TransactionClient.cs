@@ -1,7 +1,7 @@
-﻿using WildBearAdventuresMVC.WildBear.Models.APIRequest;
-using WildBearAdventuresMVC.WildBear.Models.DTOs;
+﻿using WildBearAdventures.MVC.WildBear.Models.DTOs;
+using WildBearAdventures.MVC.WildBear.Models.Request;
 
-namespace WildBearAdventuresMVC.WildBear.TransactionApi;
+namespace WildBearAdventures.MVC.WildBear.TransactionApi;
 
 public class TransactionClient
 {

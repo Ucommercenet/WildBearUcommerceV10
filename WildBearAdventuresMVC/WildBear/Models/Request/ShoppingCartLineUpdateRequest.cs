@@ -1,4 +1,4 @@
-﻿namespace WildBearAdventuresMVC.WildBear.Models.APIRequest
+﻿namespace WildBearAdventures.MVC.WildBear.Models.Request
 {
     public class ShoppingCartLineUpdateRequest
     {

@@ -1,6 +1,6 @@
-﻿using WildBearAdventuresMVC.WildBear.Interfaces;
+﻿using WildBearAdventures.MVC.WildBear.TransactionApi;
 
-namespace WildBearAdventuresMVC.WildBear
+namespace WildBearAdventures.MVC.WildBear.Context
 {
     public class ContextHelper : IContextHelper
     {
@@ -27,7 +27,7 @@ namespace WildBearAdventuresMVC.WildBear
             var categoryGuid = session?.GetString(KEY_CategoryGuid);
             var isGuidFound = Guid.TryParse(categoryGuid, out var result);
 
-            return (isGuidFound) ? result : null;
+            return isGuidFound ? result : null;
         }
 
         public void SetCurrentCategoryByName(string currentCategoryName)
@@ -45,7 +45,7 @@ namespace WildBearAdventuresMVC.WildBear
             var productGuid = session?.GetString(KEY_ProductGuid);
             var isGuidFound = Guid.TryParse(productGuid, out var result);
 
-            return (isGuidFound) ? result : null;
+            return isGuidFound ? result : null;
 
         }
 
@@ -98,7 +98,7 @@ namespace WildBearAdventuresMVC.WildBear
             var session = _httpContextAccessor.HttpContext?.Session;
             var count = session?.GetInt32(KEY_BasketCount);
             //Remark if no value can be found just retrun 0
-            return (count.HasValue) ? count.Value : 0;
+            return count.HasValue ? count.Value : 0;
         }
 
 
@@ -110,7 +110,7 @@ namespace WildBearAdventuresMVC.WildBear
             var currentBasketGuid = session?.GetString(KEY_BasketGuid);
             var isGuidFound = Guid.TryParse(currentBasketGuid, out var result);
 
-            return (isGuidFound) ? result : null;
+            return isGuidFound ? result : null;
 
 
         }

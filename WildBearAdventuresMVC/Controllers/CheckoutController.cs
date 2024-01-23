@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace WildBearAdventuresMVC.Controllers
+namespace WildBearAdventures.MVC.Controllers
 {
     public class CheckoutController : Controller
     {

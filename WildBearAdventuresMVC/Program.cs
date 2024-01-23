@@ -1,9 +1,8 @@
-using WildBearAdventuresMVC.WildBear;
-using WildBearAdventuresMVC.WildBear.Interfaces;
-using WildBearAdventuresMVC.WildBear.TransactionApi;
-using WildBearAdventuresMVC.WildBear.WildBearApi;
+using WildBearAdventures.MVC.WildBear.Context;
+using WildBearAdventures.MVC.WildBear.TransactionApi;
+using WildBearAdventures.MVC.WildBear.WildBearApi;
 
-namespace WildBearAdventuresMVC
+namespace WildBearAdventures.MVC
 {
     public class Program
     {

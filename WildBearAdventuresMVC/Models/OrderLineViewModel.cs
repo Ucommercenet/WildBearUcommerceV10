@@ -1,4 +1,4 @@
-﻿namespace WildBearAdventuresMVC.Models
+﻿namespace WildBearAdventures.MVC.Models
 {
     public class OrderLineViewModel
     {

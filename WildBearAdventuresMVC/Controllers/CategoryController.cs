@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WildBearAdventuresMVC.Models;
-using WildBearAdventuresMVC.WildBear.Interfaces;
+using WildBearAdventures.MVC.WildBear.Context;
+using WildBearAdventures.MVC.WildBear.TransactionApi;
+using WildBearAdventures.MVC.Models;
 
-namespace WildBearAdventuresMVC.Controllers
+namespace WildBearAdventures.MVC.Controllers
 {
     public class CategoryController : Controller
     {
@@ -45,7 +46,7 @@ namespace WildBearAdventuresMVC.Controllers
             var CategoryViewModel = new CategoryViewModel
             {
                 ProductDtos = productDtos,
-                CurrentCategoryName = (currentCategoryDto is not null) ? currentCategoryDto?.Name : "No currentCategory",
+                CurrentCategoryName = currentCategoryDto is not null ? currentCategoryDto?.Name : "No currentCategory",
             };
 
             return View(CategoryViewModel);

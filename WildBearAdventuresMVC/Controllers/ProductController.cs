@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WildBearAdventuresMVC.Models;
-using WildBearAdventuresMVC.WildBear.Interfaces;
-using WildBearAdventuresMVC.WildBear.Models.APIRequest;
-using WildBearAdventuresMVC.WildBear.TransactionApi;
+using WildBearAdventures.MVC.Models;
+using WildBearAdventures.MVC.WildBear.Context;
+using WildBearAdventures.MVC.WildBear.Models.Request;
+using WildBearAdventures.MVC.WildBear.TransactionApi;
 
 
-namespace WildBearAdventuresMVC.Controllers
+
+namespace WildBearAdventures.MVC.Controllers
 {
 
     public class ProductController : Controller
@@ -30,7 +31,7 @@ namespace WildBearAdventuresMVC.Controllers
             { _contextHelper.SetCurrentProductByName(name.ToString()); }
 
             var productViewModel = CreateProductViewModel(ct);
-            
+
             return View(productViewModel);
         }
 
@@ -42,7 +43,7 @@ namespace WildBearAdventuresMVC.Controllers
 
 
             var currentCategory = _contextHelper.GetCurrentCategoryGuid() ?? throw new Exception("No Category found");
-            var currentCatalog = _wildBearApiClient.GetSingleCategoryByGuid(currentCategory, ct).CatalogId;            
+            var currentCatalog = _wildBearApiClient.GetSingleCategoryByGuid(currentCategory, ct).CatalogId;
 
             //Note: does also use the _transactionClient
             var basketGuid = FindCurrentShoppingCartOrCreateNew(currency, cultureCode, ct);

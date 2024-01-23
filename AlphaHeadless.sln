@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.33927.210
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HeadlessProjectv1", "HeadlessProjectv1\HeadlessProjectv1.csproj", "{5CF5EF04-C6CA-470F-A932-35C4EAD01518}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WildBearAdventures.API", "HeadlessProjectv1\WildBearAdventures.API.csproj", "{5CF5EF04-C6CA-470F-A932-35C4EAD01518}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WildBearAdventuresMVC", "WildBearAdventuresMVC\WildBearAdventuresMVC.csproj", "{04AEDE96-810D-4102-BE98-CB3B19AE29DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WildBearAdventures.MVC", "WildBearAdventuresMVC\WildBearAdventures.MVC.csproj", "{04AEDE96-810D-4102-BE98-CB3B19AE29DC}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5CF5EF04-C6CA-470F-A932-35C4EAD01518} = {5CF5EF04-C6CA-470F-A932-35C4EAD01518}
 	EndProjectSection

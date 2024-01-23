@@ -1,4 +1,4 @@
-﻿namespace WildBearAdventuresMVC.WildBear.Interfaces
+﻿namespace WildBearAdventures.MVC.WildBear.Context
 {
     public interface IContextHelper
     {

@@ -1,4 +1,4 @@
-﻿namespace WildBearAdventuresMVC.WildBear.Models.DTOs
+﻿namespace WildBearAdventures.MVC.WildBear.Models.DTOs
 {
     public class CreateShoppingCartDto
     {

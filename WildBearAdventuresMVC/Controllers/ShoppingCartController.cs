@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WildBearAdventuresMVC.Models;
-using WildBearAdventuresMVC.WildBear.Interfaces;
-using WildBearAdventuresMVC.WildBear.TransactionApi;
+using WildBearAdventures.MVC.Models;
+using WildBearAdventures.MVC.WildBear.Context;
+using WildBearAdventures.MVC.WildBear.TransactionApi;
 
-namespace WildBearAdventuresMVC.Controllers
+
+namespace WildBearAdventures.MVC.Controllers
 {
     public class ShoppingCartController : Controller
     {
@@ -39,7 +40,7 @@ namespace WildBearAdventuresMVC.Controllers
                     quantity = orderline.quantity,
                     price = orderline.price,
                     total = orderline.total
-                    
+
                 };
                 shoppingCartViewModel.ShoppingChartOrderLineViewModels.Add(orderLineViewModel);
             }

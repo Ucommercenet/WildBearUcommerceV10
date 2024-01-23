@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 
 
-namespace HeadlessProjectv1
+namespace WildBearAdventures.API
 {
     public static class MockData
     {

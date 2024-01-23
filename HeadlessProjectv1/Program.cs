@@ -1,4 +1,3 @@
-using HeadlessProjectv1;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Ucommerce.Extensions.Payment.Abstractions.Extensions;
 using Ucommerce.Extensions.Search.Abstractions.Extensions;
@@ -7,6 +6,7 @@ using Ucommerce.Web.BackOffice.DependencyInjection;
 using Ucommerce.Web.Core.DependencyInjection;
 using Ucommerce.Web.Infrastructure.DependencyInjection;
 using Ucommerce.Web.WebSite.DependencyInjection;
+using WildBearAdventures.API;
 
 var builder = WebApplication.CreateBuilder(args);
 

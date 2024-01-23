@@ -1,6 +1,6 @@
-﻿using WildBearAdventuresMVC.WildBear.Models.DTOs;
+﻿using WildBearAdventures.MVC.WildBear.Models.DTOs;
 
-namespace WildBearAdventuresMVC.Models
+namespace WildBearAdventures.MVC.Models
 {
     public class CategoryViewModel
     {
@@ -9,7 +9,7 @@ namespace WildBearAdventuresMVC.Models
         public string Description { get; set; }
 
         public int CategoryProductCount { get; set; }
-                
+
         public List<ProductDto>? ProductDtos { get; set; }
 
 

@@ -1,6 +1,6 @@
-﻿using WildBearAdventuresMVC.WildBear.Models.DTOs;
+﻿using WildBearAdventures.MVC.WildBear.Models.DTOs;
 
-namespace WildBearAdventuresMVC.WildBear.Interfaces
+namespace WildBearAdventures.MVC.WildBear.TransactionApi
 {
     public interface IStoreApiClient
     {

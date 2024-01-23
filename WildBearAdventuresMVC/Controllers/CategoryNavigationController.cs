@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WildBearAdventuresMVC.Models.WildBearCoffee;
-using WildBearAdventuresMVC.WildBear.Interfaces;
+using WildBearAdventures.MVC.Models;
+using WildBearAdventures.MVC.WildBear.TransactionApi;
 
-namespace WildBearAdventuresMVC.Controllers
+
+namespace WildBearAdventures.MVC.Controllers
 {
     public class CategoryNavigationController : Controller
     {
@@ -21,7 +22,7 @@ namespace WildBearAdventuresMVC.Controllers
 
             foreach (var categoryDto in categoryDtoCollection)
             {
-                categoryNames.Add(categoryDto.Name);                
+                categoryNames.Add(categoryDto.Name);
             }
 
             var categoryNavigationViewModel = new CategoryNavigationViewModel

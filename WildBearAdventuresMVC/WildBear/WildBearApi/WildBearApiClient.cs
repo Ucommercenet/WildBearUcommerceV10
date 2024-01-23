@@ -1,8 +1,7 @@
-﻿using WildBearAdventuresMVC.WildBear.Interfaces;
-using WildBearAdventuresMVC.WildBear.Models.DTOs;
-using WildBearAdventuresMVC.WildBear.TransactionApi;
+﻿using WildBearAdventures.MVC.WildBear.Models.DTOs;
+using WildBearAdventures.MVC.WildBear.TransactionApi;
 
-namespace WildBearAdventuresMVC.WildBear.WildBearApi;
+namespace WildBearAdventures.MVC.WildBear.WildBearApi;
 
 
 
@@ -98,10 +97,10 @@ public class WildBearApiClient : IStoreApiClient
 
 
         var response = client.GetAsync(uri, token).Result;
-               
+
 
         var contentResult = response.Content.ReadFromJsonAsync<List<CategoryDto>>().Result;
-        
+
         return contentResult;
 
 
