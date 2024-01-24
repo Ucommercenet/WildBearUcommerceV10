@@ -21,12 +21,8 @@ namespace WildBearAdventures.MVC.Controllers
         }
 
         public IActionResult Index(CancellationToken ct)
-        {
-
-            //TODO: STEPS: Get Current Cart , use GetCart on Transaction client
-
+        {            
             var CurrentCart = _contextHelper.GetCurrentCartGuid();
-
             var shoppingCartDto = _transactionClient.GetShoppingCart((Guid)CurrentCart, ct).Result;
 
             var shoppingCartViewModel = new ShoppingCartViewModel()

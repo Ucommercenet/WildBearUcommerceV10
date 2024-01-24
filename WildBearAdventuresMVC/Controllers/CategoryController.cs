@@ -2,6 +2,7 @@
 using WildBearAdventures.MVC.WildBear.Context;
 using WildBearAdventures.MVC.WildBear.TransactionApi;
 using WildBearAdventures.MVC.Models;
+using WildBearAdventures.MVC.WildBear.WildBearApi;
 
 namespace WildBearAdventures.MVC.Controllers
 {
@@ -38,7 +39,7 @@ namespace WildBearAdventures.MVC.Controllers
 
             var currentCategoryDto = _wildBearApiClient.GetSingleCategoryByGuid((Guid)currentCategoryGuid, token);
 
-
+            
 
             var productDtos = _wildBearApiClient.GetAllProductsFromCategoryGuid((Guid)currentCategoryGuid, token);
 

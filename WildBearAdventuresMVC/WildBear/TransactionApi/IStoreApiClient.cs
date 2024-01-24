@@ -11,5 +11,7 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
         CategoryDto GetSingleCategoryByGuid(Guid categoryGuid, CancellationToken token);
         ProductDto GetSingleProductByGuid(Guid productGuid, CancellationToken token);
         ProductDto GetSingleProductByName(string searchName, CancellationToken token);
+
+
     }
 }

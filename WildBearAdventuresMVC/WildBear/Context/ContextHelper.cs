@@ -36,6 +36,9 @@ namespace WildBearAdventures.MVC.WildBear.Context
 
             var CategoryGuid = _wildBearApiClient.GetOnlyCategoryGuidByName(currentCategoryName, new CancellationToken());
             session?.SetString(KEY_CategoryGuid, CategoryGuid.ToString());
+
+
+            
         }
 
         public Guid? GetCurrentProductGuid()

@@ -107,7 +107,6 @@ public class WildBearApiClient : IStoreApiClient
 
     }
 
-    //Optimize: Shoudl I just do better select on GetCategoryByName 
     public Guid GetOnlyCategoryGuidByName(string nameInput, CancellationToken token)
     {
 
@@ -140,6 +139,7 @@ public class WildBearApiClient : IStoreApiClient
         return result;
     }
     #endregion
+
 
 
 }

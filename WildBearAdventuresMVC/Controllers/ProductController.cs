@@ -3,6 +3,7 @@ using WildBearAdventures.MVC.Models;
 using WildBearAdventures.MVC.WildBear.Context;
 using WildBearAdventures.MVC.WildBear.Models.Request;
 using WildBearAdventures.MVC.WildBear.TransactionApi;
+using WildBearAdventures.MVC.WildBear.WildBearApi;
 
 
 
@@ -23,14 +24,18 @@ namespace WildBearAdventures.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index(CancellationToken ct)
-        {
+        public IActionResult Index(string productName, CancellationToken ct)
+        {            
+            var currentProductDto = _wildBearApiClient.GetSingleProductByName(productName, ct);
 
-            var ableToGetRoute = HttpContext.Request.RouteValues.TryGetValue("id", out var name);
-            if (ableToGetRoute)
-            { _contextHelper.SetCurrentProductByName(name.ToString()); }
+            currentProductDto.UnitPrices.TryGetValue("EUR 15 pct", out var price);
 
-            var productViewModel = CreateProductViewModel(ct);
+            var productViewModel = new ProductViewModel()
+            {
+                Name = currentProductDto.Name,
+                ShortDescription = currentProductDto?.ShortDescription,
+                Price = price
+            };
 
             return View(productViewModel);
         }
@@ -38,8 +43,8 @@ namespace WildBearAdventures.MVC.Controllers
         [HttpPost]
         public async Task<RedirectToActionResult> AddToCart(Guid? productGuid, CancellationToken ct, int quantity = 1)
         {
-            var currency = "EUR"; //TODO: Get dynamic
-            var cultureCode = "da-DK"; //TODO: Get dynamic
+            var currency = "EUR"; //TODO Improvement: Get dynamic
+            var cultureCode = "da-DK"; //TODO Improvement: Get dynamic
 
 
             var currentCategory = _contextHelper.GetCurrentCategoryGuid() ?? throw new Exception("No Category found");
@@ -89,30 +94,7 @@ namespace WildBearAdventures.MVC.Controllers
 
         }
 
-        /// <summary>
-        /// Uses the ContextHelper to find current product
-        /// </summary>
-        /// <param name="ct"></param>
-        /// <returns></returns>
-        private ProductViewModel CreateProductViewModel(CancellationToken ct)
-        {
-            var currentproductGuid = _contextHelper.GetCurrentProductGuid();
-            var currentprodcutDto = _wildBearApiClient.GetSingleProductByGuid((Guid)currentproductGuid, ct);
-                        
-            currentprodcutDto.UnitPrices.TryGetValue("EUR 15 pct", out var price);
-
-            var productViewModel = new ProductViewModel()
-            {
-                Name = currentprodcutDto.Name,
-                ShortDescription = currentprodcutDto?.ShortDescription,
-                Price = price            
-            };
-
-
-
-
-            return productViewModel;
-        }
+      
 
 
 
