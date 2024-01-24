@@ -98,13 +98,19 @@ namespace WildBearAdventures.MVC.Controllers
         {
             var currentproductGuid = _contextHelper.GetCurrentProductGuid();
             var currentprodcutDto = _wildBearApiClient.GetSingleProductByGuid((Guid)currentproductGuid, ct);
+                        
+            currentprodcutDto.UnitPrices.TryGetValue("EUR 15 pct", out var price);
 
             var productViewModel = new ProductViewModel()
             {
                 Name = currentprodcutDto.Name,
                 ShortDescription = currentprodcutDto?.ShortDescription,
-                Price = currentprodcutDto.UnitPrices.EUR15pct,
+                Price = price            
             };
+
+
+
+
             return productViewModel;
         }
 

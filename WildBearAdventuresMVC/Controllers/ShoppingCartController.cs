@@ -6,6 +6,8 @@ using WildBearAdventures.MVC.WildBear.TransactionApi;
 
 namespace WildBearAdventures.MVC.Controllers
 {
+    //Handout Part 7 Transaction Endpoints
+    #region Handout
     public class ShoppingCartController : Controller
     {
         private readonly IContextHelper _contextHelper;
@@ -45,10 +47,11 @@ namespace WildBearAdventures.MVC.Controllers
                 shoppingCartViewModel.ShoppingChartOrderLineViewModels.Add(orderLineViewModel);
             }
 
-            //TODO:
+            //TODO: Fix hardcoded value
             shoppingCartViewModel.ShoppingCartOrderTotal = 8000;
 
             return View(shoppingCartViewModel);
         }
-    }
+    } 
+    #endregion
 }

@@ -19,10 +19,9 @@ namespace WildBearAdventures.MVC.Controllers
 
         public IActionResult Index(string id, CancellationToken token)
         {
-            //TODO: Show sub-Categories                        
+            //TODO Improvement: Show sub-Categories                        
 
             //Figure out currentCategory based on route values aka. how did we get here.
-            //TODO: include the get Route in SetCurrentCategory()
             var ableToGetRoute = HttpContext.Request.RouteValues.TryGetValue("id", out var routeName);
             if (ableToGetRoute)
             {
