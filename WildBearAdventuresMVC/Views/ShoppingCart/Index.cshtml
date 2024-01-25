@@ -27,18 +27,18 @@
         </p>
     </li>
 }
-<div class="row">
 
-    <p class="fw-bold">
-        ShoppingCart Order Total: @Model.ShoppingCartOrderTotal
-    </p>
+<p button type="button" class="btn btn-light">
+    <a asp-controller="Checkout"
+       asp-action="Index"
+       asp-route-id="@Model.ShoppingCartGuid"
+       class="text-black">
+        Checkout shopping cart Order total: @Model.ShoppingCartOrderTotal
+   </a>
+</p>
 
 
-</div>
 
 
 
-<div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    <a asp-action="Index">Back to List</a>
-</div>
+

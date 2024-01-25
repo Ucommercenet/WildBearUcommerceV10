@@ -41,7 +41,7 @@ namespace WildBearAdventures.MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<RedirectToActionResult> AddToCart(Guid? productGuid, CancellationToken ct, int quantity = 1)
+        public async Task<RedirectToActionResult> AddToCart(string productName, CancellationToken ct, int quantity = 1)
         {
             var currency = "EUR"; //TODO Improvement: Get dynamic
             var cultureCode = "da-DK"; //TODO Improvement: Get dynamic
@@ -53,10 +53,8 @@ namespace WildBearAdventures.MVC.Controllers
             //Note: does also use the _transactionClient
             var basketGuid = FindCurrentShoppingCartOrCreateNew(currency, cultureCode, ct);
             _contextHelper.SetCurrentCart(basketGuid);
-
-            //CurrentProduct
-            var currentProductGuid = (productGuid ?? _contextHelper.GetCurrentProductGuid()) ?? throw new Exception("No product found");
-            var product = _wildBearApiClient.GetSingleProductByGuid(currentProductGuid, ct);
+                                   
+            var product = _wildBearApiClient.GetSingleProductByName(productName, ct);
             var priceGroupGuid = product.PriceGroupIds.First();
 
 

@@ -49,7 +49,7 @@ public class TransactionClient
     {
         using var client = _storeAuthorizationFlow.GetTransactionReadyClient(ct);
 
-        Dictionary<string, object> requestPayload = new Dictionary<string, object>
+        Dictionary<string, object> requestPayload = new()
         {
             //Required
             { "Quantity", request.Quantity},

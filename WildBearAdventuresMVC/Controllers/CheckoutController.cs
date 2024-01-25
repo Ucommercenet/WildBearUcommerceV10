@@ -6,6 +6,10 @@ namespace WildBearAdventures.MVC.Controllers
     {
         public IActionResult Index()
         {
+
+
+
+
             return View();
         }
     }

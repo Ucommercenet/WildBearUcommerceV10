@@ -32,7 +32,10 @@
     @* <button type="button" class="btn btn-light">
     <a class="nav-link text-dark" asp-area="" asp-controller="Cart" asp-action="Index">Add to cart</a>
     </button> *@
-    <form method="post" asp-action="AddToCart" asp-controller="Product">
+    <form method="post"
+          asp-controller="Product"
+          asp-action="AddToCart"          
+          asp-route-productName="@Model.Name">
         <button type="submit" class="btn btn-light">Add to cart</button>
     </form>
 

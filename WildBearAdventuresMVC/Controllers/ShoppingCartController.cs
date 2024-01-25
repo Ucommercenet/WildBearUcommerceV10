@@ -21,30 +21,33 @@ namespace WildBearAdventures.MVC.Controllers
         }
 
         public IActionResult Index(CancellationToken ct)
-        {            
+        {
             var CurrentCart = _contextHelper.GetCurrentCartGuid();
+            //TODO Improvement: Handle if no cart is found
             var shoppingCartDto = _transactionClient.GetShoppingCart((Guid)CurrentCart, ct).Result;
 
             var shoppingCartViewModel = new ShoppingCartViewModel()
             {
-                ShoppingChartOrderLineViewModels = new List<OrderLineViewModel>()
+                ShoppingChartOrderLineViewModels = new List<OrderLineViewModel>(),
+                ShoppingCartOrderTotal = shoppingCartDto.orderTotal,
+                ShoppingCartGuid = (Guid)CurrentCart
             };
 
-            foreach (var orderline in shoppingCartDto.orderLines)
+            foreach (var orderLine in shoppingCartDto.orderLines)
             {
                 var orderLineViewModel = new OrderLineViewModel()
                 {
-                    productName = orderline.productName,
-                    quantity = orderline.quantity,
-                    price = orderline.price,
-                    total = orderline.total
+                    productName = orderLine.productName,
+                    quantity = orderLine.quantity,
+                    price = orderLine.price,
+                    total = orderLine.total
 
                 };
                 shoppingCartViewModel.ShoppingChartOrderLineViewModels.Add(orderLineViewModel);
             }
 
-            //TODO: Fix hardcoded value
-            shoppingCartViewModel.ShoppingCartOrderTotal = 8000;
+            
+            
 
             return View(shoppingCartViewModel);
         }

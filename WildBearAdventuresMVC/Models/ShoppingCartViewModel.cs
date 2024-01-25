@@ -6,9 +6,8 @@
 
         public decimal ShoppingCartOrderTotal { get; set; }
 
+        public Guid ShoppingCartGuid { get; set; }
 
-        //public decimal ShoppingCartPaymentTotal { get; set; }
-        //public decimal ShoppingCartShippingTotal { get; set; }
 
     }
 

@@ -14,8 +14,7 @@ namespace WildBearAdventures.MVC.WildBear.Context
             _httpContextAccessor = httpContextAccessor;
         }
 
-        private const string KEY_CategoryGuid = "CurrentCategoryGuid";
-        private const string KEY_ProductGuid = "CurrentProductGuid";
+        private const string KEY_CategoryGuid = "CurrentCategoryGuid";        
         private const string KEY_BasketGuid = "CurrentBasketGuid";
         private const string KEY_BasketCount = "CurrentBasketCount";
 
@@ -41,25 +40,6 @@ namespace WildBearAdventures.MVC.WildBear.Context
             
         }
 
-        public Guid? GetCurrentProductGuid()
-
-        {
-            var session = _httpContextAccessor.HttpContext?.Session;
-            var productGuid = session?.GetString(KEY_ProductGuid);
-            var isGuidFound = Guid.TryParse(productGuid, out var result);
-
-            return isGuidFound ? result : null;
-
-        }
-
-        public void SetCurrentProductByName(string currentProductName)
-        {
-            var session = _httpContextAccessor.HttpContext?.Session;
-
-            //only get id(Guid)
-            var ProductGuid = _wildBearApiClient.GetSingleProductByName(currentProductName, new CancellationToken()).Id;
-            session?.SetString(KEY_ProductGuid, ProductGuid.ToString());
-        }
 
         /// <summary>
         /// Sets the currentBasketGuid
