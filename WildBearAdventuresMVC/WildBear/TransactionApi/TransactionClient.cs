@@ -1,4 +1,7 @@
-﻿using WildBearAdventures.MVC.WildBear.Models.DTOs;
+﻿using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Identity;
+using Newtonsoft.Json.Linq;
+using System.Threading;
+using WildBearAdventures.MVC.WildBear.Models.DTOs;
 using WildBearAdventures.MVC.WildBear.Models.Request;
 
 namespace WildBearAdventures.MVC.WildBear.TransactionApi;
@@ -13,7 +16,57 @@ public class TransactionClient
         _storeAuthorizationFlow = storeAuthorization;
     }
 
+    #region API GET Calls
+    public async Task<ShoppingCartDto> GetShoppingCart(Guid shoppingCartGuid, CancellationToken ct)
+    {
+        using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 
+        var response = await client.GetAsync(requestUri: $"/api/v1/carts/{shoppingCartGuid}");
+
+        var shoppingCart = response.Content.ReadAsAsync<ShoppingCartDto>().Result;
+
+        return shoppingCart;
+
+    }
+
+
+    public async Task<PriceGroupsDto> GetPriceGroups(string cultureCode, CancellationToken ct)
+    {
+        using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
+
+        var response = await client.GetAsync(requestUri: $"/api/v1/price-groups?cultureCode={cultureCode}");               
+        var priceGroupsDto = await response.Content.ReadAsAsync<PriceGroupsDto>();
+               
+
+        return priceGroupsDto;
+    }
+
+    public async Task<string> GetPaymentMethods(string countryId, string selectedCultureCode, CancellationToken ct)
+    {
+        using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
+
+        var response = await client.GetAsync(requestUri: $"/api/v1/payment-methods?cultureCode={selectedCultureCode}&countryId={countryId}");
+
+        var humanReadableJson = JToken.Parse(response.Content.ReadAsStringAsync().Result).ToString();
+
+
+        throw new NotImplementedException();
+    }
+
+    public async Task<CountriesDto> GetCountries(CancellationToken ct)
+    {
+        using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
+
+        var response = await client.GetAsync(requestUri: $"/api/v1/countries");
+
+        var countriesDto = await response.Content.ReadAsAsync<CountriesDto>();
+
+        return countriesDto;
+    }
+
+    #endregion
+
+    #region API POST Calls
     /// <summary>
     /// 
     /// </summary>
@@ -24,7 +77,7 @@ public class TransactionClient
     /// <exception cref="Exception"></exception>
     public async Task<Guid> PostCreateBasket(string currency, string cultureCode, CancellationToken cancellationToken)
     {
-        using var client = _storeAuthorizationFlow.GetTransactionReadyClient(cancellationToken);
+        using var client = _storeAuthorizationFlow.GetAuthorizedClient(cancellationToken);
 
         var requestPayload = new Dictionary<string, string>
         {
@@ -42,12 +95,33 @@ public class TransactionClient
         return responseResult.BasketId;
     }
 
+    public async Task PostCreatePayment(CreatePaymentRequest createPaymentRequest, CancellationToken cancellationToken)
+    {
+        using var client = _storeAuthorizationFlow.GetAuthorizedClient(cancellationToken);
+
+        var requestPayload = new Dictionary<string, string>
+        {
+            { "cartId", $"{createPaymentRequest.ShoppingCartId}" },
+            { "cultureCode", $"{createPaymentRequest.CultureCode}"  },
+            { "paymentMethodId", $"{createPaymentRequest.PaymentMethodId}" },
+            { "priceGroupId", $"{createPaymentRequest.PriceGroupGuid}" },
+        };
+
+        var createPaymentResponse = await client.PostAsJsonAsync("/api/v1/payments", requestPayload);
 
 
+
+        var content = createPaymentResponse.Content.ReadAsStringAsync().Result;
+
+        if (createPaymentResponse.IsSuccessStatusCode is false)
+        { throw new Exception($"Could not create payment"); }
+
+        return;
+    }
 
     public async Task PostShoppingCartLine(ShoppingCartLineUpdateRequest request, CancellationToken ct)
     {
-        using var client = _storeAuthorizationFlow.GetTransactionReadyClient(ct);
+        using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 
         Dictionary<string, object> requestPayload = new()
         {
@@ -64,27 +138,26 @@ public class TransactionClient
 
         var response = await client.PostAsJsonAsync(requestUri: $"/api/v1/carts/{request.ShoppingCart}/lines", value: requestPayload);
 
-        var contentString = response.Content.ReadAsStringAsync().Result;
+        var content = response.Content.ReadAsStringAsync().Result;
 
         if (response.IsSuccessStatusCode is false)
         { throw new Exception($"Could not UpdateOrderLineQuantity"); }
 
         return;
     }
+    #endregion
 
-
-    public async Task<ShoppingCartDto> GetShoppingCart(Guid shoppingCartGuid, CancellationToken ct)
+    //Only use this for scaffolding new API Calls
+    public async Task<string> GetDRAFT(CancellationToken ct)
     {
-        using var client = _storeAuthorizationFlow.GetTransactionReadyClient(ct);
+        using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 
-        var response = await client.GetAsync(requestUri: $"/api/v1/carts/{shoppingCartGuid}");
+        var response = await client.GetAsync(requestUri: $"/api/v1/payment-methods");        
 
-        var shoppingCart = response.Content.ReadAsAsync<ShoppingCartDto>().Result;
+        var humanReadableJson = JToken.Parse(response.Content.ReadAsStringAsync().Result).ToString();
 
-        return shoppingCart;
 
+        throw new NotImplementedException();
     }
-
-
 
 }

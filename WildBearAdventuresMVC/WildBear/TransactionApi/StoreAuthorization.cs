@@ -24,7 +24,7 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
         /// <returns></returns>
         /// <exception cref="SecurityException"></exception>
         /// <remarks>In a multi store setup this would need an update. Because not its only works for WildBearStore</remarks>
-        public HttpClient GetTransactionReadyClient(CancellationToken cancellationToken)
+        public HttpClient GetAuthorizedClient(CancellationToken cancellationToken)
         {
             AuthorizeFlow(cancellationToken);
 
