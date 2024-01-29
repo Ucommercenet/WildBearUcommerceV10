@@ -41,7 +41,7 @@ public class TransactionClient
         return priceGroupsDto;
     }
 
-    public async Task<string> GetPaymentMethods(string countryId, string selectedCultureCode, CancellationToken ct)
+    public async Task<string> DRAFT_GetPaymentMethods(string countryId, string selectedCultureCode, CancellationToken ct)
     {
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 

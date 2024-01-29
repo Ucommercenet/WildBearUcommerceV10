@@ -2,6 +2,7 @@
 using WildBearAdventures.MVC.WildBear.Models.Request;
 using WildBearAdventures.MVC.WildBear.TransactionApi;
 
+
 namespace WildBearAdventures.MVC.Controllers
 {
     public class CheckoutController : Controller
@@ -20,34 +21,25 @@ namespace WildBearAdventures.MVC.Controllers
             var selectedPaymentMethodName = "Account"; //TODO Improvement: Get from User 
 
 
-            
-            var countriesDto = await _transactionClient.GetCountries(ct);
 
-            //TODO: Get specific From billing info
-            var billingCountry = countriesDto.countries.First(x => x.cultureCode == selectedCultureCode);
+            var paymentMethodId = await FindPaymentMethodId(selectedCultureCode, selectedPaymentMethodName, ct);
 
-            //TODO: Need CountryId and CultureCode
-            var paymentMethod = await _transactionClient.GetPaymentMethods(billingCountry.id, selectedCultureCode, ct);
-
-            
-
-
-            var priceGroups = await  _transactionClient.GetPriceGroups(selectedCultureCode, ct);
+            var priceGroups = await _transactionClient.GetPriceGroups(selectedCultureCode, ct);
             var priceGroup = priceGroups.priceGroups.Single(x => x.name == selectedPriceGroupName);
 
-            var createPaymentRequest = new CreatePaymentRequest() 
-            { 
+            var createPaymentRequest = new CreatePaymentRequest()
+            {
                 CultureCode = selectedCultureCode,
                 PaymentMethodId = Guid.NewGuid(),
                 PriceGroupGuid = new Guid(priceGroup.id),
                 ShoppingCartId = cartId,
 
-                
-             };
+
+            };
 
             _transactionClient.PostCreatePayment(createPaymentRequest, ct);
-            
-            
+
+
             //TODO: Call with hadcode data
 
             //TODO: See if Payment works
@@ -57,6 +49,21 @@ namespace WildBearAdventures.MVC.Controllers
 
 
             return View();
+        }
+
+        private async Task<Guid> FindPaymentMethodId(string selectedCultureCode, string selectedPaymentMethodName, CancellationToken ct)
+        {
+            var countriesDto = await _transactionClient.GetCountries(ct);
+
+            //TODO: Get specific From billing info
+            var billingCountry =  countriesDto.countries.First(x => x.cultureCode == selectedCultureCode);
+
+            //TODO: Need CountryId and CultureCode
+            var paymentMethods = await _transactionClient.DRAFT_GetPaymentMethods(billingCountry.id, selectedCultureCode, ct);
+
+           
+
+            return Guid.NewGuid();
         }
     }
 }

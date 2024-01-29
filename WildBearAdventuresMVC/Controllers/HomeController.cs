@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WildBearAdventures.MVC.WildBear.TransactionApi;
-using WildBearAdventures.MVC.Models;
+using WildBearAdventures.MVC.ViewModel;
 
 namespace WildBearAdventures.MVC.Controllers
 {

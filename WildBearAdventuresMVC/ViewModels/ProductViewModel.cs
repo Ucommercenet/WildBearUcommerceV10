@@ -1,4 +1,4 @@
-﻿namespace WildBearAdventures.MVC.Models
+﻿namespace WildBearAdventures.MVC.ViewModel
 {
     public class ProductViewModel
     {
