@@ -22,7 +22,7 @@ namespace WildBearAdventures.MVC.Controllers
 
 
 
-            var paymentMethodId = await FindPaymentMethodId(selectedCultureCode, selectedPaymentMethodName, ct);
+            var paymentMethodGuid = await FindPaymentMethodGuid(selectedCultureCode, selectedPaymentMethodName, ct);
 
             var priceGroups = await _transactionClient.GetPriceGroups(selectedCultureCode, ct);
             var priceGroup = priceGroups.priceGroups.Single(x => x.name == selectedPriceGroupName);
@@ -30,9 +30,9 @@ namespace WildBearAdventures.MVC.Controllers
             var createPaymentRequest = new CreatePaymentRequest()
             {
                 CultureCode = selectedCultureCode,
-                PaymentMethodId = Guid.NewGuid(),
+                PaymentMethodGuid = paymentMethodGuid,
                 PriceGroupGuid = new Guid(priceGroup.id),
-                ShoppingCartId = cartId,
+                ShoppingCartGuid = cartId,
 
 
             };
@@ -51,19 +51,19 @@ namespace WildBearAdventures.MVC.Controllers
             return View();
         }
 
-        private async Task<Guid> FindPaymentMethodId(string selectedCultureCode, string selectedPaymentMethodName, CancellationToken ct)
+        private async Task<Guid> FindPaymentMethodGuid(string selectedCultureCode, string selectedPaymentMethodName, CancellationToken ct)
         {
             var countriesDto = await _transactionClient.GetCountries(ct);
-
+            
             //TODO: Get specific From billing info
             var billingCountry =  countriesDto.countries.First(x => x.cultureCode == selectedCultureCode);
 
             //TODO: Need CountryId and CultureCode
-            var paymentMethods = await _transactionClient.DRAFT_GetPaymentMethods(billingCountry.id, selectedCultureCode, ct);
+            var paymentMethods = await _transactionClient.GetPaymentMethods(billingCountry.id, selectedCultureCode, ct);
 
-           
+            var selectedPaymentMethod = paymentMethods.PaymentMethods.FirstOrDefault(x => x.Name == selectedPaymentMethodName);
 
-            return Guid.NewGuid();
+            return new Guid(selectedPaymentMethod.Id) ;
         }
     }
 }

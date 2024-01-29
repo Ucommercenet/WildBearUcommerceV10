@@ -2,11 +2,11 @@
 {
     public class CreatePaymentRequest
     {
-        public required Guid ShoppingCartId { get; set; }
+        public required Guid ShoppingCartGuid { get; set; }
 
         public required string CultureCode { get; set; }
 
-        public required Guid PaymentMethodId { get; set; }
+        public required Guid PaymentMethodGuid { get; set; }
 
         public required Guid PriceGroupGuid { get; set; }
         

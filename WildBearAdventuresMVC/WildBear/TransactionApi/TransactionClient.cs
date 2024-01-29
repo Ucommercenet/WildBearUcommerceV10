@@ -34,23 +34,23 @@ public class TransactionClient
     {
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 
-        var response = await client.GetAsync(requestUri: $"/api/v1/price-groups?cultureCode={cultureCode}");               
+        var response = await client.GetAsync(requestUri: $"/api/v1/price-groups?cultureCode={cultureCode}");
         var priceGroupsDto = await response.Content.ReadAsAsync<PriceGroupsDto>();
-               
+
 
         return priceGroupsDto;
     }
 
-    public async Task<string> DRAFT_GetPaymentMethods(string countryId, string selectedCultureCode, CancellationToken ct)
+    public async Task<PaymentMethodsDto> GetPaymentMethods(string countryId, string selectedCultureCode, CancellationToken ct)
     {
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 
         var response = await client.GetAsync(requestUri: $"/api/v1/payment-methods?cultureCode={selectedCultureCode}&countryId={countryId}");
 
-        var humanReadableJson = JToken.Parse(response.Content.ReadAsStringAsync().Result).ToString();
+        var paymentMethodsDto = await response.Content.ReadAsAsync<PaymentMethodsDto>();
 
 
-        throw new NotImplementedException();
+        return paymentMethodsDto;
     }
 
     public async Task<CountriesDto> GetCountries(CancellationToken ct)
@@ -101,9 +101,9 @@ public class TransactionClient
 
         var requestPayload = new Dictionary<string, string>
         {
-            { "cartId", $"{createPaymentRequest.ShoppingCartId}" },
+            { "cartId", $"{createPaymentRequest.ShoppingCartGuid}" },
             { "cultureCode", $"{createPaymentRequest.CultureCode}"  },
-            { "paymentMethodId", $"{createPaymentRequest.PaymentMethodId}" },
+            { "paymentMethodId", $"{createPaymentRequest.PaymentMethodGuid}" },
             { "priceGroupId", $"{createPaymentRequest.PriceGroupGuid}" },
         };
 
@@ -111,7 +111,7 @@ public class TransactionClient
 
 
 
-        var content = createPaymentResponse.Content.ReadAsStringAsync().Result;
+        var content = await createPaymentResponse.Content.ReadAsStringAsync();
 
         if (createPaymentResponse.IsSuccessStatusCode is false)
         { throw new Exception($"Could not create payment"); }
@@ -152,7 +152,7 @@ public class TransactionClient
     {
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 
-        var response = await client.GetAsync(requestUri: $"/api/v1/payment-methods");        
+        var response = await client.GetAsync(requestUri: $"/api/v1/payment-methods");
 
         var humanReadableJson = JToken.Parse(response.Content.ReadAsStringAsync().Result).ToString();
 
