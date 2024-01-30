@@ -58,7 +58,7 @@ namespace WildBearAdventures.MVC.WildBear.Context
         /// <param name="updateValue"></param>
         /// <returns>The value after the update</returns>
         /// <remarks>Optimize: in some edge cases the cart count could be negative</remarks>
-        public void UpdateCurrentShoppingCartCount(int updateValue)
+        public void UpdateMiniCartCount(int updateValue)
         {
             var session = _httpContextAccessor.HttpContext?.Session;
             var oldValue = session?.GetInt32(KEY_BasketCount);

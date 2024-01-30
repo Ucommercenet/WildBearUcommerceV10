@@ -5,13 +5,13 @@
     {
         public object nextPagingToken { get; set; }
         public object pagingToken { get; set; }
-        public Pricegroup[] priceGroups { get; set; }
+        public List<PriceGroup> PriceGroups { get; set; }
     }
 
-    public class Pricegroup
+    public class PriceGroup
     {
-        public string id { get; set; }
-        public string name { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
     }
 
 

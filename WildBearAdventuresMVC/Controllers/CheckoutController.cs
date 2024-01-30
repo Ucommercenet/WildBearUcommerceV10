@@ -25,13 +25,13 @@ namespace WildBearAdventures.MVC.Controllers
             var paymentMethodGuid = await FindPaymentMethodGuid(selectedCultureCode, selectedPaymentMethodName, ct);
 
             var priceGroups = await _transactionClient.GetPriceGroups(selectedCultureCode, ct);
-            var priceGroup = priceGroups.priceGroups.Single(x => x.name == selectedPriceGroupName);
+            var priceGroup = priceGroups.PriceGroups.Single(x => x.Name == selectedPriceGroupName);
 
             var createPaymentRequest = new CreatePaymentRequest()
             {
                 CultureCode = selectedCultureCode,
                 PaymentMethodGuid = paymentMethodGuid,
-                PriceGroupGuid = new Guid(priceGroup.id),
+                PriceGroupGuid = new Guid(priceGroup.Id),
                 ShoppingCartGuid = cartId,
 
 
@@ -56,10 +56,10 @@ namespace WildBearAdventures.MVC.Controllers
             var countriesDto = await _transactionClient.GetCountries(ct);
             
             //TODO: Get specific From billing info
-            var billingCountry =  countriesDto.countries.First(x => x.cultureCode == selectedCultureCode);
+            var billingCountry =  countriesDto.Countries.First(x => x.CultureCode == selectedCultureCode);
 
             //TODO: Need CountryId and CultureCode
-            var paymentMethods = await _transactionClient.GetPaymentMethods(billingCountry.id, selectedCultureCode, ct);
+            var paymentMethods = await _transactionClient.GetPaymentMethods(billingCountry.Id, selectedCultureCode, ct);
 
             var selectedPaymentMethod = paymentMethods.PaymentMethods.FirstOrDefault(x => x.Name == selectedPaymentMethodName);
 

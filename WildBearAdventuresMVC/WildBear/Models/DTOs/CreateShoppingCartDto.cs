@@ -2,7 +2,6 @@
 {
     public class CreateShoppingCartDto
     {
-
         public Guid BasketId { get; set; }
     }
 }

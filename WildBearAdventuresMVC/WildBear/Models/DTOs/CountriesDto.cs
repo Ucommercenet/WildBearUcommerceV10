@@ -2,16 +2,16 @@
 {
     public class CountriesDto
     {
-        public Country[] countries { get; set; }
-        public object nextPagingToken { get; set; }
-        public object pagingToken { get; set; }
+        public List<Country> Countries { get; set; }
+        public object NextPagingToken { get; set; }
+        public object PagingToken { get; set; }
     }
 
     public class Country
     {
-        public string cultureCode { get; set; }
-        public string id { get; set; }
-        public string name { get; set; }
+        public string CultureCode { get; set; }
+        public string Id { get; set; }
+        public string Name { get; set; }
     }
 
 }

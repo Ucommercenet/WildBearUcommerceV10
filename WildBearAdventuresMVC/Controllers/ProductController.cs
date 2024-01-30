@@ -40,24 +40,29 @@ namespace WildBearAdventures.MVC.Controllers
             return View(productViewModel);
         }
 
+
+
         [HttpPost]
         public async Task<RedirectToActionResult> AddToCart(string productName, CancellationToken ct, int quantity = 1)
         {
+            //Handout Part 5 Shopping Cart
+            #region Handout 
+            //Greater information
             var currency = "EUR"; //TODO Improvement: Get dynamic
             var cultureCode = "da-DK"; //TODO Improvement: Get dynamic
-
-
             var currentCategory = _contextHelper.GetCurrentCategoryGuid() ?? throw new Exception("No Category found");
             var currentCatalog = _wildBearApiClient.GetSingleCategoryByGuid(currentCategory, ct).CatalogId;
 
-            //Note: does also use the _transactionClient
+
+            //New or current Shopping Cart
             var basketGuid = FindCurrentShoppingCartOrCreateNew(currency, cultureCode, ct);
             _contextHelper.SetCurrentCart(basketGuid);
-                                   
+
+            //Product infomation
             var product = _wildBearApiClient.GetSingleProductByName(productName, ct);
             var priceGroupGuid = product.PriceGroupIds.First();
 
-
+            //Ready the Request
             var request = new ShoppingCartLineUpdateRequest
             {
                 ShoppingCart = basketGuid,
@@ -69,10 +74,13 @@ namespace WildBearAdventures.MVC.Controllers
                 VariantSku = product.VariantSku
             };
 
+            //Send the Request 
             await _transactionClient.PostShoppingCartLine(request, ct);
 
+            //Update MiniCart
+            _contextHelper.UpdateMiniCartCount(quantity); 
+            #endregion
 
-            _contextHelper.UpdateCurrentShoppingCartCount(quantity);
             //After the product has been added, show the product again.
             return RedirectToAction("Index");
         }
