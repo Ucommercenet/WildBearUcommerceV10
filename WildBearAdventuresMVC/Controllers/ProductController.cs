@@ -58,7 +58,7 @@ namespace WildBearAdventures.MVC.Controllers
             var basketGuid = FindCurrentShoppingCartOrCreateNew(currency, cultureCode, ct);
             _contextHelper.SetCurrentCart(basketGuid);
 
-            //Product infomation
+            //Product information
             var product = _wildBearApiClient.GetSingleProductByName(productName, ct);
             var priceGroupGuid = product.PriceGroupIds.First();
 
@@ -75,7 +75,7 @@ namespace WildBearAdventures.MVC.Controllers
             };
 
             //Send the Request 
-            await _transactionClient.PostShoppingCartLine(request, ct);
+            await _transactionClient.PostShoppingCartLineUpdate(request, ct);
 
             //Update MiniCart
             _contextHelper.UpdateMiniCartCount(quantity); 

@@ -119,7 +119,7 @@ public class TransactionClient
         return;
     }
 
-    public async Task PostShoppingCartLine(ShoppingCartLineUpdateRequest request, CancellationToken ct)
+    public async Task PostShoppingCartLineUpdate(ShoppingCartLineUpdateRequest request, CancellationToken ct)
     {
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 

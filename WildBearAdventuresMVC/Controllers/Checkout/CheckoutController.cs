@@ -16,6 +16,13 @@ namespace WildBearAdventures.MVC.Controllers
 
         public async Task<IActionResult> Index(Guid cartId, CancellationToken ct)
         {
+            await AddPaymentToCart(cartId, ct);
+
+            return View();
+        }
+
+        private async Task AddPaymentToCart(Guid cartId, CancellationToken ct)
+        {
             var selectedCultureCode = "da-DK"; //TODO Improvement: Get from ContextHelper or user            
             var selectedPriceGroupName = "EUR 15 pct"; //TODO Improvement: Get from ContextHelper or user             
             var selectedPaymentMethodName = "Account"; //TODO Improvement: Get from User 
@@ -40,30 +47,24 @@ namespace WildBearAdventures.MVC.Controllers
             _transactionClient.PostCreatePayment(createPaymentRequest, ct);
 
 
-            //TODO: Call with hadcode data
-
             //TODO: See if Payment works
 
             //TODO: Figure out how Ucommerce Payment redicrec works
-
-
-
-            return View();
         }
 
         private async Task<Guid> FindPaymentMethodGuid(string selectedCultureCode, string selectedPaymentMethodName, CancellationToken ct)
         {
             var countriesDto = await _transactionClient.GetCountries(ct);
-            
+
             //TODO: Get specific From billing info
-            var billingCountry =  countriesDto.Countries.First(x => x.CultureCode == selectedCultureCode);
+            var billingCountry = countriesDto.Countries.First(x => x.CultureCode == selectedCultureCode);
 
             //TODO: Need CountryId and CultureCode
             var paymentMethods = await _transactionClient.GetPaymentMethods(billingCountry.Id, selectedCultureCode, ct);
 
             var selectedPaymentMethod = paymentMethods.PaymentMethods.FirstOrDefault(x => x.Name == selectedPaymentMethodName);
 
-            return new Guid(selectedPaymentMethod.Id) ;
+            return new Guid(selectedPaymentMethod.Id);
         }
     }
 }

@@ -20,11 +20,13 @@ namespace WildBearAdventures.MVC.Controllers
             _transactionClient = transactionClient;
         }
 
-        public IActionResult Index(CancellationToken ct)
+
+        //Handout Part 5 Shopping Cart
+        public async Task<IActionResult> Index(CancellationToken ct)
         {
             var CurrentCart = _contextHelper.GetCurrentCartGuid();
             //TODO Improvement: Handle if no cart is found
-            var shoppingCartDto = _transactionClient.GetShoppingCart((Guid)CurrentCart, ct).Result;
+            var shoppingCartDto = await _transactionClient.GetShoppingCart((Guid)CurrentCart, ct);
 
             var shoppingCartViewModel = new ShoppingCartViewModel()
             {
