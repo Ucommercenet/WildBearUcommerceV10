@@ -1,7 +1,7 @@
 ﻿namespace WildBearAdventures.MVC.WildBear.Models.DTOs
 {
 
-    public class PriceGroupsDto
+    public class PriceGroupCollectionDto
     {
         public object nextPagingToken { get; set; }
         public object pagingToken { get; set; }

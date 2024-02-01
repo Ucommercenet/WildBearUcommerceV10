@@ -1,6 +1,6 @@
 ﻿namespace WildBearAdventures.MVC.WildBear.Models.DTOs
 {
-    public class CountriesDto
+    public class CountryCollectionDto
     {
         public List<Country> Countries { get; set; }
         public object NextPagingToken { get; set; }

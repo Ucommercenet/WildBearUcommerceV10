@@ -29,13 +29,12 @@ public class TransactionClient
 
     }
 
-
-    public async Task<PriceGroupsDto> GetPriceGroups(string cultureCode, CancellationToken ct)
+    public async Task<PriceGroupCollectionDto> GetPriceGroups(string cultureCode, CancellationToken ct)
     {
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 
         var response = await client.GetAsync(requestUri: $"/api/v1/price-groups?cultureCode={cultureCode}");
-        var priceGroupsDto = await response.Content.ReadAsAsync<PriceGroupsDto>();
+        var priceGroupsDto = await response.Content.ReadAsAsync<PriceGroupCollectionDto>();
 
 
         return priceGroupsDto;
@@ -53,16 +52,31 @@ public class TransactionClient
         return paymentMethodsDto;
     }
 
-    public async Task<CountriesDto> GetCountries(CancellationToken ct)
+    public async Task<CountryCollectionDto> GetCountries(CancellationToken ct)
     {
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 
         var response = await client.GetAsync(requestUri: $"/api/v1/countries");
 
-        var countriesDto = await response.Content.ReadAsAsync<CountriesDto>();
+        var countriesDto = await response.Content.ReadAsAsync<CountryCollectionDto>();
 
         return countriesDto;
     }
+
+    public async Task<ShippingMethodCollectionDto> GetShippingMethods(string countryId, string selectedCultureCode, Guid priceGroupId, CancellationToken ct)
+    {
+        using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
+
+        var response = await client.GetAsync($"/api/v1/shipping-methods?countryId={countryId}&cultureCode={selectedCultureCode}&priceGroupId={priceGroupId}", ct);
+
+        response.EnsureSuccessStatusCode(); // Ensure the response is successful, you can handle errors based on your requirements
+
+        var shippingMethodsDto = await response.Content.ReadAsAsync<ShippingMethodCollectionDto>();
+
+        return shippingMethodsDto;
+    }
+
+
 
     #endregion
 
@@ -147,17 +161,49 @@ public class TransactionClient
     }
     #endregion
 
-    //Only use this for scaffolding new API Calls
-    public async Task<string> GetDRAFT(CancellationToken ct)
+    public async Task<string> PostCartShippingInformation(ShippingInformationRequest shippingInformationRequest, CancellationToken ct)
     {
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 
-        var response = await client.GetAsync(requestUri: $"/api/v1/payment-methods");
+        Dictionary<string, object> requestPayload = new()
+        {
+            { "PriceGroupId", shippingInformationRequest.PriceGroupId},
+            { "shippingMethodId", shippingInformationRequest.ShippingMethodId },
+            { "cultureCode", shippingInformationRequest.CultureCode },
+            { "shippingAddress", shippingInformationRequest.ShippingAddress },
+            
+        };
 
-        var humanReadableJson = JToken.Parse(response.Content.ReadAsStringAsync().Result).ToString();
+        var response = await client.PostAsJsonAsync(requestUri: $"/api/v1/carts/{shippingInformationRequest.ShoppingCartGuid}/shipping", value: requestPayload);
+
+        var humanReadableResponseInJson = JToken.Parse(response.Content.ReadAsStringAsync().Result).ToString();
 
 
         throw new NotImplementedException();
     }
 
+    //Only use this for scaffolding new API Calls
+    public async Task<string> GetDRAFT(CancellationToken ct)
+    {
+        using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
+
+        Dictionary<string, object> requestPayload = new()
+        {
+            //Required
+            { "Quantity", "Todo"},
+            { "Sku", "Todo" },
+            { "CultureCode", "Todo" },
+            { "PriceGroupId", "Todo" },
+            { "CatalogId", "Todo" }, //Must be named CatalogId not productCatalogId
+        };
+
+        var response = await client.GetAsync(requestUri: $"/api/v1/payment-methods");
+
+        var humanReadableResponseInJson = JToken.Parse(response.Content.ReadAsStringAsync().Result).ToString();
+
+
+        throw new NotImplementedException();
+    }
+
+ 
 }
