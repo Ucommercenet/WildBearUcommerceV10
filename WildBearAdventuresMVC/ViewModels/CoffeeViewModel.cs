@@ -1,4 +1,4 @@
-﻿namespace WildBearAdventures.MVC.ViewModel
+﻿namespace WildBearAdventures.MVC.ViewModels
 {
     public partial class CoffeeViewModel
     {

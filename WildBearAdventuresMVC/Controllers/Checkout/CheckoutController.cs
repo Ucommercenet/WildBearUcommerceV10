@@ -3,7 +3,7 @@ using WildBearAdventures.MVC.WildBear.Models.Request;
 using WildBearAdventures.MVC.WildBear.TransactionApi;
 
 
-namespace WildBearAdventures.MVC.Controllers
+namespace WildBearAdventures.MVC.Controllers.Checkout
 {
     public class CheckoutController : Controller
     {

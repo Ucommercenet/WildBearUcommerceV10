@@ -3,7 +3,7 @@ using WildBearAdventures.MVC.WildBear.Models.Request;
 using WildBearAdventures.MVC.WildBear.TransactionApi;
 
 
-namespace WildBearAdventures.MVC.Controllers
+namespace WildBearAdventures.MVC.Controllers.Checkout
 {
     public class AddAddressesController : Controller
     {
@@ -16,11 +16,11 @@ namespace WildBearAdventures.MVC.Controllers
 
         public async Task<IActionResult> Index(Guid cartId, CancellationToken ct)
         {
-       
+
 
             return View();
         }
 
-       
+
     }
 }

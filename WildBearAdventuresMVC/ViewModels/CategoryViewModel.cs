@@ -1,6 +1,6 @@
 ﻿using WildBearAdventures.MVC.WildBear.Models.DTOs;
 
-namespace WildBearAdventures.MVC.ViewModel
+namespace WildBearAdventures.MVC.ViewModels
 {
     public class CategoryViewModel
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WildBearAdventures.MVC.ViewModel;
+using WildBearAdventures.MVC.ViewModels;
 using WildBearAdventures.MVC.WildBear.Context;
 using WildBearAdventures.MVC.WildBear.Models.Request;
 using WildBearAdventures.MVC.WildBear.TransactionApi;
