@@ -12,7 +12,7 @@
         {
             public string? City { get; set; }
             public string? CompanyName { get; set; }
-            public string? CountryId { get; set; }
+            public required string CountryId { get; set; } //required to also match CountryId in the database.  
             public string? Email { get; set; }
             public string? FirstName { get; set; }
             public string? LastName { get; set; }

@@ -16,7 +16,7 @@ public class TransactionClient
         _storeAuthorizationFlow = storeAuthorization;
     }
 
-    #region API GET Calls
+    //GET CALLS
     public async Task<ShoppingCartDto> GetShoppingCart(Guid shoppingCartGuid, CancellationToken ct)
     {
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
@@ -63,7 +63,7 @@ public class TransactionClient
         return countriesDto;
     }
 
-    public async Task<ShippingMethodCollectionDto> GetShippingMethods(string countryId, string selectedCultureCode, Guid priceGroupId, CancellationToken ct)
+    public async Task<ShippingMethodCollectionDto> GetShippingMethods(string countryId, string selectedCultureCode, string priceGroupId, CancellationToken ct)
     {
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 
@@ -78,20 +78,20 @@ public class TransactionClient
 
 
 
-    #endregion
-
-    #region API POST Calls
+    
+    //POST CALLS
+    
     /// <summary>
     /// 
     /// </summary>
     /// <param name="currency"></param>
     /// <param name="cultureCode"></param>
-    /// <param name="cancellationToken"></param>
+    /// <param name="ct"></param>
     /// <returns>The guid of the basket just created</returns>
     /// <exception cref="Exception"></exception>
-    public async Task<Guid> PostCreateBasket(string currency, string cultureCode, CancellationToken cancellationToken)
+    public async Task<Guid> PostCreateBasket(string currency, string cultureCode, CancellationToken ct)
     {
-        using var client = _storeAuthorizationFlow.GetAuthorizedClient(cancellationToken);
+        using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 
         var requestPayload = new Dictionary<string, string>
         {
@@ -109,9 +109,9 @@ public class TransactionClient
         return responseResult.BasketId;
     }
 
-    public async Task PostCreatePayment(CreatePaymentRequest createPaymentRequest, CancellationToken cancellationToken)
+    public async Task PostCreatePayment(CreatePaymentRequest createPaymentRequest, CancellationToken ct)
     {
-        using var client = _storeAuthorizationFlow.GetAuthorizedClient(cancellationToken);
+        using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 
         var requestPayload = new Dictionary<string, string>
         {
@@ -121,11 +121,11 @@ public class TransactionClient
             { "priceGroupId", $"{createPaymentRequest.PriceGroupGuid}" },
         };
 
-        var createPaymentResponse = await client.PostAsJsonAsync("/api/v1/payments", requestPayload);
+        var createPaymentResponse = await client.PostAsJsonAsync(requestUri: "/api/v1/payments", value: requestPayload);
 
 
-
-        var content = await createPaymentResponse.Content.ReadAsStringAsync();
+        var humanReadableResponseInJson = JToken.Parse(createPaymentResponse.Content.ReadAsStringAsync(ct).Result).ToString();
+        
 
         if (createPaymentResponse.IsSuccessStatusCode is false)
         { throw new Exception($"Could not create payment"); }
@@ -159,9 +159,8 @@ public class TransactionClient
 
         return;
     }
-    #endregion
-
-    public async Task<string> PostCartShippingInformation(ShippingInformationRequest shippingInformationRequest, CancellationToken ct)
+    
+    public async Task PostCartShippingInformation(ShippingInformationRequest shippingInformationRequest, CancellationToken ct)
     {
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 
@@ -175,12 +174,42 @@ public class TransactionClient
         };
 
         var response = await client.PostAsJsonAsync(requestUri: $"/api/v1/carts/{shippingInformationRequest.ShoppingCartGuid}/shipping", value: requestPayload);
-
-        var humanReadableResponseInJson = JToken.Parse(response.Content.ReadAsStringAsync().Result).ToString();
-
-
-        throw new NotImplementedException();
+        
+        if (response.IsSuccessStatusCode is false)
+        { throw new Exception($"Could not PostCartShippingInformation"); }
     }
+
+    public async Task PostCartBillingInfomation(BillingAddressRequest billingAddressRequest, CancellationToken ct)
+    {
+        using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
+
+        // Construct the request payload with billing address details
+        Dictionary<string, object?> requestPayload = new()
+        {
+            { "city", billingAddressRequest.City },
+            { "firstName", billingAddressRequest.FirstName },
+            { "lastName", billingAddressRequest.LastName },
+            { "postalCode", billingAddressRequest.PostalCode },
+            { "line1", billingAddressRequest.Line1 },
+            { "countryId", billingAddressRequest.CountryId },
+            { "email", billingAddressRequest.Email },
+            { "state", billingAddressRequest.State },
+            { "mobileNumber", billingAddressRequest.MobileNumber },
+            { "attention", billingAddressRequest.Attention },
+            { "companyName", billingAddressRequest.CompanyName }
+        };
+
+
+        // Make a POST request to the API endpoint for billing address
+        var response = await client.PostAsJsonAsync($"/api/v1/carts/{billingAddressRequest.ShoppingCartGuid}/billing-address", requestPayload);
+
+        // Check if the request was successful
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new Exception($"Could not post billing address for cart {billingAddressRequest.ShoppingCartGuid}");
+        }
+    }
+
 
     //Only use this for scaffolding new API Calls
     public async Task<string> GetDRAFT(CancellationToken ct)
@@ -189,7 +218,7 @@ public class TransactionClient
 
         Dictionary<string, object> requestPayload = new()
         {
-            //Required
+            
             { "Quantity", "Todo"},
             { "Sku", "Todo" },
             { "CultureCode", "Todo" },
