@@ -6,7 +6,7 @@ using static WildBearAdventures.MVC.WildBear.Models.DTOs.ShippingMethodCollectio
 using static WildBearAdventures.MVC.WildBear.Models.Request.ShippingInformationRequest;
 
 
-namespace WildBearAdventures.MVC.Controllers.Checkout
+namespace WildBearAdventures.MVC.Controllers
 {
     public class CheckoutController : Controller
     {
@@ -16,7 +16,7 @@ namespace WildBearAdventures.MVC.Controllers.Checkout
         {
             _transactionClient = transactionClient;
         }
-        
+
         //Handout Checkout Shopping Cart. For now let's do it all in a single Controller and split out afterward
 
         public async Task<IActionResult> Index(Guid cartId, CancellationToken ct)
@@ -34,17 +34,18 @@ namespace WildBearAdventures.MVC.Controllers.Checkout
             var countriesDto = await _transactionClient.GetCountries(ct);
             var selectedCountry = countriesDto.Countries.First();
 
-            
+
             var shippingInfomation = await AddShippingInfoToCart(cartId, selectedCountry, selectedCultureCode, selectedPriceGroupId, selectedShippingMethod, ct);
 
             var isShippingInfoAlsoBillingInfo = true;
-            
+
             await AddBillingInfoToCart(cartId, isShippingInfoAlsoBillingInfo, shippingInfomation, ct);
 
-            await CheckOutCart(cartId, selectedCultureCode, selectedPaymentMethodName, priceGroups, selectedPriceGroupName, ct);
+            var paymentResponseDto = await CheckOutCart(cartId, selectedCultureCode, selectedPaymentMethodName, priceGroups, selectedPriceGroupName, ct);
 
+            //TODO: Call the URL in paymentResponseDto -- Redirect might be ok
 
-            return View();
+            return Redirect(paymentResponseDto.PaymentUrl);
         }
 
         private async Task AddBillingInfoToCart(Guid cartId, bool isShippingInfoAlsoBillingInfo, ShippingInformationRequest shippingInfomation, CancellationToken ct)
@@ -75,7 +76,7 @@ namespace WildBearAdventures.MVC.Controllers.Checkout
             await _transactionClient.PostCartBillingInfomation(billingAddressRequest, ct);
         }
 
-        private async Task CheckOutCart(Guid cartId, string selectedCultureCode, string selectedPaymentMethodName, PriceGroupCollectionDto priceGroups, string selectedPriceGroupName, CancellationToken ct)
+        private async Task<PaymentResponseDto> CheckOutCart(Guid cartId, string selectedCultureCode, string selectedPaymentMethodName, PriceGroupCollectionDto priceGroups, string selectedPriceGroupName, CancellationToken ct)
         {
             var paymentMethodGuid = await FindPaymentMethodGuid(selectedCultureCode, selectedPaymentMethodName, ct);
             var priceGroup = priceGroups.PriceGroups.Single(x => x.Name == selectedPriceGroupName);
@@ -89,16 +90,14 @@ namespace WildBearAdventures.MVC.Controllers.Checkout
 
 
             };
-
-            //TODO: will it work without billing information?
-
+            
             //Payment
-            _transactionClient.PostCreatePayment(createPaymentRequest, ct);
+            return await _transactionClient.PostCreatePayment(createPaymentRequest, ct);
         }
 
         private async Task<ShippingInformationRequest> AddShippingInfoToCart(Guid cartId, Country selectedCountry, string selectedCultureCode, string selectedPriceGroupId, string selectedShippingMethod, CancellationToken ct)
         {
-            var shippingMethods = await _transactionClient.GetShippingMethods(selectedCountry.Id, selectedCultureCode, selectedPriceGroupId, ct );
+            var shippingMethods = await _transactionClient.GetShippingMethods(selectedCountry.Id, selectedCultureCode, selectedPriceGroupId, ct);
             var selectedShippingMethodId = shippingMethods.ShippingMethods.First(x => x.Name == selectedShippingMethod).Id;
 
             //Step 1 Add Shipment
@@ -111,12 +110,12 @@ namespace WildBearAdventures.MVC.Controllers.Checkout
                 ShippingAddress = new Address
                 {
                     City = "Aarhus",
-                    CompanyName = "Ucommerce",
+                    CompanyName = "",
                     CountryId = selectedCountry.Id,
-                    Email = "Test@notrealmail.com",
-                    FirstName = "Sven",
-                    LastName = "Splitbeard",
-                    Line1 = "Klostergade 21",
+                    Email = "Redirect1@notrealmail.com",
+                    FirstName = "Redirect Test",
+                    LastName = "Test",
+                    Line1 = "Somewere",
                     Line2 = "",
                     MobileNumber = "",
                     PhoneNumber = "",
@@ -124,10 +123,10 @@ namespace WildBearAdventures.MVC.Controllers.Checkout
                     State = ""
                 }
             };
-            
+
             //Shipping Information
             await _transactionClient.PostCartShippingInformation(shippingInformationRequest, ct);
-            
+
             //The billing information might need to be the same.  
             return shippingInformationRequest;
         }

@@ -109,7 +109,7 @@ public class TransactionClient
         return responseResult.BasketId;
     }
 
-    public async Task PostCreatePayment(CreatePaymentRequest createPaymentRequest, CancellationToken ct)
+    public async Task<PaymentResponseDto> PostCreatePayment(CreatePaymentRequest createPaymentRequest, CancellationToken ct)
     {
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 
@@ -123,14 +123,12 @@ public class TransactionClient
 
         var createPaymentResponse = await client.PostAsJsonAsync(requestUri: "/api/v1/payments", value: requestPayload);
 
-
-        var humanReadableResponseInJson = JToken.Parse(createPaymentResponse.Content.ReadAsStringAsync(ct).Result).ToString();
-        
+        var paymentResponseDto = await createPaymentResponse.Content.ReadAsAsync<PaymentResponseDto>();
 
         if (createPaymentResponse.IsSuccessStatusCode is false)
         { throw new Exception($"Could not create payment"); }
 
-        return;
+        return paymentResponseDto ;
     }
 
     public async Task PostShoppingCartLineUpdate(ShoppingCartLineUpdateRequest request, CancellationToken ct)
