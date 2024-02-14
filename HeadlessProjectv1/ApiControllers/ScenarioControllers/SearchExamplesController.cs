@@ -3,6 +3,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using System.Globalization;
 using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
+using Ucommerce.Web.Infrastructure.Core.Models;
 
 namespace WildBearAdventures.API.ApiControllers.ScenarioControllers
 {

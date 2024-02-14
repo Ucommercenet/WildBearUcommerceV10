@@ -21,7 +21,7 @@ namespace WildBearAdventures.MVC.Controllers
 
         public async Task<IActionResult> Index(Guid cartId, CancellationToken ct)
         {
-
+            //Handout-Keep
             var selectedCultureCode = "da-DK"; //TODO Improvement: Get from ContextHelper or user                                              
             var selectedPriceGroupName = "EUR 15 pct"; //TODO Improvement: Get from ContextHelper or user     
             var selectedPaymentMethodName = "Account"; //TODO Improvement: Get from User 
@@ -35,17 +35,27 @@ namespace WildBearAdventures.MVC.Controllers
             var selectedCountry = countriesDto.Countries.First();
 
 
-            var shippingInfomation = await AddShippingInfoToCart(cartId, selectedCountry, selectedCultureCode, selectedPriceGroupId, selectedShippingMethod, ct);
+            var shippingInformation = await AddShippingInfoToCart( cartId, selectedCountry, selectedCultureCode, selectedPriceGroupId, selectedShippingMethod, ct);
 
             var isShippingInfoAlsoBillingInfo = true;
 
-            await AddBillingInfoToCart(cartId, isShippingInfoAlsoBillingInfo, shippingInfomation, ct);
+            await AddBillingInfoToCart(cartId, isShippingInfoAlsoBillingInfo, shippingInformation, ct);
 
             var paymentResponseDto = await CheckOutCart(cartId, selectedCultureCode, selectedPaymentMethodName, priceGroups, selectedPriceGroupName, ct);
 
-            //TODO: Call the URL in paymentResponseDto -- Redirect might be ok
 
+            DRAFT_GetOrderId();
+
+            //Note: The PaymentUrl when using the defaultPaymentService both the takeControl redirect and the callback
             return Redirect(paymentResponseDto.PaymentUrl);
+        }
+
+        private void DRAFT_GetOrderId()
+        {
+            
+
+
+
         }
 
         private async Task AddBillingInfoToCart(Guid cartId, bool isShippingInfoAlsoBillingInfo, ShippingInformationRequest shippingInfomation, CancellationToken ct)
@@ -87,12 +97,12 @@ namespace WildBearAdventures.MVC.Controllers
                 PaymentMethodGuid = paymentMethodGuid,
                 PriceGroupGuid = new Guid(priceGroup.Id),
                 ShoppingCartGuid = cartId,
-
-
             };
-            
+
             //Payment
-            return await _transactionClient.PostCreatePayment(createPaymentRequest, ct);
+            var paymentResponseDto = await _transactionClient.PostCreatePayment(createPaymentRequest, ct);
+
+            return paymentResponseDto;
         }
 
         private async Task<ShippingInformationRequest> AddShippingInfoToCart(Guid cartId, Country selectedCountry, string selectedCultureCode, string selectedPriceGroupId, string selectedShippingMethod, CancellationToken ct)
@@ -109,17 +119,17 @@ namespace WildBearAdventures.MVC.Controllers
                 ShippingMethodId = selectedShippingMethodId,
                 ShippingAddress = new Address
                 {
-                    City = "Aarhus",
+                    City = "Coruscant",
                     CompanyName = "",
                     CountryId = selectedCountry.Id,
-                    Email = "Redirect1@notrealmail.com",
-                    FirstName = "Redirect Test",
-                    LastName = "Test",
+                    Email = "Bob@notrealmail.com",
+                    FirstName = "Bob",
+                    LastName = "Willson",
                     Line1 = "Somewere",
                     Line2 = "",
                     MobileNumber = "",
                     PhoneNumber = "",
-                    PostalCode = "8000",
+                    PostalCode = "1337",
                     State = ""
                 }
             };

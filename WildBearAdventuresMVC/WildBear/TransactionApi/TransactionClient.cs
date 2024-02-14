@@ -120,8 +120,8 @@ public class TransactionClient
             { "paymentMethodId", $"{createPaymentRequest.PaymentMethodGuid}" },
             { "priceGroupId", $"{createPaymentRequest.PriceGroupGuid}" },
         };
-
-        var createPaymentResponse = await client.PostAsJsonAsync(requestUri: "/api/v1/payments", value: requestPayload);
+        
+        var createPaymentResponse = await client.PostAsJsonAsync(requestUri: $"/api/v1/payments", value: requestPayload);
 
         var paymentResponseDto = await createPaymentResponse.Content.ReadAsAsync<PaymentResponseDto>();
 

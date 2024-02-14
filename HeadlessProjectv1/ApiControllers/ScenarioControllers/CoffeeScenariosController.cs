@@ -5,6 +5,7 @@ using System.Globalization;
 using Ucommerce.Extensions.Search.Abstractions;
 using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
+using Ucommerce.Web.Infrastructure.Core.Models;
 using WildBearAdventures.API;
 
 namespace WildBearAdventures.API.ApiControllers.ScenarioControllers
