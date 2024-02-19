@@ -17,18 +17,11 @@ public class WildBearApiClient : IStoreApiClient
     #region Product Related
     public ProductDto GetRandomProductFromCategory(Guid categoryGuid, CancellationToken token)
     {
-
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(token);
 
         var uri = $"https://localhost:44381/api/Product/GetAllProductsFromCategoryGuid?categoryId={categoryGuid}";
-
         var response = client.GetAsync(uri, token).Result;
-
-        var resultTEMP = response.Content.ReadAsStringAsync().Result;
-
         var result = response.Content.ReadFromJsonAsync<List<ProductDto>>().Result;
-
-
         var randomIndex = new Random().Next(result.Count);
 
         return result[randomIndex];
