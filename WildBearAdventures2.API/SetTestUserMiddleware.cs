@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 
-namespace WildBearAdventures.API;
+namespace WildBearAdventures2.API;
 
 /// <summary>
 /// Middleware for setting the test user
@@ -35,16 +30,19 @@ public class SetTestUserMiddleware
             var userName = "admin@admin.com";
             var claims = new List<Claim>
             {
-                new(ClaimTypes.NameIdentifier, userName)
+                new(ClaimTypes.NameIdentifier, userName),
+                new(ClaimTypes.Name, userName),
+                new("IsAdmin", "True"),
+                new("UserId", "90114c77-05a9-4060-b0f4-d839055690d1"),
             };
-            var identity = new ClaimsIdentity(claims);
+            var identity = new ClaimsIdentity(claims, authenticationType: "Test");
             context.User = new ClaimsPrincipal(identity);
             await _next(context);
         }
         catch (Exception e)
         {
             Console.WriteLine(e);
-            //throw;
+            throw;
         }
     }
 }

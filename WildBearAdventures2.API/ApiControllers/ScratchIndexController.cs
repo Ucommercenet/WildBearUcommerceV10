@@ -5,11 +5,11 @@ namespace WildBearAdventures.API.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AlphaWorkaroundController : ControllerBase
+    public class ScratchIndexController : ControllerBase
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public AlphaWorkaroundController(IHttpClientFactory httpClientFactory)
+        public ScratchIndexController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
