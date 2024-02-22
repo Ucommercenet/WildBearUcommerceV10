@@ -3,7 +3,7 @@
 
     public class ProductDto
     {
-        public bool allowOrdering { get; set; }
+        public bool AllowOrdering { get; set; }
         public string[] categoryIds { get; set; }
         public string displayName { get; set; }
         public string longDescription { get; set; }

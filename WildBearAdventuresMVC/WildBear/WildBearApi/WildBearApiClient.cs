@@ -39,11 +39,20 @@ public class WildBearApiClient : IStoreApiClient
         //var result = response.Content.ReadFromJsonAsync<List<ProductDto?>>().Result;
         var allProducts = response.Content.ReadFromJsonAsync<List<ProductDto?>>().Result;
 
-        var productsVariants = allProducts.Where(x => x.ParentProductId != null).ToList();
+        //TODO: Also include non-variants
+
+        var NotSellableProducts = allProducts.Where(x => x.AllowOrdering == false).ToList();
+
+        var regularProduct = allProducts.Where(x => x.productType == 2 ).ToList();
+        var variantProduct = allProducts.Where(x => x.productType == 3 ).ToList();
 
 
+        var sellableProducts = allProducts.Where(x => x.productType == 2 | x.productType == 3 ).ToList();
 
-        return productsVariants;
+        
+
+
+        return sellableProducts;
 
     }
     public ProductDto GetSingleProductByGuid(Guid productGuid, CancellationToken token)

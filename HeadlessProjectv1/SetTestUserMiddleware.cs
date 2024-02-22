@@ -44,7 +44,7 @@ public class SetTestUserMiddleware
         catch (Exception e)
         {
             Console.WriteLine(e);
-            throw;
+            //throw;
         }
     }
 }
