@@ -8,13 +8,13 @@ namespace WildBearAdventures.MVC.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly IStoreApiClient _wildBearApiClient;
+        private readonly IStoreApiClient _wildBearClient;
         private readonly IContextHelper _contextHelper;
 
 
-        public CategoryController(IStoreApiClient wildBearApiClient, IContextHelper contextHelper)
+        public CategoryController(IStoreApiClient wildBearClient, IContextHelper contextHelper)
         {
-            _wildBearApiClient = wildBearApiClient;
+            _wildBearClient = wildBearClient;
             _contextHelper = contextHelper;
         }
 
@@ -37,11 +37,11 @@ namespace WildBearAdventures.MVC.Controllers
             { return View(); }
 
 
-            var currentCategoryDto = _wildBearApiClient.GetSingleCategoryByGuid((Guid)currentCategoryGuid, token);
+            var currentCategoryDto = _wildBearClient.GetSingleCategoryByGuid((Guid)currentCategoryGuid, token);
 
             
 
-            var productDtos = _wildBearApiClient.GetAllProductsFromCategoryGuid((Guid)currentCategoryGuid, token);
+            var productDtos = _wildBearClient.GetAllProductsFromCategoryGuid((Guid)currentCategoryGuid, token);
 
             var CategoryViewModel = new CategoryViewModel
             {

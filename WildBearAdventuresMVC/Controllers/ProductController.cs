@@ -12,13 +12,13 @@ namespace WildBearAdventures.MVC.Controllers
 
     public class ProductController : Controller
     {
-        private readonly IStoreApiClient _wildBearApiClient;
+        private readonly IStoreApiClient _wildBearClient;
         private readonly IContextHelper _contextHelper;
         private readonly TransactionClient _transactionClient;
 
-        public ProductController(IStoreApiClient wildBearApiClient, IContextHelper contextHelper, TransactionClient transactionClient)
+        public ProductController(IStoreApiClient wildBearClient, IContextHelper contextHelper, TransactionClient transactionClient)
         {
-            _wildBearApiClient = wildBearApiClient;
+            _wildBearClient = wildBearClient;
             _contextHelper = contextHelper;
             _transactionClient = transactionClient;
         }
@@ -26,7 +26,7 @@ namespace WildBearAdventures.MVC.Controllers
         [HttpGet]
         public IActionResult Index(string productName, CancellationToken ct)
         {            
-            var currentProductDto = _wildBearApiClient.GetSingleProductByName(productName, ct);
+            var currentProductDto = _wildBearClient.GetSingleProductByName(productName, ct);
 
             currentProductDto.UnitPrices.TryGetValue("EUR 15 pct", out var price);
 
@@ -51,7 +51,7 @@ namespace WildBearAdventures.MVC.Controllers
             var currency = "EUR"; //TODO Improvement: Get dynamic
             var cultureCode = "da-DK"; //TODO Improvement: Get dynamic
             var currentCategory = _contextHelper.GetCurrentCategoryGuid() ?? throw new Exception("No Category found");
-            var currentCatalog = _wildBearApiClient.GetSingleCategoryByGuid(currentCategory, ct).CatalogId;
+            var currentCatalog = _wildBearClient.GetSingleCategoryByGuid(currentCategory, ct).CatalogId;
 
 
             //New or current Shopping Cart
@@ -59,7 +59,7 @@ namespace WildBearAdventures.MVC.Controllers
             _contextHelper.SetCurrentCart(basketGuid);
 
             //Product information
-            var product = _wildBearApiClient.GetSingleProductByName(productName, ct);
+            var product = _wildBearClient.GetSingleProductByName(productName, ct);
             var priceGroupGuid = product.PriceGroupIds.First();
 
             //Ready the Request

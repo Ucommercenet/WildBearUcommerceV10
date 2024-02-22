@@ -5,12 +5,12 @@ namespace WildBearAdventures.MVC.WildBear.Context
     public class ContextHelper : IContextHelper
     {
 
-        private readonly IStoreApiClient _wildBearApiClient;
+        private readonly IStoreApiClient _wildBearClient;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ContextHelper(IStoreApiClient wildBearApiClient, IHttpContextAccessor httpContextAccessor)
+        public ContextHelper(IStoreApiClient wildBearClient, IHttpContextAccessor httpContextAccessor)
         {
-            _wildBearApiClient = wildBearApiClient;
+            _wildBearClient = wildBearClient;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -33,7 +33,7 @@ namespace WildBearAdventures.MVC.WildBear.Context
         {
             var session = _httpContextAccessor.HttpContext?.Session;
 
-            var CategoryGuid = _wildBearApiClient.GetOnlyCategoryGuidByName(currentCategoryName, new CancellationToken());
+            var CategoryGuid = _wildBearClient.GetOnlyCategoryGuidByName(currentCategoryName, new CancellationToken());
             session?.SetString(KEY_CategoryGuid, CategoryGuid.ToString());
 
 

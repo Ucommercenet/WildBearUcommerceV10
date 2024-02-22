@@ -11,13 +11,13 @@ namespace WildBearAdventures.MVC
             var builder = WebApplication.CreateBuilder(args);
 
             // Custom services                      
-            builder.Services.AddTransient<IStoreApiClient, WildBearApiClient>();
+            builder.Services.AddTransient<IStoreApiClient, WildBearClient>();
 
             builder.Services.AddTransient<IContextHelper, ContextHelper>();
             builder.Services.AddTransient<TransactionClient>();
 
-            //Only ever need one StoreAuthentication
-            builder.Services.AddSingleton<StoreAuthentication>();
+            //Only ever need one StoreAuthDetails
+            builder.Services.AddSingleton<StoreAuthDetails>();
             builder.Services.AddSingleton<StoreAuthorization>();
 
 

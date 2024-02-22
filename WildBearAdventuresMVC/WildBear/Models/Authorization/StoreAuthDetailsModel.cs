@@ -4,7 +4,7 @@
     /// <summary>
     /// Authentication is per store.
     /// </summary>
-    public class StoreAuthenticationModel
+    public class StoreAuthDetailsModel
     {
         /// <summary>
         /// Will function as clientId for the api calls

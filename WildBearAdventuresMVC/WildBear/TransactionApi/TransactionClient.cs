@@ -210,7 +210,7 @@ public class TransactionClient
 
 
     //Only use this for scaffolding new API Calls
-    public async Task<string> GetDRAFT(CancellationToken ct)
+    public async Task<string> TEMPLATE_GetCall(CancellationToken ct)
     {
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
 

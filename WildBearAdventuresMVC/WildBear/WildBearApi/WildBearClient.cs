@@ -5,21 +5,22 @@ namespace WildBearAdventures.MVC.WildBear.WildBearApi;
 
 
 
-public class WildBearApiClient : IStoreApiClient
+public class WildBearClient : IStoreApiClient
 {
     private readonly StoreAuthorization _storeAuthorizationFlow;
 
-    public WildBearApiClient(StoreAuthorization storeAuthorizationFlow)
+    public WildBearClient(StoreAuthorization storeAuthorizationFlow)
     {
         _storeAuthorizationFlow = storeAuthorizationFlow;
     }
 
     #region Product Related
-    public ProductDto GetRandomProductFromCategory(Guid categoryGuid, CancellationToken token)
+    public ProductDto GetRandomProductFromCategory(string categoryName, CancellationToken token)
     {
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(token);
-
-        var uri = $"/Product/GetAllProductsFromCategoryGuid?categoryId={categoryGuid}";
+        
+        var categoryGuid = GetOnlyCategoryGuidByName(categoryName, token);
+        var uri = $"api/Product/GetAllProductsFromCategoryGuid?categoryId={categoryGuid}";
         var response = client.GetAsync(uri, token).Result;
         var result = response.Content.ReadFromJsonAsync<List<ProductDto>>().Result;
         var randomIndex = new Random().Next(result.Count);
@@ -31,7 +32,7 @@ public class WildBearApiClient : IStoreApiClient
     {
 
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(token);
-        var uri = $"https://localhost:44381/api/Product/GetAllProductsFromCategoryGuid?categoryId={categoryGuid}";
+        var uri = $"api/Product/GetAllProductsFromCategoryGuid?categoryId={categoryGuid}";
 
         var response = client.GetAsync(uri, token).Result;
 
@@ -60,7 +61,7 @@ public class WildBearApiClient : IStoreApiClient
 
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(token);
 
-        var uri = $"https://localhost:44381/api/Product/GetProductByGuid?searchGuid={productGuid}";
+        var uri = $"api/Product/GetProductByGuid?searchGuid={productGuid}";
 
         var response = client.GetAsync(uri, token).Result;
         var result = response.Content.ReadFromJsonAsync<ProductDto>().Result;
@@ -74,7 +75,7 @@ public class WildBearApiClient : IStoreApiClient
 
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(token);
 
-        var uri = $"https://localhost:44381/api/Product/GetProductByName?searchName={searchName}";
+        var uri = $"api/Product/GetProductByName?searchName={searchName}";
 
         var response = client.GetAsync(uri, token).Result;
         var result = response.Content.ReadFromJsonAsync<ProductDto>().Result;
@@ -95,9 +96,7 @@ public class WildBearApiClient : IStoreApiClient
 
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(token);
 
-        var uri = $"https://localhost:44381/api/Category/GetAllCategoriesFromCatalog?catalogName={catalogInput}";
-
-
+        var uri = $"api/Category/GetAllCategoriesFromCatalog?catalogName={catalogInput}";
         var response = client.GetAsync(uri, token).Result;
 
 
@@ -114,7 +113,7 @@ public class WildBearApiClient : IStoreApiClient
 
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(token);
 
-        var uri = $"https://localhost:44381/api/Category/GetOnlyGuidByName?searchName={nameInput}";
+        var uri = $"api/Category/GetOnlyGuidByName?searchName={nameInput}";
 
 
         var response = client.GetAsync(uri, token).Result;
@@ -132,7 +131,7 @@ public class WildBearApiClient : IStoreApiClient
 
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(token);
 
-        var uri = $"https://localhost:44381/api/Category/GetCategoryByGuid?searchGuid={categoryGuid}";
+        var uri = $"api/Category/GetCategoryByGuid?searchGuid={categoryGuid}";
 
         var response = client.GetAsync(uri, token).Result;
         var result = response.Content.ReadFromJsonAsync<CategoryDto>().Result;

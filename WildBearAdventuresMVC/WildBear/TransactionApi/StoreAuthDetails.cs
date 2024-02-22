@@ -5,19 +5,19 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
 
     /// <summary>
     /// *IMPORTANT*
-    /// StoreAuthentication is a singleton
+    /// StoreAuthDetails is a singleton
     /// In this demo, we only have theWildBearStore
     /// Authentication is per store, the store Id is used as clientID
     /// </summary>
-    public class StoreAuthentication
+    public class StoreAuthDetails
     {
 
-        public StoreAuthentication(IConfiguration configuration)
+        public StoreAuthDetails(IConfiguration configuration)
         {
-            WildBearStore = GetAuthenticationModelForWildBearStore(configuration);
+            WildBearStore = GetStoreAuthDetailsModelForWildBearStore(configuration);
         }
 
-        public StoreAuthenticationModel WildBearStore { get; }
+        public StoreAuthDetailsModel WildBearStore { get; }
 
 
 
@@ -26,7 +26,7 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
         /// </summary>        
         /// <remark>There might be more then one store per solution, this method if more stores needs authentication</remark>
         /// <returns></returns>
-        private StoreAuthenticationModel GetAuthenticationModelForWildBearStore(IConfiguration configuration)
+        private StoreAuthDetailsModel GetStoreAuthDetailsModelForWildBearStore(IConfiguration configuration)
         {
 
             var storeGuid = configuration.GetValue<string>("Authentication:WildBearStore:Guid");
@@ -45,7 +45,7 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
 
 
 
-            var authenticationModel = new StoreAuthenticationModel()
+            var authenticationModel = new StoreAuthDetailsModel()
             {
                 ClientGuid = storeGuid,
                 ClientSecret = clientSecret,

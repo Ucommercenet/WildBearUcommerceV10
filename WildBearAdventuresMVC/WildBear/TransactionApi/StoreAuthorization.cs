@@ -8,12 +8,12 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
 {
     public class StoreAuthorization
     {
-        private readonly StoreAuthentication _storeAuthentication;
+        private readonly StoreAuthDetails _storeAuthDetails;
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public StoreAuthorization(StoreAuthentication storeAuthentication, IHttpClientFactory httpClientFactory)
+        public StoreAuthorization(StoreAuthDetails storeAuthDetails, IHttpClientFactory httpClientFactory)
         {
-            _storeAuthentication = storeAuthentication;
+            _storeAuthDetails = storeAuthDetails;
             _httpClientFactory = httpClientFactory;
         }
 
@@ -28,12 +28,12 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
         {
             AuthorizeFlow(cancellationToken);
 
-            if (_storeAuthentication.WildBearStore.authorizationDetails.AccessToken is null)
+            if (_storeAuthDetails.WildBearStore.authorizationDetails.AccessToken is null)
             { throw new SecurityException(); }
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_storeAuthentication.WildBearStore.BaseUrl);
+            client.BaseAddress = new Uri(_storeAuthDetails.WildBearStore.BaseUrl);
 
-            var accessToken = _storeAuthentication.WildBearStore.authorizationDetails.AccessToken;
+            var accessToken = _storeAuthDetails.WildBearStore.authorizationDetails.AccessToken;
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Bearer", parameter: accessToken);
             return client;
         }
@@ -41,12 +41,12 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
         #region Authorize Related
         private void AuthorizeFlow(CancellationToken cancellationToken)
         {
-            if (_storeAuthentication.WildBearStore.authorizationDetails is null)
+            if (_storeAuthDetails.WildBearStore.authorizationDetails is null)
             {
                 RequestAuthorization(cancellationToken);
             }
 
-            var expiresAt = _storeAuthentication.WildBearStore.authorizationDetails?.AccessTokenExpiresAt;
+            var expiresAt = _storeAuthDetails.WildBearStore.authorizationDetails?.AccessTokenExpiresAt;
             //A small buffer as been added
             //Note: Comparing datetime with null always produces false, which is what we want here.
             var tokenIsValid = DateTime.UtcNow.AddSeconds(10) < expiresAt;
@@ -68,9 +68,9 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
             //STEP 1: Create authorizationCode based on StoreAuthenticationModel Ucommerce authentication call         
 
             using var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(_storeAuthentication.WildBearStore.BaseUrl);
+            client.BaseAddress = new Uri(_storeAuthDetails.WildBearStore.BaseUrl);
 
-            var storeAuthentication = _storeAuthentication.WildBearStore;
+            var storeAuthentication = _storeAuthDetails.WildBearStore;
             var uri = $"/api/v1/oauth/connect?client_id={storeAuthentication.ClientGuid}&redirect_uri={storeAuthentication.RedirectUrl}&response_type=code";
 
             var connectResponse = client.GetAsync(uri, cancellationToken).Result;
@@ -121,7 +121,7 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
         {
             //TODO: Check if Auth is ready for refresh
             using var client = _httpClientFactory.CreateClient();
-            var storeAuthentication = _storeAuthentication.WildBearStore;
+            var storeAuthentication = _storeAuthDetails.WildBearStore;
 
 
             var refreshRequest = new HttpRequestMessage(new HttpMethod("POST"), "/api/v1/oauth/cancellationToken");
@@ -130,7 +130,7 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
             if (succesfull is not true)
             { throw new SecurityException(); }
 
-            var refreshToken = _storeAuthentication.WildBearStore.authorizationDetails.RefreshToken;
+            var refreshToken = _storeAuthDetails.WildBearStore.authorizationDetails.RefreshToken;
 
             //Prepares the data and assigns it to HttpRequstMessage.Content
             //According to connect flow documentation: https://docs.ucommerce.net/ucommerce/v9.7/headless/getting-started/quick-start.html
@@ -155,12 +155,12 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
         /// <summary>
         ///
         /// </summary>
-        /// <param name="authentication"></param>
+        /// <param name="authDetails"></param>
         /// <param name="authorizeRequestHeaders"></param>
         /// <returns>Returns true if successful</returns>
-        private static bool AddAuthorizationToHeaders(StoreAuthenticationModel authentication, HttpRequestHeaders authorizeRequestHeaders)
+        private static bool AddAuthorizationToHeaders(StoreAuthDetailsModel authDetails, HttpRequestHeaders authorizeRequestHeaders)
         {
-            var Base64CredentialsValue = GenerateBase64CredentialsForAuthorizationHeader(authentication.ClientGuid, authentication.ClientSecret);
+            var Base64CredentialsValue = GenerateBase64CredentialsForAuthorizationHeader(authDetails.ClientGuid, authDetails.ClientSecret);
 
             var isAuthAdded = authorizeRequestHeaders.TryAddWithoutValidation(name: "Authorization", value: Base64CredentialsValue);
 

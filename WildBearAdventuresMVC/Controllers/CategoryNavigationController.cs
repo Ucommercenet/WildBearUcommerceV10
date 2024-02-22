@@ -7,16 +7,16 @@ namespace WildBearAdventures.MVC.Controllers
 {
     public class CategoryNavigationController : Controller
     {
-        private readonly IStoreApiClient _wildBearApiClient;
+        private readonly IStoreApiClient _wildBearClient;
 
-        public CategoryNavigationController(IStoreApiClient wildBearApiClient)
+        public CategoryNavigationController(IStoreApiClient wildBearClient)
         {
-            _wildBearApiClient = wildBearApiClient;
+            _wildBearClient = wildBearClient;
         }
 
         public IActionResult Index()
         {
-            var categoryDtoCollection = _wildBearApiClient.GetAllCategoriesFromCatalog("MainProductCatalog", new CancellationToken());
+            var categoryDtoCollection = _wildBearClient.GetAllCategoriesFromCatalog("MainProductCatalog", new CancellationToken());
 
             var categoryNames = new List<string>();
 

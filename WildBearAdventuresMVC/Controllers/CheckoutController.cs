@@ -25,7 +25,7 @@ namespace WildBearAdventures.MVC.Controllers
             var selectedCultureCode = "da-DK"; //TODO Improvement: Get from ContextHelper or user                                              
             var selectedPriceGroupName = "EUR 15 pct"; //TODO Improvement: Get from ContextHelper or user     
             var selectedPaymentMethodName = "Account"; //TODO Improvement: Get from User 
-            var selectedShippingMethod = "Standard Shipping"; //TODO Improvement: Get from User 
+            var selectedShippingMethod = "Download"; //TODO Improvement: Get from User 
 
             //Find PriceGroupId
             var priceGroups = await _transactionClient.GetPriceGroups(selectedCultureCode, ct);
@@ -44,18 +44,8 @@ namespace WildBearAdventures.MVC.Controllers
             var paymentResponseDto = await CheckOutCart(cartId, selectedCultureCode, selectedPaymentMethodName, priceGroups, selectedPriceGroupName, ct);
 
 
-            DRAFT_GetOrderId();
-
             //Note: The PaymentUrl when using the defaultPaymentService both the takeControl redirect and the callback
             return Redirect(paymentResponseDto.PaymentUrl);
-        }
-
-        private void DRAFT_GetOrderId()
-        {
-            
-
-
-
         }
 
         private async Task AddBillingInfoToCart(Guid cartId, bool isShippingInfoAlsoBillingInfo, ShippingInformationRequest shippingInfomation, CancellationToken ct)
@@ -119,13 +109,13 @@ namespace WildBearAdventures.MVC.Controllers
                 ShippingMethodId = selectedShippingMethodId,
                 ShippingAddress = new Address
                 {
-                    City = "Coruscant",
+                    City = "Mega-City One",
                     CompanyName = "",
                     CountryId = selectedCountry.Id,
                     Email = "Bob@notrealmail.com",
-                    FirstName = "Bob",
-                    LastName = "Willson",
-                    Line1 = "Somewere",
+                    FirstName = "Judge",
+                    LastName = "Dredd",
+                    Line1 = "Metropolis 1",
                     Line2 = "",
                     MobileNumber = "",
                     PhoneNumber = "",
@@ -136,8 +126,7 @@ namespace WildBearAdventures.MVC.Controllers
 
             //Shipping Information
             await _transactionClient.PostCartShippingInformation(shippingInformationRequest, ct);
-
-            //The billing information might need to be the same.  
+           
             return shippingInformationRequest;
         }
 
