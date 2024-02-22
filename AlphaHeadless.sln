@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.33927.210
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WildBearAdventures.MVC", "WildBearAdventuresMVC\WildBearAdventures.MVC.csproj", "{04AEDE96-810D-4102-BE98-CB3B19AE29DC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WildBearAdventures2.API", "WildBearAdventures2.API\WildBearAdventures2.API.csproj", "{06A7E5EE-4901-4CB1-8832-322ADFFEE55E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WildBearAdventures.API", "WildBearAdventures2.API\WildBearAdventures.API.csproj", "{F01D5CDA-0E4F-4EDE-A134-2DD5906803C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{04AEDE96-810D-4102-BE98-CB3B19AE29DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04AEDE96-810D-4102-BE98-CB3B19AE29DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04AEDE96-810D-4102-BE98-CB3B19AE29DC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{06A7E5EE-4901-4CB1-8832-322ADFFEE55E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{06A7E5EE-4901-4CB1-8832-322ADFFEE55E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{06A7E5EE-4901-4CB1-8832-322ADFFEE55E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{06A7E5EE-4901-4CB1-8832-322ADFFEE55E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F01D5CDA-0E4F-4EDE-A134-2DD5906803C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F01D5CDA-0E4F-4EDE-A134-2DD5906803C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F01D5CDA-0E4F-4EDE-A134-2DD5906803C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F01D5CDA-0E4F-4EDE-A134-2DD5906803C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
