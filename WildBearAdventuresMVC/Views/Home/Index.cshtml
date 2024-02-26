@@ -8,8 +8,8 @@
     <h1 class="display-4">Welcome</h1>
 
     <div class="coffee-box">
-        <p><strong>Today's Random Product is: @Model.Name</strong></p>
-        <p>@Model.Description</p>
+        <p><strong>Today's Random Product is: @Model?.Name</strong></p>
+        <p>@Model?.Description</p>
         <p><strong>Price:</strong> @Model?.Price</p>
     </div>
 </div>
