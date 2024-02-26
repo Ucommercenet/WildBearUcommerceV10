@@ -1,22 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace WildBearAdventures.API.ApiControllers
+namespace WildBearAdventures.API.ApiControllers.Miscellaneous
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ScratchIndexController : ControllerBase
+    public class DiscoverPipelinesController : ControllerBase
     {
         private readonly IHttpClientFactory _httpClientFactory;
 
-        public ScratchIndexController(IHttpClientFactory httpClientFactory)
+        public DiscoverPipelinesController(IHttpClientFactory httpClientFactory)
         {
             _httpClientFactory = httpClientFactory;
         }
 
-        [SwaggerOperation(Summary = "The button to index data to the search engine is missing.")]
-        [HttpPost("PostScratchIndexRequest")]
-        public string PostScratchIndexRequest()
+        
+        [HttpPost("DiscoverPipelines")]
+        public string DiscoverPipelines()
         {
             var host = HttpContext.Request.Host.Host;
             var port = HttpContext.Request.Host.Port;
@@ -30,5 +31,8 @@ namespace WildBearAdventures.API.ApiControllers
 
             return response.IsSuccessStatusCode ? "ScratchIndexRequest complete" : "ScratchIndexRequest did NOT complete";
         }
+
+
+
     }
 }
