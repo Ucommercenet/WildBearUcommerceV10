@@ -6,6 +6,7 @@ using Ucommerce.Web.Core.DependencyInjection;
 using Ucommerce.Extensions.Search.Abstractions.Extensions;
 using Ucommerce.Search.Elastic.Configuration;
 using Ucommerce.Extensions.Payment.Abstractions.Extensions;
+using WildBearAdventures.API.PipelinesExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,7 +18,12 @@ builder.Services.AddUcommerce(builder.Configuration)
     .UcommerceBuilder
     .AddElasticsearch()
     .AddPayments()
+    .AddMyOrderProcessingExtensions()
     .Build();
+
+
+
+
 
 builder.Services.AddControllers();
 

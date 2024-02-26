@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WildBearAdventures.MVC.WildBear.MockData;
 using WildBearAdventures.MVC.WildBear.Models.DTOs;
 using WildBearAdventures.MVC.WildBear.Models.Request;
 using WildBearAdventures.MVC.WildBear.TransactionApi;
@@ -98,6 +99,8 @@ namespace WildBearAdventures.MVC.Controllers
         {
             var shippingMethods = await _transactionClient.GetShippingMethods(selectedCountry.Id, selectedCultureCode, selectedPriceGroupId, ct);
             var selectedShippingMethodId = shippingMethods.ShippingMethods.First(x => x.Name == selectedShippingMethod).Id;
+            var mockAddress = MockFictionalDataGenerator.GetRandomAddress();
+
 
             //Step 1 Add Shipment
             var shippingInformationRequest = new ShippingInformationRequest
@@ -108,18 +111,18 @@ namespace WildBearAdventures.MVC.Controllers
                 ShippingMethodId = selectedShippingMethodId,
                 ShippingAddress = new Address
                 {
-                    City = "Mega-City One",
-                    CompanyName = "",
+                    City = mockAddress.City,
+                    CompanyName =mockAddress.CompanyName ,
                     CountryId = selectedCountry.Id,
-                    Email = "Bob@notrealmail.com",
-                    FirstName = "Judge",
-                    LastName = "Dredd",
-                    Line1 = "Metropolis 1",
-                    Line2 = "",
-                    MobileNumber = "",
-                    PhoneNumber = "",
-                    PostalCode = "1337",
-                    State = ""
+                    Email = mockAddress.Email,
+                    FirstName = mockAddress.FirstName,
+                    LastName = mockAddress.LastName,
+                    Line1 = mockAddress.Line1,
+                    Line2 = mockAddress.Line2,
+                    MobileNumber = mockAddress.MobileNumber,
+                    PhoneNumber = mockAddress.PhoneNumber,
+                    PostalCode = mockAddress.PostalCode,
+                    State = mockAddress.State
                 }
             };
 

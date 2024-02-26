@@ -9,12 +9,10 @@ namespace WildBearAdventures.API.PipelinesExtensions
 
         public Task Execute(PipelineTaskArgs<OrderProcessingInput, OrderProcessingOutput> subject, PipelineContext context)
         {
+            Console.WriteLine("Export Order to other system");
 
-            //subject.Input.Order.
 
-
-            throw new NotImplementedException();
-            // Your custom logic.
+            return Task.CompletedTask;
         }
     }
 }
