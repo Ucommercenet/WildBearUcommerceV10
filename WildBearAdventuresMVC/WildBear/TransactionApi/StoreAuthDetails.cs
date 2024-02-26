@@ -19,7 +19,7 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
 
         public StoreAuthDetailsModel WildBearStore { get; }
 
-
+        //Handout Part 4: Authentication (No code task) 
 
         /// <summary>
         /// Authentication is per store the store Id is used as clientID

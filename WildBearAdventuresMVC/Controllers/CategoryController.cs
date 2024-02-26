@@ -20,16 +20,11 @@ namespace WildBearAdventures.MVC.Controllers
 
         public IActionResult Index(string id, CancellationToken token)
         {
-            //TODO Improvement: Show sub-Categories                        
+            //Handout Part 2.2: Category details
+            #region MyRegion
+            //TODO Improvement: Handle sub-Categories too                     
 
-            //Figure out currentCategory based on route values aka. how did we get here.
-            var ableToGetRoute = HttpContext.Request.RouteValues.TryGetValue("id", out var routeName);
-            if (ableToGetRoute)
-            {
-                _contextHelper.SetCurrentCategoryByName(routeName?.ToString());
-            }
-
-
+            _contextHelper.SetCurrentCategoryByName(id);
             var currentCategoryGuid = _contextHelper.GetCurrentCategoryGuid();
 
 
@@ -39,7 +34,7 @@ namespace WildBearAdventures.MVC.Controllers
 
             var currentCategoryDto = _wildBearClient.GetSingleCategoryByGuid((Guid)currentCategoryGuid, token);
 
-            
+
 
             var productDtos = _wildBearClient.GetAllProductsFromCategoryGuid((Guid)currentCategoryGuid, token);
 
@@ -49,7 +44,9 @@ namespace WildBearAdventures.MVC.Controllers
                 CurrentCategoryName = currentCategoryDto is not null ? currentCategoryDto?.Name : "No currentCategory",
             };
 
-            return View(CategoryViewModel);
+            return View(CategoryViewModel); 
+            #endregion
+            
         }
     }
 }

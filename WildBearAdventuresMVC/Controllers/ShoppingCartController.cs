@@ -6,8 +6,6 @@ using WildBearAdventures.MVC.WildBear.TransactionApi;
 
 namespace WildBearAdventures.MVC.Controllers
 {
-    //Handout Part 7 Transaction Endpoints
-    #region Handout
     public class ShoppingCartController : Controller
     {
         private readonly IContextHelper _contextHelper;
@@ -21,7 +19,7 @@ namespace WildBearAdventures.MVC.Controllers
         }
 
 
-        //Handout Part 5 Shopping Cart
+        
         public async Task<IActionResult> Index(CancellationToken ct)
         {
             var CurrentCart = _contextHelper.GetCurrentCartGuid();
@@ -54,5 +52,5 @@ namespace WildBearAdventures.MVC.Controllers
             return View(shoppingCartViewModel);
         }
     } 
-    #endregion
+   
 }

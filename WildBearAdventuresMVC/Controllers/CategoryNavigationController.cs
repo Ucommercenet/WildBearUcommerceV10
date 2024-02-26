@@ -16,6 +16,8 @@ namespace WildBearAdventures.MVC.Controllers
 
         public IActionResult Index()
         {
+            //Handout Part 2.1: Category navigation
+            #region Handout
             var categoryDtoCollection = _wildBearClient.GetAllCategoriesFromCatalog("MainProductCatalog", new CancellationToken());
 
             var categoryNames = new List<string>();
@@ -32,6 +34,9 @@ namespace WildBearAdventures.MVC.Controllers
 
 
             return View(categoryNavigationViewModel);
+            #endregion
+            //throw new NotImplementedException();
+
         }
 
 

@@ -16,16 +16,15 @@ namespace WildBearAdventures.MVC.Controllers
         {
             _transactionClient = transactionClient;
         }
-
-        //Handout Checkout Shopping Cart. For now let's do it all in a single Controller and split out afterward
-
+        
         public async Task<IActionResult> Index(Guid cartId, CancellationToken ct)
         {
-            //Handout-Keep
             var selectedCultureCode = "da-DK"; //TODO Improvement: Get from ContextHelper or user                                              
             var selectedPriceGroupName = "EUR 15 pct"; //TODO Improvement: Get from ContextHelper or user     
             var selectedPaymentMethodName = "Account"; //TODO Improvement: Get from User 
             var selectedShippingMethod = "Download"; //TODO Improvement: Get from User 
+
+            //Handout Part 6: Checkout flow
 
             //Find PriceGroupId
             var priceGroups = await _transactionClient.GetPriceGroups(selectedCultureCode, ct);

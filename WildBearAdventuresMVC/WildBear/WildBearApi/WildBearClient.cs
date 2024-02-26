@@ -39,20 +39,12 @@ public class WildBearClient : IStoreApiClient
         //IMPROVE: Fix breaks if the there is zero products in the list
         //var result = response.Content.ReadFromJsonAsync<List<ProductDto?>>().Result;
         var allProducts = response.Content.ReadFromJsonAsync<List<ProductDto?>>().Result;
-
-        //TODO: Also include non-variants
-
-        var NotSellableProducts = allProducts.Where(x => x.AllowOrdering == false).ToList();
-
+        
         var regularProduct = allProducts.Where(x => x.productType == 2 ).ToList();
         var variantProduct = allProducts.Where(x => x.productType == 3 ).ToList();
-
-
-        var sellableProducts = allProducts.Where(x => x.productType == 2 | x.productType == 3 ).ToList();
-
         
-
-
+        var sellableProducts = allProducts.Where(x => x.productType == 2 | x.productType == 3 ).ToList();
+        
         return sellableProducts;
 
     }

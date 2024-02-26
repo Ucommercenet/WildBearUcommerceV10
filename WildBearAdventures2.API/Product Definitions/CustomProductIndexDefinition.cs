@@ -10,7 +10,7 @@ namespace WildBearAdventures.API.Product_Definitions
         {
             this.Field(p => p["OriginCountry"], typeof(string));
 
-            //TODO: Check if this works
+            //TODO: report bug around user defined fields somethimes not geting in the index
             //this.Field(p => p.PricesInclTax["EUR 15 pct"]);
 
 

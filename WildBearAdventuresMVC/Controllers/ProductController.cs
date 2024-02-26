@@ -25,7 +25,10 @@ namespace WildBearAdventures.MVC.Controllers
 
         [HttpGet]
         public IActionResult Index(string productName, CancellationToken ct)
-        {            
+        {
+
+            //Handout Part 3: Product details
+            #region Handout
             var currentProductDto = _wildBearClient.GetSingleProductByName(productName, ct);
 
             currentProductDto.UnitPrices.TryGetValue("EUR 15 pct", out var price);
@@ -37,7 +40,9 @@ namespace WildBearAdventures.MVC.Controllers
                 Price = price
             };
 
-            return View(productViewModel);
+            return View(productViewModel); 
+            #endregion
+            //throw new NotImplementedException();
         }
 
 
@@ -45,11 +50,13 @@ namespace WildBearAdventures.MVC.Controllers
         [HttpPost]
         public async Task<RedirectToActionResult> AddToCart(string productName, CancellationToken ct, int quantity = 1)
         {
-            //Handout Part 5 Shopping Cart
-            #region Handout 
+            //Handout Part 5 Add products to the shopping cart
+            #region Handout
             //Greater information
             var currency = "EUR"; //TODO Improvement: Get dynamic
             var cultureCode = "da-DK"; //TODO Improvement: Get dynamic
+
+
             var currentCategory = _contextHelper.GetCurrentCategoryGuid() ?? throw new Exception("No Category found");
             var currentCatalog = _wildBearClient.GetSingleCategoryByGuid(currentCategory, ct).CatalogId;
 
@@ -78,10 +85,11 @@ namespace WildBearAdventures.MVC.Controllers
             await _transactionClient.PostShoppingCartLineUpdate(request, ct);
 
             //Update MiniCart
-            _contextHelper.UpdateMiniCartCount(quantity); 
-            #endregion
+            _contextHelper.UpdateMiniCartCount(quantity);
 
-            //After the product has been added, show the product again.
+
+            //After the product has been added, show the product again. 
+            #endregion
             return RedirectToAction("Index");
         }
 
