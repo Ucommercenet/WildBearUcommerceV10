@@ -87,7 +87,6 @@ namespace WildBearAdventures.MVC.WildBear.Context
 
 
         public Guid? GetCurrentCartGuid()
-
         {
             var session = _httpContextAccessor.HttpContext?.Session;
             var currentBasketGuid = session?.GetString(KEY_BasketGuid);

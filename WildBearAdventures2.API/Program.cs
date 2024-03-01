@@ -7,6 +7,7 @@ using Ucommerce.Extensions.Search.Abstractions.Extensions;
 using Ucommerce.Search.Elastic.Configuration;
 using Ucommerce.Extensions.Payment.Abstractions.Extensions;
 using WildBearAdventures.API.PipelinesExtensions;
+using WildBearAdventures.API.Product_Definitions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,10 +22,7 @@ builder.Services.AddUcommerce(builder.Configuration)
     .AddMyOrderProcessingExtensions()
     .Build();
 
-
-
-
-
+builder.Services.AddHostedService<SetupDefinitions>();
 builder.Services.AddControllers();
 
 #region Swagger Related

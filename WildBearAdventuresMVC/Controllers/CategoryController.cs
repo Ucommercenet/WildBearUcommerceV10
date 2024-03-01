@@ -30,12 +30,9 @@ namespace WildBearAdventures.MVC.Controllers
 
             if (currentCategoryGuid is null)
             { return View(); }
-
-
+            
             var currentCategoryDto = _wildBearClient.GetSingleCategoryByGuid((Guid)currentCategoryGuid, token);
-
-
-
+            
             var productDtos = _wildBearClient.GetAllProductsFromCategoryGuid((Guid)currentCategoryGuid, token);
 
             var CategoryViewModel = new CategoryViewModel

@@ -35,7 +35,7 @@ namespace WildBearAdventures.MVC.Controllers
 
             return View(categoryNavigationViewModel);
             #endregion
-            //throw new NotImplementedException();
+           
 
         }
 

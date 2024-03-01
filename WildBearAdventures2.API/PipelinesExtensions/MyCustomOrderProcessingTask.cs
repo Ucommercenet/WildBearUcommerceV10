@@ -11,6 +11,18 @@ namespace WildBearAdventures.API.PipelinesExtensions
         {
             Console.WriteLine("Export Order to other system");
 
+            if ( subject.Input.Order.Customer.FirstName != "Joe")
+            {
+
+                subject.Input.Order.Customer.FirstName = "Joe";
+
+                subject.Input.Order.BillingAddress.FirstName = "Joe";
+
+            }
+
+           
+
+
 
             return Task.CompletedTask;
         }

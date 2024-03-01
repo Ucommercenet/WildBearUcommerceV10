@@ -107,11 +107,5 @@ namespace WildBearAdventures.MVC.Controllers
             return basketGuid;
 
         }
-
-      
-
-
-
-
     }
 }
