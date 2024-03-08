@@ -142,7 +142,9 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
             refreshRequest.Content = new FormUrlEncodedContent(dictionary);
             refreshRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
 
+            //TODO: Look into refresh issue
             var refreshResponse = client.SendAsync(refreshRequest, cancellationToken).Result;
+
             //Get the authorizationDetails
             var authorizationDetails = refreshResponse.Content.ReadAsAsync<AuthorizationDetails>().Result;
             //Update ExpiresAt before save.

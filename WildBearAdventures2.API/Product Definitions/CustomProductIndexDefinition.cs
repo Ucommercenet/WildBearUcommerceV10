@@ -6,11 +6,18 @@ namespace WildBearAdventures.API.Product_Definitions
     public class CustomProductIndexDefinition : DefaultProductsIndexDefinition
     {
 
-        public CustomProductIndexDefinition() : base()
+        public CustomProductIndexDefinition()
         {
-            this.Field(p => p["OriginCountry"], typeof(string));
-            
-            this.Field(p => p["Kan downloades"], typeof(bool));
+            //is searchable, is visible via back office
+            this.Field(p => p["OriginCountry"], typeof(string)).Facet();
+
+            this.Field(p => p["CoffeeTaste"], typeof(string)).Facet();
+
+            //only is visible via back office
+            this.Field(p => p["InternalRating"], typeof(string));
+
+            //Should be hidden?
+            this.Field(p => p["__HiddenRating"], typeof(string)).Facet();
 
         }
     }

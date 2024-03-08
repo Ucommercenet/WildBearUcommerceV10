@@ -8,6 +8,9 @@ using Ucommerce.Search.Elastic.Configuration;
 using Ucommerce.Extensions.Payment.Abstractions.Extensions;
 using WildBearAdventures.API.PipelinesExtensions;
 using WildBearAdventures.API.Product_Definitions;
+using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
+using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
+using Ucommerce.Web.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +24,8 @@ builder.Services.AddUcommerce(builder.Configuration)
     .AddPayments()
     .AddMyOrderProcessingExtensions()
     .Build();
+
+builder.Services.AddUnique<IIndexDefinition<ProductSearchModel>, CustomProductIndexDefinition>();
 
 builder.Services.AddHostedService<SetupDefinitions>();
 builder.Services.AddControllers();

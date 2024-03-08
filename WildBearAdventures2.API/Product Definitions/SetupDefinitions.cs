@@ -20,18 +20,21 @@ namespace WildBearAdventures.API.Product_Definitions
 
             // Set up data using dbContext
 
-            var exists = dbContext.Set<ProductDefinitionEntity>().Any(x => x.Name == "Coffee");
-            if (exists) { return; }
+            //var exists = dbContext.Set<ProductDefinitionEntity>().Any(x => x.Name == "Coffee");
+            //if (exists) { return; }
 
             var shortTextDataType = dbContext.Set<DataTypeEntity>().First(x => x.DefinitionName == "ShortText");
 
             //Add Coffee Product Definition
 
-            var coffeeDefinition = CreateProductDefinition("Coffee", "Definition for Coffee type products.");
+            var coffeeDefinition = CreateCoffeeProductDefinition("Coffee", "Definition for Coffee type products.");
 
             coffeeDefinition.ProductDefinitionFields = new List<ProductDefinitionFieldEntity>()
             {
                 CreateProductDefinitionField(shortTextDataType, "OriginCountry", false, false),
+                CreateProductDefinitionField(shortTextDataType, "CoffeeTaste", false, false),
+                CreateProductDefinitionField(shortTextDataType, "InternalRating", false, false),
+                CreateProductDefinitionField(shortTextDataType, "__HiddenRating", false, false)
             };
 
             dbContext.Add(coffeeDefinition);
@@ -39,7 +42,7 @@ namespace WildBearAdventures.API.Product_Definitions
             await dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        private ProductDefinitionEntity CreateProductDefinition(string name, string description)
+        private ProductDefinitionEntity CreateCoffeeProductDefinition(string name, string description)
         {
             return new ProductDefinitionEntity
             {
