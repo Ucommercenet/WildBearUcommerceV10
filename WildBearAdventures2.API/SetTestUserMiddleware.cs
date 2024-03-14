@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace WildBearAdventures2.API;
+namespace WildBearAdventures.API;
 
 /// <summary>
 /// Middleware for setting the test user

@@ -1,8 +1,8 @@
 ﻿using Ucommerce.Web.Infrastructure.Persistence;
 using Ucommerce.Web.Infrastructure.Persistence.Entities.Definitions;
-using WildBearAdventures.API.Product_Definitions;
 
-namespace WildBearAdventures.API.Product_Definitions
+
+namespace WildBearAdventures.API.WildBearProducts
 {
     public class SetupDefinitions : BackgroundService
     {
@@ -27,14 +27,13 @@ namespace WildBearAdventures.API.Product_Definitions
 
             //Add Coffee Product Definition
 
-            var coffeeDefinition = CreateCoffeeProductDefinition("Coffee", "Definition for Coffee type products.");
+            var coffeeDefinition = CreateCoffeeProductDefinition(name: "Coffee", description: "Definition for Coffee type products.");
 
             coffeeDefinition.ProductDefinitionFields = new List<ProductDefinitionFieldEntity>()
             {
                 CreateProductDefinitionField(shortTextDataType, "OriginCountry", false, false),
                 CreateProductDefinitionField(shortTextDataType, "CoffeeTaste", false, false),
-                CreateProductDefinitionField(shortTextDataType, "InternalRating", false, false),
-                CreateProductDefinitionField(shortTextDataType, "__HiddenRating", false, false)
+                CreateProductDefinitionField(shortTextDataType, "TestDoesNotExsist", false, false),              
             };
 
             dbContext.Add(coffeeDefinition);

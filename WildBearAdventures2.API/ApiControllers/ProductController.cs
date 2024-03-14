@@ -56,7 +56,7 @@ namespace WildBearAdventures.API.ApiControllers
                .ToResultSet(token);
             var result = searchroduct.SingleOrDefault();
 
-            var definedFields = result.GetUserDefinedFields();
+            //var definedFields = result.GetUserDefinedFields();
 
 
             return result is null ? NotFound() : Ok(result);

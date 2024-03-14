@@ -43,11 +43,16 @@ namespace WildBearAdventures.API.ApiControllers.ScenarioControllers
             // ***THIS IS NOT ProductIds but Product RelationIds***
             //var productRelationGuids = category?.ProductIds;
 
-            var result = await _indexProduct.AsSearchable(_language.Culture).Where(x => x.CategoryIds.Contains(category.Id)).ToResultSet(token);
+
+            //Testing the sort by Displayname
+            var query =  _indexProduct.AsSearchable(_language.Culture).Where(x => x.CategoryIds.Contains(category.Id));
+
+            var orderedResult =  query.OrderBy(x => x.DisplayName);
 
 
+            var finalResuelt = await orderedResult.OrderByDescending(x => x.ShortDescription).ToResultSet();
 
-            return result;
+            return finalResuelt;
         }
 
 

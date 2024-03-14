@@ -1,4 +1,3 @@
-using WildBearAdventures2.API;
 using Ucommerce.Web.BackOffice.DependencyInjection;
 using Ucommerce.Web.Infrastructure.DependencyInjection;
 using Ucommerce.Web.WebSite.DependencyInjection;
@@ -7,10 +6,11 @@ using Ucommerce.Extensions.Search.Abstractions.Extensions;
 using Ucommerce.Search.Elastic.Configuration;
 using Ucommerce.Extensions.Payment.Abstractions.Extensions;
 using WildBearAdventures.API.PipelinesExtensions;
-using WildBearAdventures.API.Product_Definitions;
 using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 using Ucommerce.Web.Common.Extensions;
+using WildBearAdventures.API;
+using WildBearAdventures.API.WildBearProducts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,10 +25,14 @@ builder.Services.AddUcommerce(builder.Configuration)
     .AddMyOrderProcessingExtensions()
     .Build();
 
-builder.Services.AddUnique<IIndexDefinition<ProductSearchModel>, CustomProductIndexDefinition>();
+builder.Services.AddUnique<IIndexDefinition<ProductSearchModel>, ProductIndexDefinition>();
 
 builder.Services.AddHostedService<SetupDefinitions>();
+builder.Services.AddHostedService<StartupSandbox>();
 builder.Services.AddControllers();
+
+
+
 
 #region Swagger Related
 builder.Services.AddEndpointsApiExplorer();
