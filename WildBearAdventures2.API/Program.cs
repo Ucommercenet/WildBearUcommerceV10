@@ -29,7 +29,7 @@ builder.Services.AddUcommerce(builder.Configuration)
 builder.Services.AddUnique<IIndexDefinition<ProductSearchModel>, ProductIndexDefinition>();
 
 builder.Services.AddHostedService<SetupDefinitions>();
-builder.Services.AddHostedService<WildBearProductsImport>();
+//builder.Services.AddHostedService<WildBearProductsImport>();
 builder.Services.AddControllers();
 
 
