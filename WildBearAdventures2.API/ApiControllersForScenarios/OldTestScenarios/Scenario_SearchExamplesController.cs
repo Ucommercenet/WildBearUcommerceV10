@@ -5,16 +5,16 @@ using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 using Ucommerce.Web.Infrastructure.Core.Models;
 
-namespace WildBearAdventures.API.ApiControllers.ScenarioControllers
+namespace WildBearAdventures.API.ApiControllersForScenarios.OldTestScenarios
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SearchExamplesController : ControllerBase
+    public class Scenario_SearchExamplesController : ControllerBase
     {
         private readonly IIndex<ProductSearchModel> _indexProduct;
         private readonly IIndex<CatalogSearchModel> _indexCatalog;
 
-        public SearchExamplesController(IIndex index, IIndex<CatalogSearchModel> indexCatalog, IIndex<ProductSearchModel> indexProduct)
+        public Scenario_SearchExamplesController(IIndex index, IIndex<CatalogSearchModel> indexCatalog, IIndex<ProductSearchModel> indexProduct)
         {
             _indexCatalog = indexCatalog;
             _indexProduct = indexProduct;

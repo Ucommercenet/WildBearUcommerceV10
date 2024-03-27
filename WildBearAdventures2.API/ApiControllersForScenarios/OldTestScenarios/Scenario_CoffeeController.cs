@@ -6,14 +6,13 @@ using Ucommerce.Extensions.Search.Abstractions;
 using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 using Ucommerce.Web.Infrastructure.Core.Models;
-using WildBearAdventures.API;
 
-namespace WildBearAdventures.API.ApiControllers.ScenarioControllers
+namespace WildBearAdventures.API.ApiControllersForScenarios.OldTestScenarios
 {
 
     [Route("api/[controller]")]
     [ApiController]
-    public class CoffeeScenariosController : ControllerBase
+    public class Scenario_CoffeeController : ControllerBase
     {
         //Easy Coffee scenario: This is anti pattern! But lets make it work then move the controllers out of this class
 
@@ -22,7 +21,7 @@ namespace WildBearAdventures.API.ApiControllers.ScenarioControllers
 
         private readonly Language _language;
 
-        public CoffeeScenariosController(IIndex<ProductSearchModel> indexProduct, IIndex<CategorySearchModel> indexCategory)
+        public Scenario_CoffeeController(IIndex<ProductSearchModel> indexProduct, IIndex<CategorySearchModel> indexCategory)
         {
             _indexProduct = indexProduct;
             _indexCategory = indexCategory;
@@ -45,9 +44,9 @@ namespace WildBearAdventures.API.ApiControllers.ScenarioControllers
 
 
             //Testing the sort by Displayname
-            var query =  _indexProduct.AsSearchable(_language.Culture).Where(x => x.CategoryIds.Contains(category.Id));
+            var query = _indexProduct.AsSearchable(_language.Culture).Where(x => x.CategoryIds.Contains(category.Id));
 
-            var orderedResult =  query.OrderBy(x => x.DisplayName);
+            var orderedResult = query.OrderBy(x => x.DisplayName);
 
 
             var finalResuelt = await orderedResult.OrderByDescending(x => x.ShortDescription).ToResultSet();

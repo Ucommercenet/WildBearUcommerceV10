@@ -9,10 +9,6 @@ namespace WildBearAdventures.API.WildBearProducts
         public TeaProductIndexDefinition()
         {
             this.Field(p => p["Tea Flavor Profile"], typeof(string));
-
-
-
-
         }
 
 

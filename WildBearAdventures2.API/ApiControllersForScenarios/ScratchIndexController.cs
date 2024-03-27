@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace WildBearAdventures.API.ApiControllers.Miscellaneous
+namespace WildBearAdventures.API.ApiControllersForScenarios
 {
     [Route("api/[controller]")]
     [ApiController]

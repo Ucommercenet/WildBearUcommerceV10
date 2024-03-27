@@ -11,6 +11,7 @@ using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 using Ucommerce.Web.Common.Extensions;
 using WildBearAdventures.API;
 using WildBearAdventures.API.WildBearProducts;
+using WildBearAdventures.API.WildBearProducts.ImportV2;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,7 @@ builder.Services.AddUcommerce(builder.Configuration)
 builder.Services.AddUnique<IIndexDefinition<ProductSearchModel>, ProductIndexDefinition>();
 
 builder.Services.AddHostedService<SetupDefinitions>();
-builder.Services.AddHostedService<StartupSandbox>();
+builder.Services.AddHostedService<WildBearProductsImport>();
 builder.Services.AddControllers();
 
 

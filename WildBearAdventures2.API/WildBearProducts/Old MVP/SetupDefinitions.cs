@@ -27,7 +27,8 @@ namespace WildBearAdventures.API.WildBearProducts
 
             //Add Coffee Product Definition
 
-            var coffeeDefinition = CreateCoffeeProductDefinition(name: "Coffee", description: "Definition for Coffee type products.");
+            var coffeeDefinition = CreateProductDefinition(name: "Coffee", description: "Definition for Coffee type products.");
+
 
             coffeeDefinition.ProductDefinitionFields = new List<ProductDefinitionFieldEntity>()
             {
@@ -41,7 +42,7 @@ namespace WildBearAdventures.API.WildBearProducts
             await dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        private ProductDefinitionEntity CreateCoffeeProductDefinition(string name, string description)
+        private ProductDefinitionEntity CreateProductDefinition(string name, string description)
         {
             return new ProductDefinitionEntity
             {
