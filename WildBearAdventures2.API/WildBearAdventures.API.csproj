@@ -25,4 +25,8 @@
             <Pack>true</Pack>
         </None>
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Scenarios\" />
+    </ItemGroup>
 </Project>

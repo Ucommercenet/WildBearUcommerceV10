@@ -4,6 +4,9 @@ using Ucommerce.Web.Infrastructure.Persistence.Entities.Definitions;
 
 namespace WildBearAdventures.API.WildBearProducts
 {
+    //For this to work remember to add this to Program.cs
+    //builder.Services.AddHostedService<SetupDefinitions>();
+
     public class SetupDefinitions : BackgroundService
     {
         private readonly IServiceProvider _serviceProvider;

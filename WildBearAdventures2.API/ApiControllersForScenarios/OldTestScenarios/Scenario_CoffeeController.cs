@@ -44,14 +44,13 @@ namespace WildBearAdventures.API.ApiControllersForScenarios.OldTestScenarios
 
 
             //Testing the sort by Displayname
-            var query = _indexProduct.AsSearchable(_language.Culture).Where(x => x.CategoryIds.Contains(category.Id));
+            var result = _indexProduct.AsSearchable(_language.Culture)
+                .Where(x => x.CategoryIds.Contains(category.Id)).ToResultSet().Result;
 
-            var orderedResult = query.OrderBy(x => x.DisplayName);
+            //var orderedResult = query.OrderBy(x => x.DisplayName);
+            //var finalResuelt = await orderedResult.OrderByDescending(x => x.ShortDescription).ToResultSet();
 
-
-            var finalResuelt = await orderedResult.OrderByDescending(x => x.ShortDescription).ToResultSet();
-
-            return finalResuelt;
+            return result;
         }
 
 

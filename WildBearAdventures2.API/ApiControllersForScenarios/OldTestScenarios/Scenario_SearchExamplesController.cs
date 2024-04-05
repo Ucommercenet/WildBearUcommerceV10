@@ -19,25 +19,7 @@ namespace WildBearAdventures.API.ApiControllersForScenarios.OldTestScenarios
             _indexCatalog = indexCatalog;
             _indexProduct = indexProduct;
         }
-
-        [HttpGet("GetProductNameForA001")]
-        public string GetProductNameForA001(CancellationToken token)
-        {
-            var language = new Language()
-            {
-                Name = "Danish",
-                Culture = new CultureInfo("da-DK")
-            };
-
-            var indexSearch = _indexProduct.AsSearchable(language.Culture);
-
-            var productResultSet = indexSearch.Where(x => x.Sku == "A001")
-                .ToResultSet(token).Result;
-
-            var result = productResultSet.FirstOrDefault()?.Name;
-
-            return result ??= "No product found";
-        }
+               
 
         [SwaggerOperation(Summary = "Gets the first Catalog, which on a fresh install would be the Ucommerce Catalog.")]
         [HttpGet("GetDefaultCatalog")]

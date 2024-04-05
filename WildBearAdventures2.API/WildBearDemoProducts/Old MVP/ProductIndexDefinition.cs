@@ -10,7 +10,6 @@ namespace WildBearAdventures.API.WildBearProducts
         {
             //is searchable, is visible via back office
             this.Field(p => p["OriginCountry"], typeof(string)).Facet();
-
             this.Field(p => p["CoffeeTaste"], typeof(string)).Facet();
         }
     }
