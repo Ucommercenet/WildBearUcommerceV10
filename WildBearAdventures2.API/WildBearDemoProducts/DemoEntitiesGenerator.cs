@@ -1,4 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Collections.Immutable;
+using Ucommerce.Extensions.Search.Abstractions;
+using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
+using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 using Ucommerce.Web.Infrastructure.Persistence;
 using Ucommerce.Web.Infrastructure.Persistence.Entities;
 using Ucommerce.Web.Infrastructure.Persistence.Entities.Definitions;
@@ -8,13 +12,19 @@ namespace WildBearAdventures.API.WildBearDemoProducts
     public class DemoEntitiesGenerator
     {
         private readonly UcommerceDbContext _ucommerceDbContext;
+        private IEnumerable<IIndexer<ProductEntity>> _productIndexer;
 
-        public DemoEntitiesGenerator(UcommerceDbContext ucommerceDbContext)
+        public DemoEntitiesGenerator(UcommerceDbContext ucommerceDbContext, IEnumerable<IIndexer<ProductEntity>> productIndexer)
         {
             _ucommerceDbContext = ucommerceDbContext;
+            _productIndexer = productIndexer;
         }
 
-        public List<ProductEntity> CreateCoffeeProducts()
+        /// <summary>
+        /// Will both create and Index the newly created products.
+        /// </summary>
+
+        public async Task<List<ProductEntity>> CreateCoffeeProducts(CancellationToken cancellationToken)
         {
             var wildCoffeeDefinition = _ucommerceDbContext.Set<ProductDefinitionEntity>().FirstOrDefault(x => x.Name == "WildCoffee");
             if (wildCoffeeDefinition == null) { throw new Exception("WildCoffee ProductDefinitionEntity not found"); }
@@ -22,9 +32,15 @@ namespace WildBearAdventures.API.WildBearDemoProducts
             var demoProducts = new List<ProductEntity>
             {
                 //TODO: Add option to create any number if needed
-                CreateRegularProduct(name: $"DemoCoffee{RandomLetterAndNumber()}", sku:RandomLetterAndNumber(), productDefinition: wildCoffeeDefinition, culture: "da-DK"),
-                CreateRegularProduct(name: $"DemoCoffee{RandomLetterAndNumber()}", sku:RandomLetterAndNumber(), productDefinition: wildCoffeeDefinition, culture: "da-DK")
+               await CreateRegularProduct(name: $"DemoCoffee{RandomLetterAndNumber()}", sku:RandomLetterAndNumber(), productDefinition: wildCoffeeDefinition, culture: "da-DK"),
             };
+
+
+            var indexer = 
+
+
+            await _productIndexer.Index(demoProducts.ToImmutableList(), cancellationToken);
+
             return demoProducts;
         }
 
@@ -33,14 +49,20 @@ namespace WildBearAdventures.API.WildBearDemoProducts
         /// Creates a RegularProduct(aka non variant product)
         /// Note: name, DisplayName definition, culture are required        
         /// </summary>
-        public ProductEntity CreateRegularProduct(string name, string sku, ProductDefinitionEntity productDefinition, string culture, string? shortDescription = null, decimal? price = null)
+        public async Task<ProductEntity> CreateRegularProduct(string name, string sku, ProductDefinitionEntity productDefinition, string culture, string? shortDescription = null, decimal? price = null)
         {
+            var startingPrice = new PriceEntity() { };
+            var priceCollection = new List<PriceEntity>  
+            {
+                startingPrice
+            };
+
             var product = new ProductEntity()
             {
                 Name = name,
-                Sku = sku,
+                Sku = sku,                
                 Definition = productDefinition,
-                
+                DisplayOnSite = true,
                 ProductDescriptions = new List<ProductDescriptionEntity> { new ProductDescriptionEntity() { DisplayName = name, ShortDescription = shortDescription, CultureCode = culture } }
             };
             return product;

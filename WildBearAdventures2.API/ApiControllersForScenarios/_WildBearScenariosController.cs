@@ -12,12 +12,12 @@ namespace WildBearAdventures.API.ApiControllersForScenarios
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class _WildBearStartupController : ControllerBase
+    public class _WildBearScenariosController : ControllerBase
     {
         private readonly UcommerceDbContext _ucommerceDbContext;
         private readonly DemoEntitiesGenerator _demoEntitiesGenerator;
 
-        public _WildBearStartupController(UcommerceDbContext ucommerceDbContext, DemoEntitiesGenerator demoEntitiesGenerator)
+        public _WildBearScenariosController(UcommerceDbContext ucommerceDbContext, DemoEntitiesGenerator demoEntitiesGenerator)
         {
             _ucommerceDbContext = ucommerceDbContext;
             _demoEntitiesGenerator = demoEntitiesGenerator;
@@ -26,8 +26,8 @@ namespace WildBearAdventures.API.ApiControllersForScenarios
 
         //Cound this be a PUT request!?
         //PUT requests are idempotent, meaning that sending the same request multiple times will have the same effect as sending it once.               
-        [HttpPost]
-        public IActionResult Post()
+        [HttpPost("Startup")]
+        public async Task<IActionResult> Post(CancellationToken cancellationToken)
         {
             var endpointMessage = string.Empty;
 
@@ -55,7 +55,7 @@ namespace WildBearAdventures.API.ApiControllersForScenarios
 
 
             //***Adds DemoCoffeeProducts
-            var WildCoffeeProducts = _demoEntitiesGenerator.CreateCoffeeProducts();
+            var WildCoffeeProducts = await _demoEntitiesGenerator.CreateCoffeeProducts(cancellationToken);
             _ucommerceDbContext.Set<ProductEntity>().AddRange(WildCoffeeProducts);
 
 
@@ -70,7 +70,11 @@ namespace WildBearAdventures.API.ApiControllersForScenarios
         }
 
 
-       
+        //[HttpPost("Sandbox")]
+        //public async Task<IActionResult> Post(CancellationToken cancellationToken)
+        //{
+        //}
+
 
 
 

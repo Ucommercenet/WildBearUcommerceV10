@@ -64,7 +64,6 @@ namespace WildBearAdventures.API.ApiControllers
         }
 
 
-
         //TEST with Wild Coffee: 7040940e-eab1-4a72-85b5-867905b7d94a        
         [SwaggerOperation(Summary = "Example: 7040940e-eab1-4a72-85b5-867905b7d94a")]
         [HttpGet("GetAllProductsFromCategoryGuid")]
