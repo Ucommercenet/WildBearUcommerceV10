@@ -28,17 +28,13 @@ builder.Services.AddUcommerce(builder.Configuration)
     .Build();
 
 builder.Services.AddUnique<IIndexDefinition<ProductSearchModel>, ProductIndexDefinition>();
-builder.Services.AddTransient<DemoEntitiesGenerator>();
+builder.Services.AddTransient<DemoToolbox>();
 builder.Services.AddControllers();
-
-
-
 
 #region Swagger Related
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => { options.EnableAnnotations(); }); 
+builder.Services.AddSwaggerGen(options => { options.EnableAnnotations(); });
 #endregion
-
 
 var app = builder.Build();
 

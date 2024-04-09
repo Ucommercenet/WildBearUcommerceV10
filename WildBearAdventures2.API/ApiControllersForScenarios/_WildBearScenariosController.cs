@@ -5,6 +5,7 @@ using WildBearAdventures.API.WildBearDemoProducts;
 using MimeKit.Cryptography;
 using Ucommerce.Web.Infrastructure.Persistence.Mapping;
 using Ucommerce.Web.Infrastructure.Persistence.Entities;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,68 +16,84 @@ namespace WildBearAdventures.API.ApiControllersForScenarios
     public class _WildBearScenariosController : ControllerBase
     {
         private readonly UcommerceDbContext _ucommerceDbContext;
-        private readonly DemoEntitiesGenerator _demoEntitiesGenerator;
+        private readonly DemoToolbox _demoToolbox;
 
-        public _WildBearScenariosController(UcommerceDbContext ucommerceDbContext, DemoEntitiesGenerator demoEntitiesGenerator)
+        public _WildBearScenariosController(UcommerceDbContext ucommerceDbContext, DemoToolbox demoEntitiesGenerator)
         {
             _ucommerceDbContext = ucommerceDbContext;
-            _demoEntitiesGenerator = demoEntitiesGenerator;
+            _demoToolbox = demoEntitiesGenerator;
+        }
+
+        [HttpPost("StartupCategories")]
+        public async Task<IActionResult> StartupCategories(CancellationToken cancellationToken)
+        {
+            const string CategoryName = "Drinks";
+            _demoToolbox.CreateCategory(CategoryName);
+
+            return Ok();
         }
 
 
-        //Cound this be a PUT request!?
-        //PUT requests are idempotent, meaning that sending the same request multiple times will have the same effect as sending it once.               
-        [HttpPost("Startup")]
-        public async Task<IActionResult> Post(CancellationToken cancellationToken)
+        [HttpPost("StartupProducts")]
+        public async Task<IActionResult> StartupProducts(CancellationToken cancellationToken)
         {
             var endpointMessage = string.Empty;
+            var wildCoffeeDefinitionName = "WildCoffee";
 
-            const string WildCoffeeDefinitionName = "WildCoffee";
-            const string ProductDefinitionDescription = "Definition for Coffee type products";
-            //const string ProductDefinitionFieldName = "OriginCountry";
-
-
-            var productDefinitionExists = _ucommerceDbContext.Set<ProductDefinitionEntity>().Any(x => x.Name == WildCoffeeDefinitionName);
+            //Will Create ProductDefinition if it does not exist          
+            var productDefinitionExists = _ucommerceDbContext.Set<ProductDefinitionEntity>().Any(x => x.Name == wildCoffeeDefinitionName);
             if (productDefinitionExists is false)
             {
-                //***Adds CoffeeProductDefinition
-                var WildCoffeeProductDefinition = new ProductDefinitionEntity()
-                {
-                    Name = WildCoffeeDefinitionName,
-                    Description = ProductDefinitionDescription,
-                    Deleted = false
-                };
-
-                _ucommerceDbContext.Set<ProductDefinitionEntity>().Add(WildCoffeeProductDefinition);
-                endpointMessage += $"Definition: {WildCoffeeProductDefinition.Name} was added";
-                _ucommerceDbContext.SaveChanges();
+                _demoToolbox.CreateProductDefinition(wildCoffeeDefinitionName);
+                endpointMessage += $"Definition: {wildCoffeeDefinitionName} was added";
             }
 
-
-
             //***Adds DemoCoffeeProducts
-            var WildCoffeeProducts = await _demoEntitiesGenerator.CreateCoffeeProducts(cancellationToken);
-            _ucommerceDbContext.Set<ProductEntity>().AddRange(WildCoffeeProducts);
-
+            var WildCoffeeProducts = await _demoToolbox.CreateCoffeeProducts(cancellationToken);
 
 
             //Just for debug
             foreach (var product in WildCoffeeProducts)
             { endpointMessage += $"WildCoffeeProducts {product.Name} was added"; };
 
-            //Always last saveChanges
-            _ucommerceDbContext.SaveChanges();
             return Ok(endpointMessage);
+
         }
 
+        /// <summary>
+        /// The added field wil be of type ShortText
+        /// </summary>        
+        [HttpPost("UpdateProductDefinition")]
+        public IActionResult UpdateProductDefinition(string nameOfField = "CoffeeType")
+        {
+            var wildCoffeeDefinitionName = "WildCoffee";
 
-        //[HttpPost("Sandbox")]
-        //public async Task<IActionResult> Post(CancellationToken cancellationToken)
-        //{
-        //}
+            var wildCoffeeDefinitionFields = _ucommerceDbContext
+                .Set<ProductDefinitionEntity>()
+                .Where(x => x.Name == wildCoffeeDefinitionName).FirstOrDefault();
+               
 
+            if (wildCoffeeDefinitionFields == null)
+            { return NotFound("wildCoffeeDefinition not found"); }                       
 
+            _demoToolbox.AddShortTextFieldToProductDefinition(wildCoffeeDefinitionFields.ProductDefinitionFields,nameOfField);
 
+            return Ok();
+
+        }
+         private ProductDefinitionFieldEntity CreateProductDefinitionField(DataTypeEntity dataType, string name, bool isMultilingual, bool isVariantProperty)
+        {
+            return new ProductDefinitionFieldEntity
+            {
+                Name = name,
+                Deleted = false,
+                Multilingual = isMultilingual,
+                DisplayOnSite = true,
+                RenderInEditor = true,
+                IsVariantProperty = isVariantProperty,
+                DataType = dataType
+            };
+        }
 
     }
 }

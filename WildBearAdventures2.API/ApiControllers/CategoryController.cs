@@ -83,8 +83,6 @@ namespace WildBearAdventures.API.ApiControllers
         }
 
 
-
-
         [HttpGet("GetAllCategoriesFromCatalog")]
         public async Task<IActionResult> GetAllCategoriesFromCatalog(string? catalogName, string? cultureInput, CancellationToken token)
         {
