@@ -68,32 +68,21 @@ namespace WildBearAdventures.API.ApiControllersForScenarios
         {
             var wildCoffeeDefinitionName = "WildCoffee";
 
-            var wildCoffeeDefinitionFields = _ucommerceDbContext
+            var wildCoffeeProductDefinitionEntity = _ucommerceDbContext
                 .Set<ProductDefinitionEntity>()
+                .Include(x => x.ProductDefinitionFields)
                 .Where(x => x.Name == wildCoffeeDefinitionName).FirstOrDefault();
                
 
-            if (wildCoffeeDefinitionFields == null)
+            if (wildCoffeeProductDefinitionEntity == null)
             { return NotFound("wildCoffeeDefinition not found"); }                       
 
-            _demoToolbox.AddShortTextFieldToProductDefinition(wildCoffeeDefinitionFields.ProductDefinitionFields,nameOfField);
+            _demoToolbox.AddShortTextFieldToProductDefinition(wildCoffeeProductDefinitionEntity.ProductDefinitionFields,nameOfField);
 
             return Ok();
 
         }
-         private ProductDefinitionFieldEntity CreateProductDefinitionField(DataTypeEntity dataType, string name, bool isMultilingual, bool isVariantProperty)
-        {
-            return new ProductDefinitionFieldEntity
-            {
-                Name = name,
-                Deleted = false,
-                Multilingual = isMultilingual,
-                DisplayOnSite = true,
-                RenderInEditor = true,
-                IsVariantProperty = isVariantProperty,
-                DataType = dataType
-            };
-        }
+        
 
     }
 }

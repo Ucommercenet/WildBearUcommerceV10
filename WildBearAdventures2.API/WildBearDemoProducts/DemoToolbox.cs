@@ -128,13 +128,12 @@ namespace WildBearAdventures.API.WildBearDemoProducts
 
         public void AddShortTextFieldToProductDefinition(ICollection<ProductDefinitionFieldEntity> definitionFields, string nameOfNewField)
         {
-            var shortTextDataType = _ucommerceDbContext.Set<DataTypeEntity>().First(x => x.DefinitionName == "ShortText");
+            var shortTextDataType = _ucommerceDbContext.Set<DataTypeEntity>()
+                .FirstOrDefault(x => x.DefinitionName == "ShortText") ?? throw new Exception("ShortText DataType not found");
 
-            definitionFields.Add(CreateProductDefinitionField(shortTextDataType, nameOfNewField, false, false));
 
-            _ucommerceDbContext.Add(definitionFields);
+            definitionFields.Add(CreateProductDefinitionField(shortTextDataType, nameOfNewField, false, false));            
             _ucommerceDbContext.SaveChanges();
-
 
         }
 
