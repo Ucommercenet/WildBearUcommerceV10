@@ -39,13 +39,14 @@ namespace WildBearAdventures.API.WildBearDemoProducts
             _ucommerceDbContext.Set<ProductEntity>().AddRange(demoProducts);
 
 
-            var drinksCategory = _ucommerceDbContext.Set<CategoryEntity>().Where(x => x.Name == "Drinks").First();
-            CreateCategoryProductRelation(demoProducts, drinksCategory);
+            var drinksCategory = _ucommerceDbContext.Set<CategoryEntity>().Where(x => x.Name == "Drinks").FirstOrDefault();
+            if (drinksCategory is not null)
+            { CreateCategoryProductRelation(demoProducts, drinksCategory); }
 
             _ucommerceDbContext.SaveChanges();
 
-            //TODO: bug in the indexer! For now will only work if product are in a category
-            await _productIndexer.Index(demoProducts.ToImmutableList(), cancellationToken);
+            //TODO: bug in the indexer! For now will only not-break if product are in a category
+            //await _productIndexer.Index(demoProducts.ToImmutableList(), cancellationToken);
             return demoProducts;
         }
 
@@ -128,30 +129,13 @@ namespace WildBearAdventures.API.WildBearDemoProducts
 
         public void AddShortTextFieldToProductDefinition(ICollection<ProductDefinitionFieldEntity> definitionFields, string nameOfNewField)
         {
-            var shortTextDataType = _ucommerceDbContext.Set<DataTypeEntity>()
-                .FirstOrDefault(x => x.DefinitionName == "ShortText") ?? throw new Exception("ShortText DataType not found");
 
-
-            definitionFields.Add(CreateProductDefinitionField(shortTextDataType, nameOfNewField, false, false));            
-            _ucommerceDbContext.SaveChanges();
 
         }
 
 
 
-        private ProductDefinitionFieldEntity CreateProductDefinitionField(DataTypeEntity dataType, string name, bool isMultilingual, bool isVariantProperty)
-        {
-            return new ProductDefinitionFieldEntity
-            {
-                Name = name,
-                Deleted = false,
-                Multilingual = isMultilingual,
-                DisplayOnSite = true,
-                RenderInEditor = true,
-                IsVariantProperty = isVariantProperty,
-                DataType = dataType
-            };
-        }
+
         private string RandomLetterAndNumber()
         {
             var random = new Random();

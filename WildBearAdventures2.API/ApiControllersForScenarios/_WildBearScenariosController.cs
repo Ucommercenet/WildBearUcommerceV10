@@ -63,8 +63,8 @@ namespace WildBearAdventures.API.ApiControllersForScenarios
         /// <summary>
         /// The added field wil be of type ShortText
         /// </summary>        
-        [HttpPost("UpdateProductDefinition")]
-        public IActionResult UpdateProductDefinition(string nameOfField = "CoffeeType")
+        [HttpPost("AddProductDefinition")]
+        public IActionResult AddProductDefinition(string nameOfField = "CoffeeAroma")
         {
             var wildCoffeeDefinitionName = "WildCoffee";
 
@@ -77,12 +77,33 @@ namespace WildBearAdventures.API.ApiControllersForScenarios
             if (wildCoffeeProductDefinitionEntity == null)
             { return NotFound("wildCoffeeDefinition not found"); }                       
 
-            _demoToolbox.AddShortTextFieldToProductDefinition(wildCoffeeProductDefinitionEntity.ProductDefinitionFields,nameOfField);
+              var shortTextDataType = _ucommerceDbContext.Set<DataTypeEntity>()
+                .FirstOrDefault(x => x.DefinitionName == "ShortText") ?? throw new Exception("ShortText DataType not found");
+
+
+            var definitionField =  CreateProductDefinitionField(shortTextDataType, nameOfField, false, false);   
+            
+            wildCoffeeProductDefinitionEntity.ProductDefinitionFields.Add(definitionField);
+            
+            //_ucommerceDbContext.Add(definitionField);
+            _ucommerceDbContext.SaveChanges();
 
             return Ok();
 
         }
-        
+         private ProductDefinitionFieldEntity CreateProductDefinitionField(DataTypeEntity dataType, string name, bool isMultilingual, bool isVariantProperty)
+        {
+            return new ProductDefinitionFieldEntity
+            {
+                Name = name,
+                Deleted = false,
+                Multilingual = isMultilingual,
+                DisplayOnSite = true,
+                RenderInEditor = true,
+                IsVariantProperty = isVariantProperty,
+                DataType = dataType
+            };
+        }
 
     }
 }

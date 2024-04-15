@@ -27,6 +27,7 @@ builder.Services.AddUcommerce(builder.Configuration)
     .AddMyOrderProcessingExtensions()
     .Build();
 
+
 builder.Services.AddUnique<IIndexDefinition<ProductSearchModel>, ProductIndexDefinition>();
 builder.Services.AddTransient<DemoToolbox>();
 builder.Services.AddControllers();

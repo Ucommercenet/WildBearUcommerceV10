@@ -12,6 +12,13 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Scenarios\**" />
+      <Content Remove="Scenarios\**" />
+      <EmbeddedResource Remove="Scenarios\**" />
+      <None Remove="Scenarios\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
         <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
         <PackageReference Include="Ucommerce.Web.BackOffice" Version="10.0.1" />
@@ -24,9 +31,5 @@
             <PackagePath />
             <Pack>true</Pack>
         </None>
-    </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="Scenarios\" />
     </ItemGroup>
 </Project>
