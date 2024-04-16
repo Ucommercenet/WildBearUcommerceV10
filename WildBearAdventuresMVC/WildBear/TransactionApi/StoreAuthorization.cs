@@ -76,7 +76,7 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
             var connectResponse = client.GetAsync(uri, cancellationToken).Result;
 
             if (connectResponse.StatusCode is not System.Net.HttpStatusCode.Found)
-            { throw new SecurityException(); }
+            { throw new SecurityException("Check the URL whitelist in Ucommerce back office"); }
 
 
             //Get the authorizationCode ready for later use in HttpMessage.Content

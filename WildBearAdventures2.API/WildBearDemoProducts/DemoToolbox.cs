@@ -106,7 +106,7 @@ namespace WildBearAdventures.API.WildBearDemoProducts
             var defaultCatalog = _ucommerceDbContext.Set<CatalogEntity>()
               .Where(x => x.Deleted == false).First();
 
-            var category = new CategoryEntity() { Name = categoryName, Definition = defaultCategoryDefinition, Catalog = defaultCatalog };
+            var category = new CategoryEntity() { Name = categoryName, Definition = defaultCategoryDefinition, Catalog = defaultCatalog, DisplayOnSite = true };
 
 
             _ucommerceDbContext.Set<CategoryEntity>().Add(category);
@@ -119,20 +119,13 @@ namespace WildBearAdventures.API.WildBearDemoProducts
             {
                 Name = definitionName,
                 Description = "Definition for Coffee type products",
-                Deleted = false,
+                Deleted = false,                
             };
 
             _ucommerceDbContext.Add(WildCoffeeProductDefinition);
             _ucommerceDbContext.SaveChanges();
 
         }
-
-        public void AddShortTextFieldToProductDefinition(ICollection<ProductDefinitionFieldEntity> definitionFields, string nameOfNewField)
-        {
-
-
-        }
-
 
 
 
