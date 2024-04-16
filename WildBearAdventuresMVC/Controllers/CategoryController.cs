@@ -39,6 +39,7 @@ namespace WildBearAdventures.MVC.Controllers
             {
                 ProductDtos = productDtos,
                 CurrentCategoryName = currentCategoryDto is not null ? currentCategoryDto?.Name : "No currentCategory",
+                ImageUrl = currentCategoryDto?.ImageMediaUrl,
             };
 
             return View(CategoryViewModel); 

@@ -1,4 +1,6 @@
-﻿namespace WildBearAdventures.MVC.ViewModels
+﻿using System.Security.Policy;
+
+namespace WildBearAdventures.MVC.ViewModels
 {
     public class ProductViewModel
     {
@@ -12,6 +14,8 @@
         public Guid ProductGuid { get; set; }
 
         public int Quantity { get; set; } = 0;
+
+        public string ImageUrl { get; set; }
 
 
 

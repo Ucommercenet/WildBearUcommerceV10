@@ -18,7 +18,7 @@ namespace WildBearAdventures.MVC.Controllers
         {
             //Handout Part 2.1: Category navigation
             #region Handout
-            var categoryDtoCollection = _wildBearClient.GetAllCategoriesFromCatalog("MainProductCatalog", new CancellationToken());
+            var categoryDtoCollection = _wildBearClient.GetAllCategoriesFromCatalog("uCommerce", new CancellationToken());
 
             var categoryNames = new List<string>();
 

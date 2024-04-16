@@ -12,6 +12,8 @@ namespace WildBearAdventures.MVC.ViewModels
 
         public List<ProductDto>? ProductDtos { get; set; }
 
+        public string ImageUrl { get; set; }
+
 
     }
 }

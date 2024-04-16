@@ -12,6 +12,8 @@ using Ucommerce.Web.Common.Extensions;
 using WildBearAdventures.API;
 using WildBearAdventures.API.WildBearProducts;
 using WildBearAdventures.API.WildBearDemoProducts;
+using Ucommerce.Web.Infrastructure.Core;
+using WildBearAdventures.API.ImageService;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,10 +29,11 @@ builder.Services.AddUcommerce(builder.Configuration)
     .AddMyOrderProcessingExtensions()
     .Build();
 
+builder.Services.AddControllers();
 
 builder.Services.AddUnique<IIndexDefinition<ProductSearchModel>, ProductIndexDefinition>();
 builder.Services.AddTransient<DemoToolbox>();
-builder.Services.AddControllers();
+builder.Services.AddUnique<IImageService, CoffeeImageService>();
 
 #region Swagger Related
 builder.Services.AddEndpointsApiExplorer();
