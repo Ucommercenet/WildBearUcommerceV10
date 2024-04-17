@@ -1,0 +1,2130 @@
+{
+  "order": [
+    {
+      "tasksImplement": "IPipelineTask<GetOrderInput, GetOrderOutput>",
+      "inputType": "GetOrderInput",
+      "name": "GetOrderPipeline",
+      "namespace": "Ucommerce.Web.Core.Pipelines.Order.GetOrder",
+      "outputType": "GetOrderOutput",
+      "tasks": [
+        "GetOrderPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetOrderNumberInput, GetOrderNumberOutput>",
+      "inputType": "GetOrderNumberInput",
+      "name": "GetOrderNumberPipeline",
+      "namespace": "Ucommerce.Web.Core.Pipelines.Order.GetOrderNumber",
+      "outputType": "GetOrderNumberOutput",
+      "tasks": [
+        "GetOrderNumberPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CalculateOrderInput, CalculateOrderOutput>",
+      "inputType": "CalculateOrderInput",
+      "name": "CalculateOrderPipeline",
+      "namespace": "Ucommerce.Web.Core.Pipelines.Order.CalculateOrder",
+      "outputType": "CalculateOrderOutput",
+      "tasks": [
+        "PrepareOrderDataTask",
+        "CalculateOrderLinesUnitDiscountsTask",
+        "CalculateOrderDiscountTask",
+        "CalculateOrderLinesDiscountsTask",
+        "EnsureOrderLinesDiscountNotExceedTheOrderLinesTotalTask",
+        "CalculateOrderSubTotalTask",
+        "CalculateOrderLineTaxTask",
+        "CalculateOrderLineTaxRateTask",
+        "CalculateShippingCostForShipmentsTask",
+        "CalculateShippingTaxForShipmentsTask",
+        "CalculateShippingTotalForShipmentsTask",
+        "CalculateOrderLineTotalsTask",
+        "CalculateShippingTotalTask",
+        "CalculatePaymentTotalTask",
+        "CalculateOrderLineTaxTotalTask",
+        "CalculateOrderDiscountTotalTask",
+        "CalculateOrderTaxTotalTask",
+        "CalculateOrderTotalTask",
+        "DecrementPaymentsTask",
+        "CleanUpTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<AddToOrderInput, AddToOrderOutput>",
+      "inputType": "AddToOrderInput",
+      "name": "AddToOrderPipeline",
+      "namespace": "Ucommerce.Web.Core.Pipelines.Order.AddToOrder",
+      "outputType": "AddToOrderOutput",
+      "tasks": [
+        "PrepareAddToOrderDataTask",
+        "ValidateOrderAssignedToStoreTask",
+        "ValidateIsSellableProductTask",
+        "ValidateProductIsAddedWithSameCurrencyAsOrderTask",
+        "CreateOrderLineTask",
+        "CopyProductNameFromCatalogTask",
+        "OverrideOrderLineWithExistingTask",
+        "IncrementQuantityTask",
+        "CalculateUnitPriceTask",
+        "RoundingOffUnitPriceTask",
+        "CalculateUnitTaxTask",
+        "AddNewOrderLineToOrderTask",
+        "AddPropertiesToOrderLineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetOrderPropertiesInput, GetOrderPropertiesOutput>",
+      "inputType": "GetOrderPropertiesInput",
+      "name": "GetOrderPropertiesPipeline",
+      "namespace": "Ucommerce.Web.Core.Pipelines.Order.GetOrderProperties",
+      "outputType": "GetOrderPropertiesOutput",
+      "tasks": [
+        "GetOrderPropertiesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetOrderOrderLinePropertiesInput, GetOrderOrderLinePropertiesOutput>",
+      "inputType": "GetOrderOrderLinePropertiesInput",
+      "name": "GetOrderOrderLinePropertiesPipeline",
+      "namespace": "Ucommerce.Web.Core.Pipelines.Order.GetOrderOrderLineProperties",
+      "outputType": "GetOrderOrderLinePropertiesOutput",
+      "tasks": [
+        "GetOrderOrderLinePropertiesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<AddOrderPropertyInput, AddOrderPropertyOutput>",
+      "inputType": "AddOrderPropertyInput",
+      "name": "AddOrderPropertyPipeline",
+      "namespace": "Ucommerce.Web.Core.Pipelines.Order.AddOrderProperty",
+      "outputType": "AddOrderPropertyOutput",
+      "tasks": [
+        "AddOrderPropertyPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<AddOrderOrderLinePropertyInput, AddOrderOrderLinePropertyOutput>",
+      "inputType": "AddOrderOrderLinePropertyInput",
+      "name": "AddOrderOrderLinePropertyPipeline",
+      "namespace": "Ucommerce.Web.Core.Pipelines.Order.AddOrderOrderLineProperty",
+      "outputType": "AddOrderOrderLinePropertyOutput",
+      "tasks": [
+        "AddOrderOrderLinePropertyPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateOrderPropertyInput, UpdateOrderPropertyOutput>",
+      "inputType": "UpdateOrderPropertyInput",
+      "name": "UpdateOrderPropertyPipeline",
+      "namespace": "Ucommerce.Web.Core.Pipelines.Order.UpdateOrderProperty",
+      "outputType": "UpdateOrderPropertyOutput",
+      "tasks": [
+        "UpdateOrderPropertyPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteOrderPropertyInput, DeleteOrderPropertyOutput>",
+      "inputType": "DeleteOrderPropertyInput",
+      "name": "DeleteOrderPropertyPipeline",
+      "namespace": "Ucommerce.Web.Core.Pipelines.Order.DeleteOrderProperty",
+      "outputType": "DeleteOrderPropertyOutput",
+      "tasks": [
+        "DeleteOrderPropertyPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteOrderOrderLinePropertyInput, DeleteOrderOrderLinePropertyOutput>",
+      "inputType": "DeleteOrderOrderLinePropertyInput",
+      "name": "DeleteOrderOrderLinePropertyPipeline",
+      "namespace": "Ucommerce.Web.Core.Pipelines.Order.DeleteOrderOrderLineProperty",
+      "outputType": "DeleteOrderOrderLinePropertyOutput",
+      "tasks": [
+        "DeleteOrderOrderLinePropertyPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateOrderOrderLinePropertyInput, UpdateOrderOrderLinePropertyOutput>",
+      "inputType": "UpdateOrderOrderLinePropertyInput",
+      "name": "UpdateOrderOrderLinePropertyPipeline",
+      "namespace": "Ucommerce.Web.Core.Pipelines.Order.UpdateOrderOrderLineProperty",
+      "outputType": "UpdateOrderOrderLinePropertyOutput",
+      "tasks": [
+        "UpdateOrderOrderLinePropertyPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetOrdersInput, GetOrdersOutput>",
+      "inputType": "GetOrdersInput",
+      "name": "GetOrdersPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.GetOrders",
+      "outputType": "GetOrdersOutput",
+      "tasks": [
+        "GetOrdersCheckPermissionsPipelineTask",
+        "GetOrdersPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreateOrderInput, CreateOrderOutput>",
+      "inputType": "CreateOrderInput",
+      "name": "CreateOrderPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.CreateOrder",
+      "outputType": "CreateOrderOutput",
+      "tasks": [
+        "CreateOrderCheckPermissionsPipelineTask",
+        "CreateOrderPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetOrderStatusAuditsInput, GetOrderStatusAuditsOutput>",
+      "inputType": "GetOrderStatusAuditsInput",
+      "name": "GetOrderStatusAuditsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.GetOrderStatusAudits",
+      "outputType": "GetOrderStatusAuditsOutput",
+      "tasks": [
+        "GetOrderStatusAuditsCheckPermissionsPipelineTask",
+        "GetOrderStatusAuditsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetOrderStatusesInput, GetOrderStatusesOutput>",
+      "inputType": "GetOrderStatusesInput",
+      "name": "GetOrderStatusesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.GetOrderStatuses",
+      "outputType": "GetOrderStatusesOutput",
+      "tasks": [
+        "GetOrderStatusesCheckPermissionsPipelineTask",
+        "GetOrderStatusesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreateStatusAuditInput, CreateStatusAuditOutput>",
+      "inputType": "CreateStatusAuditInput",
+      "name": "CreateStatusAuditPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.CreateStatusAudit",
+      "outputType": "CreateStatusAuditOutput",
+      "tasks": [
+        "CreateStatusAuditCheckPermissionsPipelineTask",
+        "CreateStatusAuditPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateOrderInput, UpdateOrderOutput>",
+      "inputType": "UpdateOrderInput",
+      "name": "UpdateOrderPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.UpdateOrder",
+      "outputType": "UpdateOrderOutput",
+      "tasks": [
+        "UpdateOrderCheckPermissionsPipelineTask",
+        "UpdateOrderPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetOrderBillingInput, GetOrderBillingOutput>",
+      "inputType": "GetOrderBillingInput",
+      "name": "GetOrderBillingPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.GetOrderBilling",
+      "outputType": "GetOrderBillingOutput",
+      "tasks": [
+        "GetOrderBillingCheckPermissionsPipelineTask",
+        "GetOrderBillingPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetShipmentsInput, GetShipmentsOutput>",
+      "inputType": "GetShipmentsInput",
+      "name": "GetShipmentsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.GetShipments",
+      "outputType": "GetShipmentsOutput",
+      "tasks": [
+        "GetShipmentsCheckPermissionsPipelineTask",
+        "GetShipmentsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateShipmentInput, UpdateShipmentOutput>",
+      "inputType": "UpdateShipmentInput",
+      "name": "UpdateShipmentPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.UpdateShipment",
+      "outputType": "UpdateShipmentOutput",
+      "tasks": [
+        "UpdateShipmentCheckPermissionsPipelineTask",
+        "UpdateShipmentPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetOrderDiscountsInput, GetOrderDiscountsOutput>",
+      "inputType": "GetOrderDiscountsInput",
+      "name": "GetOrderDiscountsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.GetOrderDiscounts",
+      "outputType": "GetOrderDiscountsOutput",
+      "tasks": [
+        "GetOrderDiscountsCheckPermissionsPipelineTask",
+        "GetOrderDiscountsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateOrderBillingInput, UpdateOrderBillingOutput>",
+      "inputType": "UpdateOrderBillingInput",
+      "name": "UpdateOrderBillingPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.UpdateOrderBilling",
+      "outputType": "UpdateOrderBillingOutput",
+      "tasks": [
+        "PrepareUpdateOrderBillingDataPipelineTask",
+        "UpdateOrderBillingCheckPermissionsPipelineTask",
+        "UpdateOrderBillingPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetOrderPaymentsInput, GetOrderPaymentsOutput>",
+      "inputType": "GetOrderPaymentsInput",
+      "name": "GetOrderPaymentsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.GetOrderPayments",
+      "outputType": "GetOrderPaymentsOutput",
+      "tasks": [
+        "GetOrderPaymentsCheckPermissionsPipelineTask",
+        "GetOrderPaymentsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreateOrderDiscountInput, CreateOrderDiscountOutput>",
+      "inputType": "CreateOrderDiscountInput",
+      "name": "CreateOrderDiscountPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.CreateOrderDiscount",
+      "outputType": "CreateOrderDiscountOutput",
+      "tasks": [
+        "CreateOrderDiscountCheckPermissionsPipelineTask",
+        "CreateOrderDiscountPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteOrderDiscountsInput, DeleteOrderDiscountsOutput>",
+      "inputType": "DeleteOrderDiscountsInput",
+      "name": "DeleteOrderDiscountsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.DeleteOrderDiscounts",
+      "outputType": "DeleteOrderDiscountsOutput",
+      "tasks": [
+        "DeleteOrderDiscountsCheckPermissionsPipelineTask",
+        "DeleteOrderDiscountsPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteOrderLinesInput, DeleteOrderLinesOutput>",
+      "inputType": "DeleteOrderLinesInput",
+      "name": "DeleteOrderLinesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.DeleteOrderLines",
+      "outputType": "DeleteOrderLinesOutput",
+      "tasks": [
+        "DeleteOrderLinesCheckPermissionsPipelineTask",
+        "DeleteOrderLinesPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreateOrderLinesInput, CreateOrderLinesOutput>",
+      "inputType": "CreateOrderLinesInput",
+      "name": "CreateOrderLinesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.CreateOrderLines",
+      "outputType": "CreateOrderLinesOutput",
+      "tasks": [
+        "CreateOrderLinesCheckPermissionsPipelineTask",
+        "CreateOrderLinesPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetOrderLinesInput, GetOrderLinesOutput>",
+      "inputType": "GetOrderLinesInput",
+      "name": "GetOrderLinesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.GetOrderLines",
+      "outputType": "GetOrderLinesOutput",
+      "tasks": [
+        "GetOrderLinesCheckPermissionsPipelineTask",
+        "GetOrderLinesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetOrderLineInput, GetOrderLineOutput>",
+      "inputType": "GetOrderLineInput",
+      "name": "GetOrderLinePipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.GetOrderLine",
+      "outputType": "GetOrderLineOutput",
+      "tasks": [
+        "GetOrderLineCheckPermissionsPipelineTask",
+        "GetOrderLinePipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateOrderLineInput, UpdateOrderLineOutput>",
+      "inputType": "UpdateOrderLineInput",
+      "name": "UpdateOrderLinePipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Order.UpdateOrderLine",
+      "outputType": "UpdateOrderLineOutput",
+      "tasks": [
+        "UpdateOrderLineCheckPermissionsPipelineTask",
+        "UpdateOrderLinePipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    }
+  ],
+  "campaign": [
+    {
+      "tasksImplement": "IPipelineTask<GetCampaignsInput, GetCampaignsOutput>",
+      "inputType": "GetCampaignsInput",
+      "name": "GetCampaignsPipeline",
+      "namespace": "Ucommerce.Web.Core.Pipelines.Campaign.GetCampaigns",
+      "outputType": "GetCampaignsOutput",
+      "tasks": [
+        "GetCampaignsCheckPermissionsPipelineTask",
+        "NormalizeCampaignsPriorityOrderPipelineTask",
+        "GetCampaignsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetCampaignInput, GetCampaignOutput>",
+      "inputType": "GetCampaignInput",
+      "name": "GetCampaignPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Campaign.GetCampaign",
+      "outputType": "GetCampaignOutput",
+      "tasks": [
+        "GetCampaignCheckPermissionsPipelineTask",
+        "GetCampaignPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateCampaignInput, UpdateCampaignOutput>",
+      "inputType": "UpdateCampaignInput",
+      "name": "UpdateCampaignPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Campaign.UpdateCampaign",
+      "outputType": "UpdateCampaignOutput",
+      "tasks": [
+        "UpdateCampaignCheckPermissionsPipelineTask",
+        "UpdateCampaignPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateCampaignsInput, UpdateCampaignsOutput>",
+      "inputType": "UpdateCampaignsInput",
+      "name": "UpdateCampaignsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Campaign.UpdateCampaigns",
+      "outputType": "UpdateCampaignsOutput",
+      "tasks": [
+        "UpdateCampaignsCheckPermissionsPipelineTask",
+        "UpdateCampaignsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreateCampaignInput, CreateCampaignOutput>",
+      "inputType": "CreateCampaignInput",
+      "name": "CreateCampaignPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Campaign.CreateCampaign",
+      "outputType": "CreateCampaignOutput",
+      "tasks": [
+        "CreateCampaignCheckPermissionsPipelineTask",
+        "CreateCampaignPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetCampaignPromotionsInput, GetCampaignPromotionsOutput>",
+      "inputType": "GetCampaignPromotionsInput",
+      "name": "GetCampaignPromotionsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Campaign.GetCampaignPromotions",
+      "outputType": "GetCampaignPromotionsOutput",
+      "tasks": [
+        "GetCampaignPromotionsCheckPermissionsPipelineTask",
+        "NormalizePromotionsPriorityOrderPipelineTask",
+        "GetCampaignPromotionsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteCampaignsInput, DeleteCampaignsOutput>",
+      "inputType": "DeleteCampaignsInput",
+      "name": "DeleteCampaignsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Campaign.DeleteCampaigns",
+      "outputType": "DeleteCampaignsOutput",
+      "tasks": [
+        "DeleteCampaignsCheckPermissionsPipelineTask",
+        "DeleteCampaignsPipelineTask"
+      ]
+    }
+  ],
+  "cart": [
+    {
+      "tasksImplement": "IPipelineTask<GetCartInput, GetCartOutput>",
+      "inputType": "GetCartInput",
+      "name": "GetCartPipeline",
+      "namespace": "Ucommerce.Web.Core.Pipelines.Cart.GetCart",
+      "outputType": "GetCartOutput",
+      "tasks": [
+        "GetCartPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetCartStatusAuditsInput, GetCartStatusAuditsOutput>",
+      "inputType": "GetCartStatusAuditsInput",
+      "name": "GetCartStatusAuditsPipeline",
+      "namespace": "Ucommerce.Web.Core.Pipelines.Cart.GetCartStatusAudits",
+      "outputType": "GetCartStatusAuditsOutput",
+      "tasks": [
+        "GetCartStatusAuditsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<SatisfiedCriteriaInput, SatisfiedCriteriaOutput>",
+      "inputType": "SatisfiedCriteriaInput",
+      "name": "SatisfiedCriteriaPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.SatisfiedCriteria",
+      "outputType": "SatisfiedCriteriaOutput",
+      "tasks": [
+        "PrepareSatisfiedCriteriaPipelineTask",
+        "ProductCriteriaPipelineTask",
+        "CatalogCriteriaPipelineTask",
+        "CategoryCriteriaPipelineTask",
+        "QuantityCriteriaPipelineTask",
+        "OrderAmountCriteriaPipelineTask",
+        "PriceGroupCriteriaPipelineTask",
+        "ShippingMethodCriteriaPipelineTask",
+        "PromotionCodeCriteriaTask",
+        "DynamicOrderPropertyCriteriaPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CalculateCartInput, CalculateCartOutput>",
+      "inputType": "CalculateCartInput",
+      "name": "CalculateCartPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.CalculateCart",
+      "outputType": "CalculateCartOutput",
+      "tasks": [
+        "PrepareUpdateCartDataPipelineTask",
+        "SetCultureCodePipelineTask",
+        "RemoveGeneratedOrderLinesPipelineTask",
+        "RemoveAllDiscountsFromCartPipelineTask",
+        "CalculateOrderLinesUnitDiscountsPipelineTask",
+        "CalculateCartDiscountPipelineTask",
+        "CalculateOrderLinesDiscountsPipelineTask",
+        "CalculateShippingDiscountPipelineTask",
+        "CalculateCartSubTotalPipelineTask",
+        "CalculateShippingCostForShipmentsPipelineTask",
+        "CalculateShippingTaxForShipmentsPipelineTask",
+        "CalculateShippingTotalForShipmentsPipelineTask",
+        "CalculateOrderLineTaxPipelineTask",
+        "CalculateOrderLineTaxRatePipelineTask",
+        "CalculateShippingTotalPipelineTask",
+        "CalculatePaymentTotalPipelineTask",
+        "CalculateCartOrderLineTaxTotalPipelineTask",
+        "CalculateCartDiscountTotalPipelineTask",
+        "CalculateCartTaxTotalPipelineTask",
+        "CalculateCartTotalPipelineTask",
+        "ApplyDiscountsPipelineTask",
+        "CalculateOrderLinesUnitDiscountsPipelineTask",
+        "CalculateCartDiscountPipelineTask",
+        "CalculateOrderLinesDiscountsPipelineTask",
+        "EnsureOrderLinesDiscountNotExceedTheOrderLinesTotalPipelineTask",
+        "CalculateCartSubTotalPipelineTask",
+        "EnsureCartDiscountsDoesNotExceedCartSubTotalPipelineTask",
+        "CalculateShippingDiscountPipelineTask",
+        "CalculateShippingTaxForShipmentsPipelineTask",
+        "CalculateShippingTotalForShipmentsPipelineTask",
+        "CalculateOrderLineTaxPipelineTask",
+        "CalculatePaymentFeePipelineTask",
+        "CalculatePaymentTaxPipelineTask",
+        "CalculatePaymentAmountPipelineTask",
+        "CalculateOrderLineTotalsPipelineTask",
+        "CalculateShippingTotalPipelineTask",
+        "CalculatePaymentTotalPipelineTask",
+        "CalculateCartOrderLineTaxTotalPipelineTask",
+        "CalculateCartDiscountTotalPipelineTask",
+        "CalculateCartTaxTotalPipelineTask",
+        "CalculateCartTotalPipelineTask",
+        "RoundUpCartTotalForCurrenciesWithNoDecimalDigitsPipelineTask",
+        "CleanUpPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<AddToCartInput, AddToCartOutput>",
+      "inputType": "AddToCartInput",
+      "name": "AddToCartPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.AddToCart",
+      "outputType": "AddToCartOutput",
+      "tasks": [
+        "ValidatePipelineArgumentsTask",
+        "ValidateCartAssignedToStoreTask",
+        "ValidateIsSellableProductTask",
+        "ValidateProductIsAddedWithSameCurrencyAsCartTask",
+        "CreateOrderLineTask",
+        "CopyProductNameFromCatalogTask",
+        "OverrideOrderLineWithExistingTask",
+        "AddIdentifierOrderLinePropertiesTask",
+        "IncrementQuantityTask",
+        "RemoveInvalidOrderlineTask",
+        "CalculateUnitPriceTask",
+        "RoundingOffUnitPriceTask",
+        "CalculateUnitTaxTask",
+        "AddNewOrderLineToCartTask",
+        "AddPropertiesToOrderLineTask",
+        "ExecuteCartPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreateCartInput, CreateCartOutput>",
+      "inputType": "CreateCartInput",
+      "name": "CreateCartPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.CreateCart",
+      "outputType": "CreateCartOutput",
+      "tasks": [
+        "CreateCartPipelineTask",
+        "AddPropertiesToCartTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateCartOrderLineInput, UpdateCartOrderLineOutput>",
+      "inputType": "UpdateCartOrderLineInput",
+      "name": "UpdateCartOrderLinePipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.UpdateCartOrderLine",
+      "outputType": "UpdateCartOrderLineOutput",
+      "tasks": [
+        "UpdateCartOrderLineValidateDataPipelineTask",
+        "UpdateCartOrderLinePipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<AddAddressInput, AddAddressOutput>",
+      "inputType": "AddAddressInput",
+      "name": "AddAddressPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.AddAddress",
+      "outputType": "AddAddressOutput",
+      "tasks": [
+        "CreateOrUpdateOrderAddressPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetCriteriaAndDiscountsInput, GetCriteriaAndDiscountsOutput>",
+      "inputType": "GetCriteriaAndDiscountsInput",
+      "name": "GetCriteriaAndDiscountsPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.GetCriteriaAndDiscounts",
+      "outputType": "GetCriteriaAndDiscountsOutput",
+      "tasks": [
+        "GetCriteriaPipelineTask",
+        "GetDiscountsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<ApplyDiscountInput, ApplyDiscountOutput>",
+      "inputType": "ApplyDiscountInput",
+      "name": "ApplyDiscountPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.ApplyDiscount",
+      "outputType": "ApplyDiscountOutput",
+      "tasks": [
+        "PrepareApplyDiscountDataTask",
+        "ResetAppliedPromotionCodesPipelineTask",
+        "OnlyOneCriterionNeedsToBeSatisfiedPipelineTask",
+        "FullySatisfiedOrderLinePipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<AddPromotionCodeInput, AddPromotionCodeOutput>",
+      "inputType": "AddPromotionCodeInput",
+      "name": "AddPromotionCodePipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.AddPromotionCode",
+      "outputType": "AddPromotionCodeOutput",
+      "tasks": [
+        "ValidatePromotionCodePipelineTask",
+        "AddPromotionCodePipelineTask",
+        "ExecuteCartPromotionCodePipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetCartOrderPropertiesInput, GetCartOrderPropertiesOutput>",
+      "inputType": "GetCartOrderPropertiesInput",
+      "name": "GetCartOrderPropertiesPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.GetCartOrderProperties",
+      "outputType": "GetCartOrderPropertiesOutput",
+      "tasks": [
+        "GetCartOrderPropertiesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetCartOrderLinePropertiesInput, GetCartOrderLinePropertiesOutput>",
+      "inputType": "GetCartOrderLinePropertiesInput",
+      "name": "GetCartOrderLinePropertiesPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.GetCartOrderLineProperties",
+      "outputType": "GetCartOrderLinePropertiesOutput",
+      "tasks": [
+        "GetCartOrderLinePropertiesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<AddCartOrderPropertyInput, AddCartOrderPropertyOutput>",
+      "inputType": "AddCartOrderPropertyInput",
+      "name": "AddCartOrderPropertyPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.AddCartOrderProperty",
+      "outputType": "AddCartOrderPropertyOutput",
+      "tasks": [
+        "AddCartOrderPropertyPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<AddCartOrderLinePropertyInput, AddCartOrderLinePropertyOutput>",
+      "inputType": "AddCartOrderLinePropertyInput",
+      "name": "AddCartOrderLinePropertyPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.AddCartOrderLineProperty",
+      "outputType": "AddCartOrderLinePropertyOutput",
+      "tasks": [
+        "AddCartOrderLinePropertyPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateCartOrderPropertyInput, UpdateCartOrderPropertyOutput>",
+      "inputType": "UpdateCartOrderPropertyInput",
+      "name": "UpdateCartOrderPropertyPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.UpdateCartOrderProperty",
+      "outputType": "UpdateCartOrderPropertyOutput",
+      "tasks": [
+        "UpdateCartOrderPropertyPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateCartOrderLinePropertyInput, UpdateCartOrderLinePropertyOutput>",
+      "inputType": "UpdateCartOrderLinePropertyInput",
+      "name": "UpdateCartOrderLinePropertyPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.UpdateCartOrderLineProperty",
+      "outputType": "UpdateCartOrderLinePropertyOutput",
+      "tasks": [
+        "UpdateCartOrderLinePropertyPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteCartOrderPropertyInput, DeleteCartOrderPropertyOutput>",
+      "inputType": "DeleteCartOrderPropertyInput",
+      "name": "DeleteCartOrderPropertyPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.DeleteCartOrderProperty",
+      "outputType": "DeleteCartOrderPropertyOutput",
+      "tasks": [
+        "DeleteCartOrderPropertyPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteCartOrderLinePropertyInput, DeleteCartOrderLinePropertyOutput>",
+      "inputType": "DeleteCartOrderLinePropertyInput",
+      "name": "DeleteCartOrderLinePropertyPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.DeleteCartOrderLineProperty",
+      "outputType": "DeleteCartOrderLinePropertyOutput",
+      "tasks": [
+        "DeleteCartOrderLinePropertyPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<RemoveCartPromotionCodeInput, RemoveCartPromotionCodeOutput>",
+      "inputType": "RemoveCartPromotionCodeInput",
+      "name": "RemoveCartPromotionCodePipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.RemoveCartPromotionCode",
+      "outputType": "RemoveCartPromotionCodeOutput",
+      "tasks": [
+        "RemoveCartPromotionCodePipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteCartOrderLineInput, DeleteCartOrderLineOutput>",
+      "inputType": "DeleteCartOrderLineInput",
+      "name": "DeleteCartOrderLinePipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.DeleteCartOrderLine",
+      "outputType": "DeleteCartOrderLineOutput",
+      "tasks": [
+        "DeleteCartOrderLinePipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<ApplyCartPromotionCodeInput, ApplyCartPromotionCodeOutput>",
+      "inputType": "ApplyCartPromotionCodeInput",
+      "name": "ApplyCartPromotionCodePipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.ApplyCartPromotionCode",
+      "outputType": "ApplyCartPromotionCodeOutput",
+      "tasks": [
+        "ApplyCartPromotionCodePipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DiscountFlowInput, DiscountFlowOutput>",
+      "inputType": "DiscountFlowInput",
+      "name": "DiscountFlowPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Cart.DiscountFlow",
+      "outputType": "DiscountFlowOutput",
+      "tasks": [
+        "DiscountFlowPipelineTask"
+      ]
+    }
+  ],
+  "paymentMethod": [
+    {
+      "tasksImplement": "IPipelineTask<GetPaymentMethodInput, GetPaymentMethodOutput>",
+      "inputType": "GetPaymentMethodInput",
+      "name": "GetPaymentMethodPipeline",
+      "namespace": "Ucommerce.Web.Core.Pipelines.PaymentMethod.GetPaymentMethod",
+      "outputType": "GetPaymentMethodOutput",
+      "tasks": [
+        "GetPaymentMethodPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreatePaymentMethodInput, CreatePaymentMethodOutput>",
+      "inputType": "CreatePaymentMethodInput",
+      "name": "CreatePaymentMethodPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.PaymentMethod.CreatePaymentMethod",
+      "outputType": "CreatePaymentMethodOutput",
+      "tasks": [
+        "CreatePaymentMethodCheckPermissionsPipelineTask",
+        "CreatePaymentMethodPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetPaymentPipelinesInput, GetPaymentPipelinesOutput>",
+      "inputType": "GetPaymentPipelinesInput",
+      "name": "GetPaymentPipelinesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.PaymentMethod.GetPaymentPipelines",
+      "outputType": "GetPaymentPipelinesOutput",
+      "tasks": [
+        "GetPaymentPipelinesCheckPermissionsPipelineTask",
+        "GetPaymentPipelinesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetShallowPaymentMethodsInput, GetShallowPaymentMethodsOutput>",
+      "inputType": "GetShallowPaymentMethodsInput",
+      "name": "GetShallowPaymentMethodsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.PaymentMethod.GetShallowPaymentMethods",
+      "outputType": "GetShallowPaymentMethodsOutput",
+      "tasks": [
+        "GetShallowPaymentMethodsCheckPermissionsPipelineTask",
+        "GetShallowPaymentMethodsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetShallowPaymentServicesInput, GetShallowPaymentServicesOutput>",
+      "inputType": "GetShallowPaymentServicesInput",
+      "name": "GetShallowPaymentServicesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.PaymentMethod.PaymentService",
+      "outputType": "GetShallowPaymentServicesOutput",
+      "tasks": [
+        "GetShallowPaymentServicesCheckPermissionsPipelineTask",
+        "GetShallowPaymentServicesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdatePaymentMethodInput, UpdatePaymentMethodOutput>",
+      "inputType": "UpdatePaymentMethodInput",
+      "name": "UpdatePaymentMethodPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.PaymentMethod.UpdatePaymentMethod",
+      "outputType": "UpdatePaymentMethodOutput",
+      "tasks": [
+        "UpdatePaymentMethodCheckPermissionsPipelineTask",
+        "UpdatePaymentMethodPipelineTask",
+        "UpdatePaymentMethodServicePropertiesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetPaymentMethodPricingInput, GetPaymentMethodPricingOutput>",
+      "inputType": "GetPaymentMethodPricingInput",
+      "name": "GetPaymentMethodPricingPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.PaymentMethod.GetPaymentMethodPricing",
+      "outputType": "GetPaymentMethodPricingOutput",
+      "tasks": [
+        "GetPaymentMethodPricingCheckPermissionsPipelineTask",
+        "GetPaymentMethodPricingPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeletePaymentMethodInput, DeletePaymentMethodOutput>",
+      "inputType": "DeletePaymentMethodInput",
+      "name": "DeletePaymentMethodPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.PaymentMethod.DeletePaymentMethod",
+      "outputType": "DeletePaymentMethodOutput",
+      "tasks": [
+        "DeletePaymentMethodCheckPermissionsPipelineTask",
+        "DeletePaymentMethodPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdatePaymentMethodPricingInput, UpdatePaymentMethodPricingOutput>",
+      "inputType": "UpdatePaymentMethodPricingInput",
+      "name": "UpdatePaymentMethodPricingPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.PaymentMethod.UpdatePaymentMethodPricing",
+      "outputType": "UpdatePaymentMethodPricingOutput",
+      "tasks": [
+        "UpdatePaymentMethodPricingCheckPermissionsPipelineTask",
+        "UpdatePaymentMethodPricingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetPaymentMethodsInput, GetPaymentMethodsOutput>",
+      "inputType": "GetPaymentMethodsInput",
+      "name": "GetPaymentMethodsPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.PaymentMethod.GetPaymentMethods",
+      "outputType": "GetPaymentMethodsOutput",
+      "tasks": [
+        "GetPaymentMethodsWithPaginationTask"
+      ]
+    }
+  ],
+  "system": [
+    {
+      "tasksImplement": "IPipelineTask<GetSystemInput, GetSystemOutput>",
+      "inputType": "GetSystemInput",
+      "name": "GetSystemPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.System.GetSystem",
+      "outputType": "GetSystemOutput",
+      "tasks": [
+        "GetSystemCheckPermissionsPipelineTask",
+        "SystemPipelineTask"
+      ]
+    }
+  ],
+  "definition": [
+    {
+      "tasksImplement": "IPipelineTask<GetShallowDefinitionsInput, GetShallowDefinitionsOutput>",
+      "inputType": "GetShallowDefinitionsInput",
+      "name": "GetShallowDefinitionsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Definition.GetShallowDefinitions",
+      "outputType": "GetShallowDefinitionsOutput",
+      "tasks": [
+        "ShallowDefinitionsPipelineTask",
+        "ProductShallowDefinitionsPipelineTask",
+        "CampaignShallowDefinitionsPipelineTask",
+        "OrderShallowDefinitionsPipelineTask",
+        "CriterionShallowDefinitionsPipelineTask",
+        "DiscountsShallowDefinitionsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetDefinitionsInput, GetDefinitionsOutput>",
+      "inputType": "GetDefinitionsInput",
+      "name": "GetDefinitionsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Definition.GetDefinitions",
+      "outputType": "GetDefinitionsOutput",
+      "tasks": [
+        "DefinitionsPipelineTask",
+        "ProductDefinitionsPipelineTask",
+        "CampaignDefinitionsPipelineTask",
+        "OrderDefinitionsPipelineTask",
+        "OrderStatusAuditDefinitionsPipelineTask",
+        "OrderAddressDefinitionsPipelineTask",
+        "OrderLineDefinitionsPipelineTask",
+        "PaymentDefinitionsPipelineTask",
+        "ShipmentDefinitionsPipelineTask",
+        "CriterionDefinitionsPipelineTask",
+        "DiscountsDefinitionsPipelineTask",
+        "OrderDiscountsDefinitionsPipelineTask",
+        "RedirectUrlDefinitionsPipelineTask",
+        "ApiAccessDefinitionsPipelineTask",
+        "CurrencyDefinitionsPipelineTask",
+        "PaymentMethodPricingDefinitionsPipelineTask",
+        "ShippingMethodDefinitionsPipelineTask",
+        "PriceGroupDefinitionsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetLastModifiedDefinitionInput, GetLastModifiedDefinitionOutput>",
+      "inputType": "GetLastModifiedDefinitionInput",
+      "name": "GetLastModifiedDefinitionPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Definition.GetLastModifiedDefinition",
+      "outputType": "GetLastModifiedDefinitionOutput",
+      "tasks": [
+        "GetLastModifiedStoreDefinitionPipelineTask",
+        "GetLastModifiedCatalogDefinitionPipelineTask",
+        "GetLastModifiedCategoryDefinitionPipelineTask",
+        "GetLastModifiedProductsDefinitionPipelineTask",
+        "GetLastModifiedFakeDefinitionPipelineTask",
+        "GetLastModifiedPromotionsDefinitionPipelineTask"
+      ]
+    }
+  ],
+  "navigation": [
+    {
+      "tasksImplement": "IPipelineTask<GetTreeNodesInput, GetTreeNodesOutput>",
+      "inputType": "GetTreeNodesInput",
+      "name": "GetTreeNodesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Navigation.GetTreeNodes",
+      "outputType": "GetTreeNodesOutput",
+      "tasks": [
+        "GetTreeNodesPipelineTask"
+      ]
+    }
+  ],
+  "store": [
+    {
+      "tasksImplement": "IPipelineTask<UpdateStoreInput, UpdateStoreOutput>",
+      "inputType": "UpdateStoreInput",
+      "name": "UpdateStorePipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Store.UpdateStore",
+      "outputType": "UpdateStoreOutput",
+      "tasks": [
+        "UpdateStoreCheckPermissionsPipelineTask",
+        "UpdateStorePipelineTask",
+        "UpdateStoreIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetStoresInput, GetStoresOutput>",
+      "inputType": "GetStoresInput",
+      "name": "GetStoresPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Store.GetStores",
+      "outputType": "GetStoresOutput",
+      "tasks": [
+        "GetStoresPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteStoreInput, DeleteStoreOutput>",
+      "inputType": "DeleteStoreInput",
+      "name": "DeleteStorePipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Store.DeleteStore",
+      "outputType": "DeleteStoreOutput",
+      "tasks": [
+        "DeleteStoreCheckPermissionsPipelineTask",
+        "DeleteStorePreparePipelineTask",
+        "DeleteStorePipelineTask",
+        "DeleteStoreIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreateStoreInput, CreateStoreOutput>",
+      "inputType": "CreateStoreInput",
+      "name": "CreateStorePipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Store.CreateStore",
+      "outputType": "CreateStoreOutput",
+      "tasks": [
+        "CreateStoreCheckPermissionsPipelineTask",
+        "CreateStorePipelineTask",
+        "CreateStoreRolesPipelineTask",
+        "CreateStoreIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    }
+  ],
+  "catalog": [
+    {
+      "tasksImplement": "IPipelineTask<GetCatalogsInput, GetCatalogsOutput>",
+      "inputType": "GetCatalogsInput",
+      "name": "GetCatalogsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Catalog.GetCatalogs",
+      "outputType": "GetCatalogsOutput",
+      "tasks": [
+        "NormalizeCatalogSortOrdersPipelineTask",
+        "GetCatalogsCheckPermissionsPipelineTask",
+        "GetCatalogsPipelineTask",
+        "GetCatalogsWithPaginationTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreateCatalogInput, CreateCatalogOutput>",
+      "inputType": "CreateCatalogInput",
+      "name": "CreateCatalogPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Catalog.CreateCatalog",
+      "outputType": "CreateCatalogOutput",
+      "tasks": [
+        "CreateCatalogCheckPermissionsPipelineTask",
+        "CreateCatalogPipelineTask",
+        "CreateCatalogIndexingPipelineTask",
+        "SaveChangesPipelineTask",
+        "NormalizeNewCatalogSortOrdersPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteCatalogInput, DeleteCatalogOutput>",
+      "inputType": "DeleteCatalogInput",
+      "name": "DeleteCatalogPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Catalog.DeleteCatalog",
+      "outputType": "DeleteCatalogOutput",
+      "tasks": [
+        "DeleteCatalogCheckPermissionsPipelineTask",
+        "DeleteCatalogPrepareTask",
+        "DeleteCatalogPipelineTask",
+        "DeleteCatalogIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateCatalogInput, UpdateCatalogOutput>",
+      "inputType": "UpdateCatalogInput",
+      "name": "UpdateCatalogPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Catalog.UpdateCatalog",
+      "outputType": "UpdateCatalogOutput",
+      "tasks": [
+        "UpdateCatalogCheckPermissionsPipelineTask",
+        "UpdateCatalogPipelineTask",
+        "UpdateCatalogIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    }
+  ],
+  "category": [
+    {
+      "tasksImplement": "IPipelineTask<GetCategoryInput, GetCategoryOutput>",
+      "inputType": "GetCategoryInput",
+      "name": "GetCategoryPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Category.GetCategory",
+      "outputType": "GetCategoryOutput",
+      "tasks": [
+        "GetCategoryCheckPermissionsPipelineTask",
+        "GetCategoryPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteCategoryInput, DeleteCategoryOutput>",
+      "inputType": "DeleteCategoryInput",
+      "name": "DeleteCategoryPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Category.DeleteCategory",
+      "outputType": "DeleteCategoryOutput",
+      "tasks": [
+        "DeleteCategoryCheckPermissionsPipelineTask",
+        "DeleteCategoryPipelineTask",
+        "DeleteCategoryIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreateCategoryInput, CreateCategoryOutput>",
+      "inputType": "CreateCategoryInput",
+      "name": "CreateCategoryPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Category.CreateCategory",
+      "outputType": "CreateCategoryOutput",
+      "tasks": [
+        "CreateCategoryCheckPermissionsPipelineTask",
+        "CreateCategoryPipelineTask",
+        "CreateCategoryIndexingPipelineTask",
+        "SaveChangesPipelineTask",
+        "NormalizeNewCategorySortOrderPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetCategoriesInput, GetCategoriesOutput>",
+      "inputType": "GetCategoriesInput",
+      "name": "GetCategoriesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Category.GetCategories",
+      "outputType": "GetCategoriesOutput",
+      "tasks": [
+        "GetCategoriesCheckPermissionsPipelineTask",
+        "NormalizeCategorySortOrderPipelineTask",
+        "GetCategoriesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateCategoryInput, UpdateCategoryOutput>",
+      "inputType": "UpdateCategoryInput",
+      "name": "UpdateCategoryPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Category.UpdateCategory",
+      "outputType": "UpdateCategoryOutput",
+      "tasks": [
+        "UpdateCategoryPreparePipelineTask",
+        "UpdateCategoryCheckPermissionsPipelineTask",
+        "UpdateCategoryPipelineTask",
+        "UpdateCategoryIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<RemoveProductsFromCategoryInput, RemoveProductsFromCategoryOutput>",
+      "inputType": "RemoveProductsFromCategoryInput",
+      "name": "RemoveProductsFromCategoryPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Category.RemoveProductFromCategory",
+      "outputType": "RemoveProductsFromCategoryOutput",
+      "tasks": [
+        "RemoveProductsFromCategoryPreparePipelineTask",
+        "RemoveProductsFromCategoryCheckPermissionsPipelineTask",
+        "RemoveProductsFromCategoryPipelineTask",
+        "RemoveProductsFromCategoryReIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<AddProductsToCategoryInput, AddProductsToCategoryOutput>",
+      "inputType": "AddProductsToCategoryInput",
+      "name": "AddProductsToCategoryPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Category.AddProductsToCategory",
+      "outputType": "AddProductsToCategoryOutput",
+      "tasks": [
+        "AddProductsToCategoryCheckPermissionsPipelineTask",
+        "AddProductsToCategoryPreparePipelineTask",
+        "AddProductsToCategoryPipelineTask",
+        "AddProductsToCategoryIndexingProductsPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    }
+  ],
+  "product": [
+    {
+      "tasksImplement": "IPipelineTask<GetProductInput, GetProductOutput>",
+      "inputType": "GetProductInput",
+      "name": "GetProductPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Product.GetProduct",
+      "outputType": "GetProductOutput",
+      "tasks": [
+        "GetProductCheckPermissionsPipelineTask",
+        "GetProductPipelineTask",
+        "GetProductPricesPipelineTask",
+        "GetProductPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetProductRelationsInput, GetProductRelationsOutput>",
+      "inputType": "GetProductRelationsInput",
+      "name": "GetProductRelationsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Product.GetProductRelations",
+      "outputType": "GetProductRelationsOutput",
+      "tasks": [
+        "GetProductRelationsCheckPermissionsPipelineTask",
+        "GetProductRelationsPipelineTask",
+        "GetProductRelationsPricesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetProductsInput, GetProductsOutput>",
+      "inputType": "GetProductsInput",
+      "name": "GetProductsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Product.GetProducts",
+      "outputType": "GetProductsOutput",
+      "tasks": [
+        "GetProductsCheckPermissionsPipelineTask",
+        "GetProductsPipelineTask",
+        "GetProductsPricesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetProductVariantsInput, GetProductVariantsOutput>",
+      "inputType": "GetProductVariantsInput",
+      "name": "GetProductVariantsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Product.GetProductVariants",
+      "outputType": "GetProductVariantsOutput",
+      "tasks": [
+        "GetProductVariantsCheckPermissionsPipelineTask",
+        "GetProductVariantsPipelineTask",
+        "GetProductVariantsPricesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateProductInput, UpdateProductOutput>",
+      "inputType": "UpdateProductInput",
+      "name": "UpdateProductPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Product.UpdateProduct",
+      "outputType": "UpdateProductOutput",
+      "tasks": [
+        "UpdateProductCheckPermissionsPipelineTask",
+        "UpdateProductPipelineTask",
+        "UpdateProductPricePipelineTask",
+        "UpdateProductSkuPipelineTask",
+        "UpdateProductUserDefinedFieldsPipelineTask",
+        "UpdateProductIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreateProductInput, CreateProductOutput>",
+      "inputType": "CreateProductInput",
+      "name": "CreateProductPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Product.CreateProduct",
+      "outputType": "CreateProductOutput",
+      "tasks": [
+        "CreateProductCheckPermissionsPipelineTask",
+        "CreateProductPipelineTask",
+        "CreateProductIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteProductRelationInput, DeleteProductRelationOutput>",
+      "inputType": "DeleteProductRelationInput",
+      "name": "DeleteProductRelationPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Product.DeleteProductRelation",
+      "outputType": "DeleteProductRelationOutput",
+      "tasks": [
+        "DeleteProductRelationCheckPermissionsPipelineTask",
+        "DeleteProductRelationsPreparePipelineTask",
+        "DeleteProductRelationPipelineTask",
+        "DeleteProductRelationsIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteProductInput, DeleteProductOutput>",
+      "inputType": "DeleteProductInput",
+      "name": "DeleteProductPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Product.DeleteProduct",
+      "outputType": "DeleteProductOutput",
+      "tasks": [
+        "DeleteProductCheckPermissionsPipelineTask",
+        "DeleteProductPipelineTask",
+        "DeleteProductIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreateProductRelationsInput, CreateProductRelationsOutput>",
+      "inputType": "CreateProductRelationsInput",
+      "name": "CreateProductRelationsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Product.CreateProductRelations",
+      "outputType": "CreateProductRelationsOutput",
+      "tasks": [
+        "CreateProductRelationsCheckPermissionsPipelineTask",
+        "CreateProductRelationsPipelineTask",
+        "CreateProductRelationsIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    }
+  ],
+  "productRelationType": [
+    {
+      "tasksImplement": "IPipelineTask<GetProductRelationTypesInput, GetProductRelationTypesOutput>",
+      "inputType": "GetProductRelationTypesInput",
+      "name": "GetProductRelationTypesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.ProductRelationType.GetProductRelationTypes",
+      "outputType": "GetProductRelationTypesOutput",
+      "tasks": [
+        "GetProductRelationTypesCheckPermissionsPipelineTask",
+        "GetProductRelationTypesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreateProductRelationTypeInput, CreateProductRelationTypeOutput>",
+      "inputType": "CreateProductRelationTypeInput",
+      "name": "CreateProductRelationTypePipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.ProductRelationType.CreateProductRelationType",
+      "outputType": "CreateProductRelationTypeOutput",
+      "tasks": [
+        "CreateProductRelationTypeCheckPermissionsPipelineTask",
+        "CreateProductRelationTypePipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteProductRelationTypesInput, DeleteProductRelationTypesOutput>",
+      "inputType": "DeleteProductRelationTypesInput",
+      "name": "DeleteProductRelationTypesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.ProductRelationType.DeleteProductRelationTypes",
+      "outputType": "DeleteProductRelationTypesOutput",
+      "tasks": [
+        "DeleteProductRelationTypesCheckPermissionsPipelineTask",
+        "DeleteProductRelationTypesPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateProductRelationTypeInput, UpdateProductRelationTypeOutput>",
+      "inputType": "UpdateProductRelationTypeInput",
+      "name": "UpdateProductRelationTypePipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.ProductRelationType.UpdateProductRelationType",
+      "outputType": "UpdateProductRelationTypeOutput",
+      "tasks": [
+        "UpdateProductRelationTypeCheckPermissionsPipelineTask",
+        "UpdateProductRelationTypePipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    }
+  ],
+  "currency": [
+    {
+      "tasksImplement": "IPipelineTask<GetCurrenciesInput, GetCurrenciesOutput>",
+      "inputType": "GetCurrenciesInput",
+      "name": "GetCurrenciesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Currency.GetCurrencies",
+      "outputType": "GetCurrenciesOutput",
+      "tasks": [
+        "GetCurrenciesCheckPermissionsPipelineTask",
+        "GetCurrenciesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreateCurrencyInput, CreateCurrencyOutput>",
+      "inputType": "CreateCurrencyInput",
+      "name": "CreateCurrencyPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Currency.CreateCurrency",
+      "outputType": "CreateCurrencyOutput",
+      "tasks": [
+        "CreateCurrencyCheckPermissionsPipelineTask",
+        "CreateCurrencyPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteCurrenciesInput, DeleteCurrenciesOutput>",
+      "inputType": "DeleteCurrenciesInput",
+      "name": "DeleteCurrenciesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Currency.DeleteCurrencies",
+      "outputType": "DeleteCurrenciesOutput",
+      "tasks": [
+        "DeleteCurrenciesCheckPermissionsPipelineTask",
+        "DeleteCurrenciesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateCurrencyInput, UpdateCurrencyOutput>",
+      "inputType": "UpdateCurrencyInput",
+      "name": "UpdateCurrencyPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Currency.UpdateCurrency",
+      "outputType": "UpdateCurrencyOutput",
+      "tasks": [
+        "UpdateCurrencyCheckPermissionsPipelineTask",
+        "UpdateCurrencyPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateCurrenciesInput, UpdateCurrenciesOutput>",
+      "inputType": "UpdateCurrenciesInput",
+      "name": "UpdateCurrenciesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Currency.UpdateCurrencies",
+      "outputType": "UpdateCurrenciesOutput",
+      "tasks": [
+        "UpdateCurrenciesCheckPermissionsPipelineTask",
+        "UpdateCurrenciesPipelineTask"
+      ]
+    }
+  ],
+  "priceGroup": [
+    {
+      "tasksImplement": "IPipelineTask<GetPriceGroupsInput, GetPriceGroupsOutput>",
+      "inputType": "GetPriceGroupsInput",
+      "name": "GetPriceGroupsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.PriceGroup.GetPriceGroups",
+      "outputType": "GetPriceGroupsOutput",
+      "tasks": [
+        "GetPriceGroupsCheckPermissionsPipelineTask",
+        "GetPriceGroupsPipelineTask",
+        "GetPriceGroupsWithPaginationTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetFullPriceGroupsInput, GetFullPriceGroupsOutput>",
+      "inputType": "GetFullPriceGroupsInput",
+      "name": "GetFullPriceGroupsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.PriceGroup.GetFullPriceGroups",
+      "outputType": "GetFullPriceGroupsOutput",
+      "tasks": [
+        "GetFullPriceGroupsCheckPermissionsPipelineTask",
+        "GetFullPriceGroupPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreatePriceGroupInput, CreatePriceGroupOutput>",
+      "inputType": "CreatePriceGroupInput",
+      "name": "CreatePriceGroupPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.PriceGroup.CreatePriceGroup",
+      "outputType": "CreatePriceGroupOutput",
+      "tasks": [
+        "CreatePriceGroupCheckPermissionsPipelineTask",
+        "CreatePriceGroupPipelineTask",
+        "CreatePriceGroupIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeletePriceGroupsInput, DeletePriceGroupsOutput>",
+      "inputType": "DeletePriceGroupsInput",
+      "name": "DeletePriceGroupsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.PriceGroup.DeletePriceGroup",
+      "outputType": "DeletePriceGroupsOutput",
+      "tasks": [
+        "DeletePriceGroupsCheckPermissionsPipelineTask",
+        "DeletePriceGroupsPipelineTask",
+        "DeletePriceGroupsIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdatePriceGroupInput, UpdatePriceGroupOutput>",
+      "inputType": "UpdatePriceGroupInput",
+      "name": "UpdatePriceGroupPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.PriceGroup.UpdatePriceGroup",
+      "outputType": "UpdatePriceGroupOutput",
+      "tasks": [
+        "UpdatePriceGroupCheckPermissionsPipelineTask",
+        "UpdatePriceGroupPipelineTask",
+        "UpdatePriceGroupIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<ResurrectPriceGroupsInput, ResurrectPriceGroupsOutput>",
+      "inputType": "ResurrectPriceGroupsInput",
+      "name": "ResurrectPriceGroupsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.PriceGroup.ResurrectPriceGroups",
+      "outputType": "ResurrectPriceGroupsOutput",
+      "tasks": [
+        "ResurrectPriceGroupsCheckPermissionsPipelineTask",
+        "ResurrectPriceGroupsPipelineTask",
+        "ResurrectPriceGroupsIndexingPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetPriceGroupInput, GetPriceGroupOutput>",
+      "inputType": "GetPriceGroupInput",
+      "name": "GetPriceGroupPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.PriceGroup.GetPriceGroup",
+      "outputType": "GetPriceGroupOutput",
+      "tasks": [
+        "GetPriceGroupTask"
+      ]
+    }
+  ],
+  "promotions": [
+    {
+      "tasksImplement": "IPipelineTask<CreatePromotionInput, CreatePromotionOutput>",
+      "inputType": "CreatePromotionInput",
+      "name": "CreatePromotionPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.CreatePromotion",
+      "outputType": "CreatePromotionOutput",
+      "tasks": [
+        "CreatePromotionCheckPermissionsPipelineTask",
+        "CreatePromotionPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetPromotionDetailsInput, GetPromotionDetailsOutput>",
+      "inputType": "GetPromotionDetailsInput",
+      "name": "GetPromotionDetailsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.GetPromotionDetails",
+      "outputType": "GetPromotionDetailsOutput",
+      "tasks": [
+        "GetPromotionDetailsCheckPermissionsPipelineTask",
+        "GetPromotionDetailsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdatePromotionInput, UpdatePromotionOutput>",
+      "inputType": "UpdatePromotionInput",
+      "name": "UpdatePromotionPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.UpdatePromotion",
+      "outputType": "UpdatePromotionOutput",
+      "tasks": [
+        "UpdatePromotionCheckPermissionsPipelineTask",
+        "UpdatePromotionPipelineTask",
+        "ReorderPromotionsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeletePromotionInput, DeletePromotionOutput>",
+      "inputType": "DeletePromotionInput",
+      "name": "DeletePromotionPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.DeletePromotion",
+      "outputType": "DeletePromotionOutput",
+      "tasks": [
+        "DeletePromotionCheckPermissionsPipelineTask",
+        "DeletePromotionPipelineTask"
+      ]
+    }
+  ],
+  "criteria": [
+    {
+      "tasksImplement": "IPipelineTask<GetCriteriaInput, GetCriteriaOutput>",
+      "inputType": "GetCriteriaInput",
+      "name": "GetCriteriaPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Criteria.GetCriteria",
+      "outputType": "GetCriteriaOutput",
+      "tasks": [
+        "GetCriteriaCheckPermissionsPipelineTask",
+        "GetCriteriaPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetCriterionInput, GetCriterionOutput>",
+      "inputType": "GetCriterionInput",
+      "name": "GetCriterionPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Criteria.GetCriterion",
+      "outputType": "GetCriterionOutput",
+      "tasks": [
+        "GetCriterionCheckPermissionsPipelineTask",
+        "GetCriterionPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<AddCriterionInput, AddCriterionOutput>",
+      "inputType": "AddCriterionInput",
+      "name": "AddCriterionPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Criteria.AddCriterion",
+      "outputType": "AddCriterionOutput",
+      "tasks": [
+        "AddCriterionCheckPermissionsPipelineTask",
+        "AddCatalogCriterionPipelineTask",
+        "AddCategoryCriterionPipelineTask",
+        "AddDynamicOrderPropertyCriterionPipelineTask",
+        "AddOrderAmountCriterionPipelineTask",
+        "AddPriceGroupCriterionPipelineTask",
+        "AddProductCriterionPipelineTask",
+        "AddQuantityCriterionPipelineTask",
+        "AddShippingMethodCriterionPipelineTask",
+        "AddPromotionCodeCriterionPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteCriterionInput, DeleteCriterionOutput>",
+      "inputType": "DeleteCriterionInput",
+      "name": "DeleteCriterionPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Criteria.DeleteCriterion",
+      "outputType": "DeleteCriterionOutput",
+      "tasks": [
+        "DeleteCriterionPipelineTask",
+        "DeleteCriterionCheckPermissionsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<AddProductsToCriterionInput, AddProductsToCriterionOutput>",
+      "inputType": "AddProductsToCriterionInput",
+      "name": "AddProductsToCriterionPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Criteria.AddProductsToCriterion",
+      "outputType": "AddProductsToCriterionOutput",
+      "tasks": [
+        "AddProductsToCriterionCheckPermissionsPipelineTask",
+        "AddProductsToCriterionPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<AddCategoriesToCriterionInput, AddCategoriesToCriterionOutput>",
+      "inputType": "AddCategoriesToCriterionInput",
+      "name": "AddCategoriesToCriterionPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Criteria.AddCategoriesToCriterion",
+      "outputType": "AddCategoriesToCriterionOutput",
+      "tasks": [
+        "AddCategoriesToCriterionCheckPermissionsPipelineTask",
+        "AddCategoriesToCriterionPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<RemoveCategoriesFromCriterionInput, RemoveCategoriesFromCriterionOutput>",
+      "inputType": "RemoveCategoriesFromCriterionInput",
+      "name": "RemoveCategoriesFromCriterionPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Criteria.RemoveCategoriesFromCriterion",
+      "outputType": "RemoveCategoriesFromCriterionOutput",
+      "tasks": [
+        "RemoveCategoriesFromCriterionCheckPermissionsPipelineTask",
+        "RemoveCategoriesFromCriterionPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<RemoveProductsFromCriterionInput, RemoveProductsFromCriterionOutput>",
+      "inputType": "RemoveProductsFromCriterionInput",
+      "name": "RemoveProductsFromCriterionPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Criteria.RemoveProductsFromCriterion",
+      "outputType": "RemoveProductsFromCriterionOutput",
+      "tasks": [
+        "RemoveProductsFromCriterionCheckPermissionsPipelineTask",
+        "RemoveProductsFromCriterionPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<RemovePromotionCodesFromCriterionInput, RemovePromotionCodesFromCrieterionOutput>",
+      "inputType": "RemovePromotionCodesFromCriterionInput",
+      "name": "RemovePromotionCodesFromCriterionPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Criteria.RemovePromotionCodesFromCriterion",
+      "outputType": "RemovePromotionCodesFromCrieterionOutput",
+      "tasks": [
+        "RemovePromotionCodesFromCriterionCheckPermissionsPipelineTask",
+        "RemovePromotionCodesFromCriterionPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateCriteriaInput, UpdateCriteriaOutput>",
+      "inputType": "UpdateCriteriaInput",
+      "name": "UpdateCriteriaPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Criteria.UpdateCriteria",
+      "outputType": "UpdateCriteriaOutput",
+      "tasks": [
+        "UpdateCriteriaCheckPermissionsPipelineTask",
+        "UpdateCriteriaPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetCatalogsForCriterionInput, GetCatalogsForCriterionOutput>",
+      "inputType": "GetCatalogsForCriterionInput",
+      "name": "GetCatalogsForCriterionPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Criteria.GetCatalogsForCriterion",
+      "outputType": "GetCatalogsForCriterionOutput",
+      "tasks": [
+        "GetCatalogsForCriterionCheckPermissionsPipelineTask",
+        "GetCatalogsForCriterionPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetSelectedCatalogsInput, GetSelectedCatalogsOutput>",
+      "inputType": "GetSelectedCatalogsInput",
+      "name": "GetSelectedCatalogsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Criteria.GetSelectedCatalogs",
+      "outputType": "GetSelectedCatalogsOutput",
+      "tasks": [
+        "GetSelectedCatalogsCheckPermissionsPipelineTask",
+        "GetSelectedCatalogsPipelineTask"
+      ]
+    }
+  ],
+  "discounts": [
+    {
+      "tasksImplement": "IPipelineTask<DeleteDiscountInput, DeleteDiscountOutput>",
+      "inputType": "DeleteDiscountInput",
+      "name": "DeleteDiscountPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Discounts.DeleteDiscount",
+      "outputType": "DeleteDiscountOutput",
+      "tasks": [
+        "DeleteDiscountPipelineTask",
+        "DeleteDiscountCheckPermissionsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetDiscountsInput, GetDiscountsOutput>",
+      "inputType": "GetDiscountsInput",
+      "name": "GetDiscountsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Discounts.GetDiscounts",
+      "outputType": "GetDiscountsOutput",
+      "tasks": [
+        "GetDiscountsCheckPermissionsPipelineTask",
+        "GetDiscountsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<AddDiscountInput, AddDiscountOutput>",
+      "inputType": "AddDiscountInput",
+      "name": "AddDiscountPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Discounts.AddDiscount",
+      "outputType": "AddDiscountOutput",
+      "tasks": [
+        "AddDiscountCheckPermissionsPipelineTask",
+        "AddFreeGiftDiscountPipelineTask",
+        "AddAmountOffOrderLinesDiscountPipelineTask",
+        "AddAmountOffOrderTotalDiscountPipelineTask",
+        "AddAmountOffUnitDiscountPipelineTask",
+        "AddPercentOffOrderLinesDiscountPipelineTask",
+        "AddPercentOffOrderTotalDiscountPipelineTask",
+        "AddPercentOffShippingTotalDiscountPipelineTask",
+        "AddSpecificOrderLineDiscountPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateDiscountInput, UpdateDiscountOutput>",
+      "inputType": "UpdateDiscountInput",
+      "name": "UpdateDiscountPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Discounts.UpdateDiscount",
+      "outputType": "UpdateDiscountOutput",
+      "tasks": [
+        "UpdateDiscountCheckPermissionsPipelineTask",
+        "UpdateDiscountPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetProductForDiscountInput, GetProductForDiscountOutput>",
+      "inputType": "GetProductForDiscountInput",
+      "name": "GetProductForDiscountPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Discounts.GetProductForDiscount",
+      "outputType": "GetProductForDiscountOutput",
+      "tasks": [
+        "GetProductForDiscountCheckPermissionsPipelineTask",
+        "GetProductForDiscountPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<AddProductsToFreeGiftDiscountInput, AddProductsToFreeGiftDiscountOutput>",
+      "inputType": "AddProductsToFreeGiftDiscountInput",
+      "name": "AddProductsToFreeGiftDiscountPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Discounts.AddProductsToFreeGiftDiscount",
+      "outputType": "AddProductsToFreeGiftDiscountOutput",
+      "tasks": [
+        "AddProductsToFreeGiftDiscountCheckPermissionsPipelineTask",
+        "AddProductsToFreeGiftDiscountPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetDiscountInput, GetDiscountOutput>",
+      "inputType": "GetDiscountInput",
+      "name": "GetDiscountPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Discounts.GetDiscount",
+      "outputType": "GetDiscountOutput",
+      "tasks": [
+        "GetDiscountCheckPermissionsPipelineTask",
+        "GetDiscountPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetProductDiscountOptionsInput, GetProductDiscountOptionsOutput>",
+      "inputType": "GetProductDiscountOptionsInput",
+      "name": "GetProductDiscountOptionsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Discounts.GetProductDiscountOptions",
+      "outputType": "GetProductDiscountOptionsOutput",
+      "tasks": [
+        "GetProductDiscountOptionsCheckPermissionsPipelineTask",
+        "GetProductDiscountOptionsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteProductsFromFreeGiftDiscountInput, DeleteProductsFromFreeGiftDiscountOutput>",
+      "inputType": "DeleteProductsFromFreeGiftDiscountInput",
+      "name": "DeleteProductsFromFreeGiftDiscountPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Discounts.DeleteProductsToFreeGiftDiscount",
+      "outputType": "DeleteProductsFromFreeGiftDiscountOutput",
+      "tasks": [
+        "DeleteProductsFromFreeGiftDiscountPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetSelectedDiscountOptionInput, GetSelectedDiscountOptionOutput>",
+      "inputType": "GetSelectedDiscountOptionInput",
+      "name": "GetSelectedDiscountOptionPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Discounts.GetSelectedDiscountOption",
+      "outputType": "GetSelectedDiscountOptionOutput",
+      "tasks": [
+        "GetSelectedDiscountOptionCheckPermissionsPipelineTask",
+        "GetSelectedDiscountOptionPipelineTask"
+      ]
+    }
+  ],
+  "promotionCode": [
+    {
+      "tasksImplement": "IPipelineTask<CreatePromotionCodesInput, CreatePromotionCodesOutput>",
+      "inputType": "CreatePromotionCodesInput",
+      "name": "CreatePromotionCodesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Criteria.PromotionCode.CreatePromotionCodes",
+      "outputType": "CreatePromotionCodesOutput",
+      "tasks": [
+        "CreatePromotionCodesCheckPermissionsPipelineTask",
+        "CreatePromotionCodesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetPromotionCodesForCriterionInput, GetPromotionCodesForCriterionOutput>",
+      "inputType": "GetPromotionCodesForCriterionInput",
+      "name": "GetPromotionCodesForCriterionPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.Promotions.Criteria.PromotionCode.GetPromotionCodesForCriterion",
+      "outputType": "GetPromotionCodesForCriterionOutput",
+      "tasks": [
+        "GetPromotionCodesForCriterionCheckPermissionsPipelineTask",
+        "GetPromotionCodesForCriterionPipelineTask"
+      ]
+    }
+  ],
+  "shippingMethod": [
+    {
+      "tasksImplement": "IPipelineTask<GetShallowShippingMethodsInput, GetShallowShippingMethodsOutput>",
+      "inputType": "GetShallowShippingMethodsInput",
+      "name": "GetShallowShippingMethodsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.ShippingMethod.GetShallowShippingMethods",
+      "outputType": "GetShallowShippingMethodsOutput",
+      "tasks": [
+        "GetShallowShippingMethodsCheckPermissionsPipelineTask",
+        "GetShallowShippingMethodsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetShallowShippingMethodServicesInput, GetShallowShippingMethodServicesOutput>",
+      "inputType": "GetShallowShippingMethodServicesInput",
+      "name": "GetShallowShippingMethodServicesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.ShippingMethod.GetShallowShippingMethodServices",
+      "outputType": "GetShallowShippingMethodServicesOutput",
+      "tasks": [
+        "GetShallowShippingMethodServicesCheckPermissionsPipelineTask",
+        "GetShallowShippingMethodServicesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreateShippingMethodInput, CreateShippingMethodOutput>",
+      "inputType": "CreateShippingMethodInput",
+      "name": "CreateShippingMethodPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.ShippingMethod.CreateShippingMethod",
+      "outputType": "CreateShippingMethodOutput",
+      "tasks": [
+        "CreateShippingMethodCheckPermissionsPipelineTask",
+        "CreateShippingMethodPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetShippingMethodInput, GetShippingMethodOutput>",
+      "inputType": "GetShippingMethodInput",
+      "name": "GetShippingMethodPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.ShippingMethod.GetShippingMethod",
+      "outputType": "GetShippingMethodOutput",
+      "tasks": [
+        "GetShippingMethodCheckPermissionsPipelineTask",
+        "GetShippingMethodPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateShippingMethodInput, UpdateShippingMethodOutput>",
+      "inputType": "UpdateShippingMethodInput",
+      "name": "UpdateShippingMethodPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.ShippingMethod.UpdateShippingMethod",
+      "outputType": "UpdateShippingMethodOutput",
+      "tasks": [
+        "UpdateShippingMethodPrepareDataPipelineTask",
+        "UpdateShippingMethodCheckPermissionsPipelineTask",
+        "UpdateShippingMethodPricePipelineTask",
+        "UpdateShippingMethodPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteShippingMethodInput, DeleteShippingMethodOutput>",
+      "inputType": "DeleteShippingMethodInput",
+      "name": "DeleteShippingMethodPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.ShippingMethod.DeleteShippingMethod",
+      "outputType": "DeleteShippingMethodOutput",
+      "tasks": [
+        "DeleteShippingMethodCheckPermissionsPipelineTask",
+        "DeleteShippingMethodPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetShippingMethodsInput, GetShippingMethodsOutput>",
+      "inputType": "GetShippingMethodsInput",
+      "name": "GetShippingMethodsPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.ShippingMethod.GetShippingMethods",
+      "outputType": "GetShippingMethodsOutput",
+      "tasks": [
+        "GetShippingMethodsWithPaginationTask"
+      ]
+    }
+  ],
+  "apiAccess": [
+    {
+      "tasksImplement": "IPipelineTask<GetApiAccessInput, GetApiAccessOutput>",
+      "inputType": "GetApiAccessInput",
+      "name": "GetApiAccessPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.ApiAccess.GetApiAccess",
+      "outputType": "GetApiAccessOutput",
+      "tasks": [
+        "GetApiAccessCheckPermissionsPipelineTask",
+        "GetApiAccessPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetRedirectUrlsInput, GetRedirectUrlsOutput>",
+      "inputType": "GetRedirectUrlsInput",
+      "name": "GetRedirectUrlsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.ApiAccess.GetRedirectUrls",
+      "outputType": "GetRedirectUrlsOutput",
+      "tasks": [
+        "GetRedirectUrlsCheckPermissionsPipelineTask",
+        "GetRedirectUrlsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<AddRedirectUrlInput, AddRedirectUrlOutput>",
+      "inputType": "AddRedirectUrlInput",
+      "name": "AddRedirectUrlPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.ApiAccess.AddRedirectUrl",
+      "outputType": "AddRedirectUrlOutput",
+      "tasks": [
+        "AddRedirectUrlCheckPermissionsPipelineTask",
+        "AddRedirectUrlPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteRedirectUrlsInput, DeleteRedirectUrlsOutput>",
+      "inputType": "DeleteRedirectUrlsInput",
+      "name": "DeleteRedirectUrlsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.ApiAccess.DeleteRedirectUrls",
+      "outputType": "DeleteRedirectUrlsOutput",
+      "tasks": [
+        "DeleteRedirectUrlsCheckPermissionsPipelineTask",
+        "DeleteRedirectUrlsPipelineTask"
+      ]
+    }
+  ],
+  "orderNumberSeries": [
+    {
+      "tasksImplement": "IPipelineTask<GetOrderNumberSeriesListInput, GetOrderNumberSeriesListOutput>",
+      "inputType": "GetOrderNumberSeriesListInput",
+      "name": "GetOrderNumberSeriesListPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.OrderNumberSeries.GetOrderNumberSeriesList",
+      "outputType": "GetOrderNumberSeriesListOutput",
+      "tasks": [
+        "GetOrderNumberSeriesListCheckPermissionsPipelineTask",
+        "GetOrderNumberSeriesListPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreateOrderNumberSeriesInput, CreateOrderNumberSeriesOutput>",
+      "inputType": "CreateOrderNumberSeriesInput",
+      "name": "CreateOrderNumberSeriesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.OrderNumberSeries.CreateOrderNumberSeries",
+      "outputType": "CreateOrderNumberSeriesOutput",
+      "tasks": [
+        "CreateOrderNumberSeriesCheckPermissionsPipelineTask",
+        "CreateOrderNumberSeriesPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<DeleteOrderNumberSeriesListInput, DeleteOrderNumberSeriesListOutput>",
+      "inputType": "DeleteOrderNumberSeriesListInput",
+      "name": "DeleteOrderNumberSeriesListPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.OrderNumberSeries.DeleteOrderNumberSeriesList",
+      "outputType": "DeleteOrderNumberSeriesListOutput",
+      "tasks": [
+        "DeleteOrderNumberSeriesListCheckPermissionsPipelineTask",
+        "DeleteOrderNumberSeriesListPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UnDeleteOrderNumberSeriesListInput, UnDeleteOrderNumberSeriesListOutput>",
+      "inputType": "UnDeleteOrderNumberSeriesListInput",
+      "name": "UnDeleteOrderNumberSeriesListPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.OrderNumberSeries.UnDeleteOrderNumberSeriesList",
+      "outputType": "UnDeleteOrderNumberSeriesListOutput",
+      "tasks": [
+        "UnDeleteOrderNumberSeriesListCheckPermissionsPipelineTask",
+        "UnDeleteOrderNumberSeriesListPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<UpdateOrderNumberSeriesInput, UpdateOrderNumberSeriesOutput>",
+      "inputType": "UpdateOrderNumberSeriesInput",
+      "name": "UpdateOrderNumberSeriesPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.OrderNumberSeries.UpdateOrderNumberSeries",
+      "outputType": "UpdateOrderNumberSeriesOutput",
+      "tasks": [
+        "UpdateOrderNumberSeriesCheckPermissionsPipelineTask",
+        "UpdateOrderNumberSeriesPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    }
+  ],
+  "user": [
+    {
+      "tasksImplement": "IPipelineTask<GetUsersInput, GetUsersOutput>",
+      "inputType": "GetUsersInput",
+      "name": "GetUsersPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.User.GetUsers",
+      "outputType": "GetUsersOutput",
+      "tasks": [
+        "GetUsersCheckPermissionsPipelineTask",
+        "GetUsersPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetUserPermissionsInput, GetUserPermissionsOutput>",
+      "inputType": "GetUserPermissionsInput",
+      "name": "GetUserPermissionsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.User.GetUserPermissions",
+      "outputType": "GetUserPermissionsOutput",
+      "tasks": [
+        "GetUserPermissionsCheckPermissionsPipelineTask",
+        "GetUserPermissionsPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<SetUserPermissionsInput, SetUserPermissionsOutput>",
+      "inputType": "SetUserPermissionsInput",
+      "name": "SetUserPermissionsPipeline",
+      "namespace": "Ucommerce.Web.BackOffice.Pipelines.User.SetUserPermissions",
+      "outputType": "SetUserPermissionsOutput",
+      "tasks": [
+        "SetUserPermissionsCheckPermissionsPipelineTask",
+        "SetUserPermissionsPipelineTask",
+        "SaveChangesPipelineTask"
+      ]
+    }
+  ],
+  "country": [
+    {
+      "tasksImplement": "IPipelineTask<GetCountriesInput, GetCountriesOutput>",
+      "inputType": "GetCountriesInput",
+      "name": "GetCountriesPipeline",
+      "namespace": "Ucommerce.Web.WebSite.Pipelines.Country.GetCountries",
+      "outputType": "GetCountriesOutput",
+      "tasks": [
+        "GetCountriesWithPaginationTask"
+      ]
+    }
+  ],
+  "payment": [
+    {
+      "tasksImplement": "IPipelineTask<GetPaymentInput, GetPaymentOutput>",
+      "inputType": "GetPaymentInput",
+      "name": "GetPaymentPipeline",
+      "namespace": "Ucommerce.Extensions.Payment.Abstractions.Pipelines.Payment.GetPayment",
+      "outputType": "GetPaymentOutput",
+      "tasks": [
+        "GetPaymentPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreatePaymentInput, CreatePaymentOutput>",
+      "inputType": "CreatePaymentInput",
+      "name": "CreatePaymentPipeline",
+      "namespace": "Ucommerce.Extensions.Payment.Abstractions.Pipelines.Payment.CreatePayment",
+      "outputType": "CreatePaymentOutput",
+      "tasks": [
+        "DeletePaymentsFromCartPipelineTask",
+        "DeletePaymentsFromCartPipelineTask",
+        "CreatePaymentPipelineTask",
+        "ExecuteGetPaymentUrlPipelinePipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<GetPaymentUrlInput, GetPaymentUrlOutput>",
+      "inputType": "GetPaymentUrlInput",
+      "name": "GetPaymentUrlPipeline",
+      "namespace": "Ucommerce.Extensions.Payment.Abstractions.Pipelines.Payment.GetPaymentUrl",
+      "outputType": "GetPaymentUrlOutput",
+      "tasks": [
+        "GetPaymentUrlPipelineTask"
+      ]
+    }
+  ],
+  "customer": [
+    {
+      "tasksImplement": "IPipelineTask<CreateCustomerInput, CreateCustomerOutput>",
+      "inputType": "CreateCustomerInput",
+      "name": "CreateCustomerPipeline",
+      "namespace": "Ucommerce.Extensions.Payment.Abstractions.Pipelines.Customer.CreateCustomer",
+      "outputType": "CreateCustomerOutput",
+      "tasks": [
+        "CreateCustomerPipelineTask"
+      ]
+    }
+  ],
+  "shipment": [
+    {
+      "tasksImplement": "IPipelineTask<RemoveShipmentInput, RemoveShipmentOutput>",
+      "inputType": "RemoveShipmentInput",
+      "name": "RemoveShipmentPipeline",
+      "namespace": "Ucommerce.Extensions.Payment.Abstractions.Pipelines.Shipment.RemoveShipment",
+      "outputType": "RemoveShipmentOutput",
+      "tasks": [
+        "RemoveShipmentPipelineTask"
+      ]
+    },
+    {
+      "tasksImplement": "IPipelineTask<CreateShipmentInput, CreateShipmentOutput>",
+      "inputType": "CreateShipmentInput",
+      "name": "CreateShipmentPipeline",
+      "namespace": "Ucommerce.Extensions.Payment.Abstractions.Pipelines.Shipment.CreateShipment",
+      "outputType": "CreateShipmentOutput",
+      "tasks": [
+        "CreateShipmentPipelineTask"
+      ]
+    }
+  ]
+}

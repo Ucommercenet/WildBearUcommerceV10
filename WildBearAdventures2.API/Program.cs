@@ -18,15 +18,20 @@ using WildBearAdventures.API.ImageService;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Set up services
-builder.Services.AddUcommerce(builder.Configuration)
+builder.Services
+    //Set up services
+    .AddUcommerce(builder.Configuration)
     .AddBackOffice()
     .AddWebSite()
     .AddSearch()
     .UcommerceBuilder
     .AddElasticsearch()
     .AddPayments()
-    .AddMyOrderProcessingExtensions()
+    //Custom pipeline Tasks
+    .AddCustomOrderProcessingTask()
+    .AddCoffeeProductDescriptionTask()
+
+    //Final builder setup
     .Build();
 
 builder.Services.AddControllers();
