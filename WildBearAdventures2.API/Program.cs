@@ -30,7 +30,6 @@ builder.Services
     //Custom pipeline Tasks
     .AddCustomOrderProcessingTask()
     .AddCoffeeProductDescriptionTask()
-
     //Final builder setup
     .Build();
 
