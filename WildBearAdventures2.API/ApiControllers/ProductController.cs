@@ -52,7 +52,8 @@ namespace WildBearAdventures.API.ApiControllers
             { return NotFound(); }
 
 
-            var searchroduct = await _indexProduct.AsSearchable(culture).Where(p => p.Name == searchName)
+            var searchroduct = await _indexProduct.AsSearchable(culture)
+               .Where(p => p.Name == searchName)
                .ToResultSet(token);
             var result = searchroduct.SingleOrDefault();
 
@@ -60,7 +61,13 @@ namespace WildBearAdventures.API.ApiControllers
             var definedFields = result?.GetUserDefinedFields();
 
 
-            return result is null ? NotFound() : Ok(result);
+            var searchResult = new ProductSearchResult()
+            {
+                ProductSearchModel = result,
+                UserDefinedFields = definedFields
+            };
+
+            return result is null ? NotFound() : Ok(searchResult);
 
         }
 
