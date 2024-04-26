@@ -61,13 +61,13 @@ namespace WildBearAdventures.API.ApiControllers
             var definedFields = result?.GetUserDefinedFields();
 
 
-            var searchResult = new ProductSearchResult()
+            var ResultIncUserDefinedFields = new ProductSearchResult()
             {
                 ProductSearchModel = result,
                 UserDefinedFields = definedFields
             };
 
-            return result is null ? NotFound() : Ok(searchResult);
+            return result is null ? NotFound() : Ok(result);
 
         }
 

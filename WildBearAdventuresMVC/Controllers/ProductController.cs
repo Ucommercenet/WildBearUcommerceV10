@@ -26,7 +26,6 @@ namespace WildBearAdventures.MVC.Controllers
         [HttpGet]
         public IActionResult Index(string productName, CancellationToken ct)
         {
-
             //Handout Part 3: Product details
             #region Handout
             var currentProductDto = _wildBearClient.GetSingleProductByName(productName, ct);
@@ -67,7 +66,7 @@ namespace WildBearAdventures.MVC.Controllers
 
             //Product information
             var product = _wildBearClient.GetSingleProductByName(productName, ct);
-            var priceGroupGuid = product.PriceGroupIds.First();
+            var priceGroupGuid = product.PriceGroupIds.FirstOrDefault();
 
             //Ready the Request
             var request = new ShoppingCartLineUpdateRequest

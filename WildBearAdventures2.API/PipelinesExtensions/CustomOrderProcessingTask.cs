@@ -3,19 +3,22 @@ using Ucommerce.Web.Infrastructure.Pipelines;
 
 namespace WildBearAdventures.API.PipelinesExtensions
 {
-    public class CustomOrderProcessingTask : IPipelineTask<OrderProcessingInput, OrderProcessingOutput>
+    public class CustomOrderProcessingTask : IPipelineTask<OrderProcessingInput,OrderProcessingOutput>
     {
         public CascadeMode CascadeMode => CascadeMode.Continue;
+                
 
-        public Task Execute(PipelineTaskArgs<OrderProcessingInput, OrderProcessingOutput> subject, PipelineContext context)
+        public Task Execute(PipelineContext<OrderProcessingInput, OrderProcessingOutput> context, CancellationToken cancellationToken)
         {
-            if (subject.Input.Order.Customer.FirstName != "Joe")
+            if (context.Input.Order.Customer.FirstName != "Joe")
             {
-                subject.Input.Order.Customer.FirstName = "Joe";
-                subject.Input.Order.BillingAddress.FirstName = "Joe";
+                context.Input.Order.Customer.FirstName = "Joe";
+                context.Input.Order.BillingAddress.FirstName = "Joe";
             }
 
             return Task.CompletedTask;
         }
+
+       
     }
 }

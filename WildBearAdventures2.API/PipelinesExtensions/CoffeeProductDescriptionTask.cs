@@ -10,14 +10,14 @@ namespace WildBearAdventures.API.PipelinesExtensions
     {
         public CascadeMode CascadeMode => CascadeMode.Stop;
 
-        public Task Execute(PipelineTaskArgs<CreateProductInput, CreateProductOutput> subject, PipelineContext context)
+        public Task Execute(PipelineContext<CreateProductInput, CreateProductOutput> context, CancellationToken cancellationToken)
         {
 
             //DO if name contains coffee add description
-            if (subject.Input.Name.Contains("Coffee"))
+            if (context.Input.Name.Contains("Coffee"))
             {
 
-                var DanishDescription = subject.Output.Product.ProductDescriptions.FirstOrDefault(x => x.CultureCode == "da-DK");
+                var DanishDescription = context.Output.Product.ProductDescriptions.FirstOrDefault(x => x.CultureCode == "da-DK");
 
                 DanishDescription.ShortDescription = "This is a great coffee";
 
@@ -27,5 +27,7 @@ namespace WildBearAdventures.API.PipelinesExtensions
 
             return Task.CompletedTask;
         }
+
+       
     }
 }
