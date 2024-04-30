@@ -48,6 +48,8 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
 
             var expiresAt = _storeAuthDetails.WildBearStore.authorizationDetails?.AccessTokenExpiresAt;
             //A small buffer as been added
+            //TODO: use 10 sec for testing
+
             //Note: Comparing datetime with null always produces false, which is what we want here.
             var tokenIsValid = DateTime.UtcNow.AddSeconds(290) < expiresAt;
 
@@ -121,16 +123,16 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
 
         private void RefreshAuthorization(CancellationToken cancellationToken)
         {
-            //TODO: Check if Auth is ready for refresh            
+                  
             using var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_storeAuthDetails.WildBearStore.BaseUrl);
 
             var storeAuthentication = _storeAuthDetails.WildBearStore;
             var refreshRequest = new HttpRequestMessage(new HttpMethod("POST"), "/api/v1/oauth/Token");
 
-            var succesfull = AddAuthorizationToHeaders(storeAuthentication, refreshRequest.Headers);
-            if (succesfull is not true)
-            { throw new SecurityException(); }
+            var successful = AddAuthorizationToHeaders(storeAuthentication, refreshRequest.Headers);
+            if (successful is not true)
+            { throw new SecurityException("AddAuthorizationToHeaders failed"); }
 
             var refreshToken = _storeAuthDetails.WildBearStore.authorizationDetails.RefreshToken;
 
@@ -142,7 +144,7 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
                 { "grant_type", "refresh_token" }
             };
             refreshRequest.Content = new FormUrlEncodedContent(dictionary);
-            refreshRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+            refreshRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
 
             //TODO: Look into refresh issue
             var refreshResponse = client.SendAsync(refreshRequest, cancellationToken).Result;

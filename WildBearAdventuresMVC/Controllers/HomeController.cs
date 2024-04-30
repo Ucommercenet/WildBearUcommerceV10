@@ -17,7 +17,7 @@ namespace WildBearAdventures.MVC.Controllers
         {
             //Handout Part 1: (Extra) Write an Ucommerce endpoint
 
-            var productDto = _wildBearClient.GetRandomProductFromCategory(categoryName: "Software", new CancellationToken());
+            var productDto = _wildBearClient.GetRandomProductFromCategory(categoryName: "Drinks", new CancellationToken());
             productDto.UnitPrices.TryGetValue("EUR 15 pct", out var price);
 
             var coffeeViewModel = new CoffeeViewModel()
