@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
 using WildBearAdventures.MVC.ViewModels;
 using WildBearAdventures.MVC.WildBear.Context;
 using WildBearAdventures.MVC.WildBear.Models.Request;
@@ -89,7 +90,7 @@ namespace WildBearAdventures.MVC.Controllers
 
             //After the product has been added, show the product again. 
             #endregion
-            return RedirectToAction("Index");
+            return RedirectToAction(actionName: "Index", routeValues: new { productName });
         }
 
         private Guid FindCurrentShoppingCartOrCreateNew(string currency, string cultureCode, CancellationToken ct)

@@ -30,6 +30,7 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
 
             if (_storeAuthDetails.WildBearStore.authorizationDetails.AccessToken is null)
             { throw new SecurityException(); }
+
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_storeAuthDetails.WildBearStore.BaseUrl);
 
@@ -42,23 +43,27 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
         private void AuthorizeFlow(CancellationToken cancellationToken)
         {
             if (_storeAuthDetails.WildBearStore.authorizationDetails is null)
-            {
-                RequestAuthorization(cancellationToken);
-            }
+            { InitializeAuthorization(cancellationToken); }
 
             var expiresAt = _storeAuthDetails.WildBearStore.authorizationDetails?.AccessTokenExpiresAt;
-            //A small buffer as been added
-            //TODO: use 10 sec for testing
 
-            //Note: Comparing datetime with null always produces false, which is what we want here.
-            var tokenIsValid = DateTime.UtcNow.AddSeconds(290) < expiresAt;
+            //Note: Comparing datetime with null always produces false, which is what we want here.            
+            var tokenIsValid = DateTime.UtcNow < expiresAt;
 
-            if (tokenIsValid is not true)
+            //If tokenIsValid is true: Do nothing the access token is still valid for a request
+            if (tokenIsValid is false)
             {
-                RefreshAuthorization(cancellationToken);
-            }
+                try
+                {
+                    RefreshAuthorization(cancellationToken);
+                }
+                catch (Exception)
+                {
+                    //Refresh Tokens are valid for 30days, that is a long time for anything to change resulting in refresh failing.
+                    InitializeAuthorization(cancellationToken);
 
-
+                }
+            }           
         }
 
 
@@ -67,7 +72,7 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
         /// </summary>
         /// <remarks></remarks>
         /// <returns></returns>
-        private void RequestAuthorization(CancellationToken cancellationToken)
+        private void InitializeAuthorization(CancellationToken cancellationToken)
         {
             //STEP 1: Create authorizationCode based on StoreAuthenticationModel Ucommerce authentication call         
 
@@ -123,7 +128,6 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
 
         private void RefreshAuthorization(CancellationToken cancellationToken)
         {
-                  
             using var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_storeAuthDetails.WildBearStore.BaseUrl);
 
@@ -136,8 +140,8 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
 
             var refreshToken = _storeAuthDetails.WildBearStore.authorizationDetails.RefreshToken;
 
-            //Prepares the data and assigns it to HttpRequstMessage.Content
-            //According to connect flow documentation: https://docs.ucommerce.net/ucommerce/v9.7/headless/getting-started/quick-start.html
+            // Prepares the data and assigns it to HttpRequstMessage.Content
+            // According to connect flow documentation: https://docs.ucommerce.net/ucommerce/v9.7/headless/getting-started/quick-start.html
             var dictionary = new Dictionary<string, string>
             {
                 { "refresh_token", refreshToken },
@@ -146,14 +150,19 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
             refreshRequest.Content = new FormUrlEncodedContent(dictionary);
             refreshRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
 
-            //TODO: Look into refresh issue
+            // TODO: Look into refresh issue
             var refreshResponse = client.SendAsync(refreshRequest, cancellationToken).Result;
 
-            //Get the authorizationDetails
+            if (refreshResponse.StatusCode is not System.Net.HttpStatusCode.OK)
+            {
+                throw new Exception("Failed to refresh authorization");
+            }
+
+            // Get the authorizationDetails
             var authorizationDetails = refreshResponse.Content.ReadAsAsync<AuthorizationDetails>().Result;
-            //Update ExpiresAt before save.
+            // Update ExpiresAt before save.
             authorizationDetails.AccessTokenExpiresAt = DateTime.UtcNow.AddSeconds(authorizationDetails.AccessTokenExpiresIn);
-            //Saves the token and other details
+            // Saves the token and other details
             storeAuthentication.authorizationDetails = authorizationDetails;
 
         }
