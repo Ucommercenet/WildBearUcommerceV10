@@ -38,12 +38,11 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Bearer", parameter: accessToken);
             return client;
         }
-
-        #region Authorize Related
+        
         private void AuthorizeFlow(CancellationToken cancellationToken)
         {
             if (_storeAuthDetails.WildBearStore.authorizationDetails is null)
-            { InitializeAuthorization(cancellationToken); }
+            { NewAuthorization(cancellationToken); }
 
             var expiresAt = _storeAuthDetails.WildBearStore.authorizationDetails?.AccessTokenExpiresAt;
 
@@ -60,19 +59,18 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
                 catch (Exception)
                 {
                     //Refresh Tokens are valid for 30days, that is a long time for anything to change resulting in refresh failing.
-                    InitializeAuthorization(cancellationToken);
+                    NewAuthorization(cancellationToken);
 
                 }
             }           
         }
-
 
         /// <summary>
         /// Success returns true
         /// </summary>
         /// <remarks></remarks>
         /// <returns></returns>
-        private void InitializeAuthorization(CancellationToken cancellationToken)
+        private void NewAuthorization(CancellationToken cancellationToken)
         {
             //STEP 1: Create authorizationCode based on StoreAuthenticationModel Ucommerce authentication call         
 
@@ -190,8 +188,7 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
 
             return $"Basic {base64Credentials}";
         }
-
-        #endregion
+                
 
 
     }
