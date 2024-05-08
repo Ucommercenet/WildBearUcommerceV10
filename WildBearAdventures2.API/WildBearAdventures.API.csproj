@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -9,6 +9,7 @@
         </Description>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
         <PackageTags>ucommerce;ecommerce;api;headless;template</PackageTags>
+        <UserSecretsId>71f9b78c-9458-4e23-91e4-41c1a3262b94</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>

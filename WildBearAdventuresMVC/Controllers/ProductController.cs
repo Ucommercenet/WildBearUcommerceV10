@@ -31,18 +31,17 @@ namespace WildBearAdventures.MVC.Controllers
             #region Handout
             var currentProductDto = _wildBearClient.GetSingleProductByName(productName, ct);
 
-            currentProductDto.UnitPrices.TryGetValue("EUR 15 pct", out var price);
+            var hasPrice = currentProductDto.UnitPrices.TryGetValue("EUR 15 pct", out var price);           
 
             var productViewModel = new ProductViewModel()
             {
                 Name = currentProductDto.Name,
-                ShortDescription = currentProductDto?.ShortDescription,
-                Price = price
+                ShortDescription = currentProductDto?.ShortDescription ?? "No Description",
+                Price = hasPrice ? price : 0,
             };
 
-            return View(productViewModel); 
-            #endregion
-            //throw new NotImplementedException();
+            return View(productViewModel);
+            #endregion            
         }
 
 
