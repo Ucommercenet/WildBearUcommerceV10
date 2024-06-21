@@ -22,9 +22,9 @@
     <ItemGroup>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
         <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
-        <PackageReference Include="Ucommerce.Web.BackOffice" Version="10.3.0" />
-        <PackageReference Include="Ucommerce.Web.WebSite" Version="10.3.0" />
-        <PackageReference Include="Ucommerce.Search.Elastic" Version="10.3.0" />
+        <PackageReference Include="Ucommerce.Web.BackOffice" Version="10.4.0" />
+        <PackageReference Include="Ucommerce.Web.WebSite" Version="10.4.0" />
+        <PackageReference Include="Ucommerce.Search.Elastic" Version="10.4.0" />
     </ItemGroup>
     
     <ItemGroup>

@@ -24,6 +24,17 @@ namespace WildBearAdventures.API.ApiControllersForScenarios
             _demoToolbox = demoEntitiesGenerator;
         }
 
+         [HttpPost("_RunStartUpSequence")]
+        public async Task<IActionResult> RunStartUpSequence(CancellationToken cancellationToken)
+        {
+            await StartupCategories(cancellationToken);
+
+            return Ok();
+        }
+
+     
+
+
         [HttpPost("StartupCategories")]
         public async Task<IActionResult> StartupCategories(CancellationToken cancellationToken)
         {
@@ -32,7 +43,6 @@ namespace WildBearAdventures.API.ApiControllersForScenarios
 
             return Ok();
         }
-
 
         [HttpPost("StartupProducts")]
         public async Task<IActionResult> StartupProducts(CancellationToken cancellationToken)
