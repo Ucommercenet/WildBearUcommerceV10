@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace WildBearAdventures.API;
+namespace Ucommerce.API;
 
 /// <summary>
 /// Middleware for setting the test user

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 
-namespace WildBearAdventures.API
+namespace Ucommerce.API
 {
     public class ProductSearchResult
     {

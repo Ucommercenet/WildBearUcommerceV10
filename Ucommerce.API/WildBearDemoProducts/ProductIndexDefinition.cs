@@ -1,7 +1,7 @@
 ﻿using Ucommerce.Extensions.Search.Abstractions.DefaultDefinitions;
 using Ucommerce.Extensions.Search.Abstractions.Extensions;
 
-namespace WildBearAdventures.API.WildBearProducts
+namespace Ucommerce.API.WildBearDemoProducts
 {
     public class ProductIndexDefinition : DefaultProductsIndexDefinition
     {

@@ -5,7 +5,7 @@ using Ucommerce.Web.Infrastructure.DependencyInjection;
 using Ucommerce.Web.Infrastructure.Pipelines;
 using Ucommerce.Web.WebSite.Pipelines.Cart.CalculateCart;
 
-namespace WildBearAdventures.API.PipelinesExtensions
+namespace Ucommerce.API.PipelinesExtensions
 {
     public static class CheckoutPipelineExtensions
     {

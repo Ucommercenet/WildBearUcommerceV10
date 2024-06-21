@@ -1,12 +1,12 @@
 ﻿using Ucommerce.Web.Core.Pipelines.OrderProcessing;
 using Ucommerce.Web.Infrastructure.Pipelines;
 
-namespace WildBearAdventures.API.PipelinesExtensions
+namespace Ucommerce.API.PipelinesExtensions
 {
-    public class CustomOrderProcessingTask : IPipelineTask<OrderProcessingInput,OrderProcessingOutput>
+    public class CustomOrderProcessingTask : IPipelineTask<OrderProcessingInput, OrderProcessingOutput>
     {
         public CascadeMode CascadeMode => CascadeMode.Continue;
-                
+
 
         public Task Execute(PipelineContext<OrderProcessingInput, OrderProcessingOutput> context, CancellationToken cancellationToken)
         {
@@ -19,6 +19,6 @@ namespace WildBearAdventures.API.PipelinesExtensions
             return Task.CompletedTask;
         }
 
-       
+
     }
 }

@@ -1,15 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ucommerce.Web.Infrastructure.Persistence.Entities.Definitions;
 using Ucommerce.Web.Infrastructure.Persistence;
-using WildBearAdventures.API.WildBearDemoProducts;
 using MimeKit.Cryptography;
 using Ucommerce.Web.Infrastructure.Persistence.Mapping;
 using Ucommerce.Web.Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
+using Ucommerce.API.WildBearDemoProducts;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace WildBearAdventures.API.ApiControllersForScenarios
+namespace Ucommerce.API.ApiControllersForScenarios
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -24,7 +24,7 @@ namespace WildBearAdventures.API.ApiControllersForScenarios
             _demoToolbox = demoEntitiesGenerator;
         }
 
-         [HttpPost("_RunStartUpSequence")]
+        [HttpPost("_RunStartUpSequence")]
         public async Task<IActionResult> RunStartUpSequence(CancellationToken cancellationToken)
         {
             await StartupCategories(cancellationToken);
@@ -32,7 +32,7 @@ namespace WildBearAdventures.API.ApiControllersForScenarios
             return Ok();
         }
 
-     
+
 
 
         [HttpPost("StartupCategories")]
@@ -82,26 +82,26 @@ namespace WildBearAdventures.API.ApiControllersForScenarios
                 .Set<ProductDefinitionEntity>()
                 .Include(x => x.ProductDefinitionFields)
                 .Where(x => x.Name == wildCoffeeDefinitionName).FirstOrDefault();
-               
+
 
             if (wildCoffeeProductDefinitionEntity == null)
-            { return NotFound("wildCoffeeDefinition not found"); }                       
+            { return NotFound("wildCoffeeDefinition not found"); }
 
-              var shortTextDataType = _ucommerceDbContext.Set<DataTypeEntity>()
-                .FirstOrDefault(x => x.DefinitionName == "ShortText") ?? throw new Exception("ShortText DataType not found");
+            var shortTextDataType = _ucommerceDbContext.Set<DataTypeEntity>()
+              .FirstOrDefault(x => x.DefinitionName == "ShortText") ?? throw new Exception("ShortText DataType not found");
 
 
-            var definitionField =  CreateProductDefinitionField(shortTextDataType, nameOfField, false, false);   
-            
+            var definitionField = CreateProductDefinitionField(shortTextDataType, nameOfField, false, false);
+
             wildCoffeeProductDefinitionEntity.ProductDefinitionFields.Add(definitionField);
-            
+
             //_ucommerceDbContext.Add(definitionField);
             _ucommerceDbContext.SaveChanges();
 
             return Ok();
 
         }
-         private ProductDefinitionFieldEntity CreateProductDefinitionField(DataTypeEntity dataType, string name, bool isMultilingual, bool isVariantProperty)
+        private ProductDefinitionFieldEntity CreateProductDefinitionField(DataTypeEntity dataType, string name, bool isMultilingual, bool isVariantProperty)
         {
             return new ProductDefinitionFieldEntity
             {

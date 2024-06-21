@@ -5,15 +5,14 @@ using Ucommerce.Web.Core.DependencyInjection;
 using Ucommerce.Extensions.Search.Abstractions.Extensions;
 using Ucommerce.Search.Elastic.Configuration;
 using Ucommerce.Extensions.Payment.Abstractions.Extensions;
-using WildBearAdventures.API.PipelinesExtensions;
 using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 using Ucommerce.Web.Common.Extensions;
-using WildBearAdventures.API;
-using WildBearAdventures.API.WildBearProducts;
-using WildBearAdventures.API.WildBearDemoProducts;
 using Ucommerce.Web.Infrastructure.Core;
-using WildBearAdventures.API.ImageService;
+using Ucommerce.API.WildBearDemoProducts;
+using Ucommerce.API;
+using Ucommerce.API.PipelinesExtensions;
+using Ucommerce.API.ImageService;
 
 
 var builder = WebApplication.CreateBuilder(args);

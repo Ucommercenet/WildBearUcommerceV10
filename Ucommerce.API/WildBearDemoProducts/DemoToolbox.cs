@@ -10,7 +10,7 @@ using Ucommerce.Web.Infrastructure.Persistence.Entities;
 using Ucommerce.Web.Infrastructure.Persistence.Entities.Definitions;
 using static Ucommerce.Web.BackOffice.Constants.FieldIdConstants;
 
-namespace WildBearAdventures.API.WildBearDemoProducts
+namespace Ucommerce.API.WildBearDemoProducts
 {
     public class DemoToolbox
     {
@@ -119,7 +119,7 @@ namespace WildBearAdventures.API.WildBearDemoProducts
             {
                 Name = definitionName,
                 Description = "Definition for Coffee type products",
-                Deleted = false,                
+                Deleted = false,
             };
 
             _ucommerceDbContext.Add(WildCoffeeProductDefinition);

@@ -3,7 +3,7 @@ using Ucommerce.Web.Core.Pipelines.OrderProcessing;
 using Ucommerce.Web.Infrastructure.Persistence.Entities;
 using Ucommerce.Web.Infrastructure.Pipelines;
 
-namespace WildBearAdventures.API.PipelinesExtensions
+namespace Ucommerce.API.PipelinesExtensions
 {
     public class CoffeeProductDescriptionTask : IPipelineTask<CreateProductInput, CreateProductOutput>
 
@@ -28,6 +28,6 @@ namespace WildBearAdventures.API.PipelinesExtensions
             return Task.CompletedTask;
         }
 
-       
+
     }
 }

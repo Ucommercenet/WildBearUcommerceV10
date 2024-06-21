@@ -4,7 +4,7 @@ using Ucommerce.Web.Infrastructure.Core;
 using Ucommerce.Web.Infrastructure;
 using Ucommerce.Web.Common.Extensions;
 
-namespace WildBearAdventures.API.ImageService
+namespace Ucommerce.API.ImageService
 {
     /// <inheritdoc />
     public class CoffeeImageService : IImageService
