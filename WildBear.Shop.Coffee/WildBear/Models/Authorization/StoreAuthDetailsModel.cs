@@ -1,4 +1,4 @@
-﻿namespace WildBearAdventures.MVC.WildBear.Models.Authorization
+﻿namespace WildBear.Shop.Coffee.WildBear.Models.Authorization
 {
 
     /// <summary>

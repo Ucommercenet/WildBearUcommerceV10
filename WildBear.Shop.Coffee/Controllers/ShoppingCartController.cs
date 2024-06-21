@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WildBearAdventures.MVC.ViewModels;
-using WildBearAdventures.MVC.WildBear.Context;
-using WildBearAdventures.MVC.WildBear.TransactionApi;
+using WildBear.Shop.Coffee.ViewModels;
+using WildBear.Shop.Coffee.WildBear.Context;
+using WildBear.Shop.Coffee.WildBear.TransactionApi;
 
-
-namespace WildBearAdventures.MVC.Controllers
+namespace WildBear.Shop.Coffee.Controllers
 {
     public class ShoppingCartController : Controller
     {
@@ -19,7 +18,7 @@ namespace WildBearAdventures.MVC.Controllers
         }
 
 
-        
+
         public async Task<IActionResult> Index(CancellationToken ct)
         {
             var CurrentCart = _contextHelper.GetCurrentCartGuid();
@@ -46,11 +45,11 @@ namespace WildBearAdventures.MVC.Controllers
                 shoppingCartViewModel.ShoppingChartOrderLineViewModels.Add(orderLineViewModel);
             }
 
-            
-            
+
+
 
             return View(shoppingCartViewModel);
         }
-    } 
-   
+    }
+
 }

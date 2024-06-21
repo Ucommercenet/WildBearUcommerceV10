@@ -2,9 +2,9 @@
 using System.Security;
 using System.Text;
 using System.Web;
-using WildBearAdventures.MVC.WildBear.Models.Authorization;
+using WildBear.Shop.Coffee.WildBear.Models.Authorization;
 
-namespace WildBearAdventures.MVC.WildBear.TransactionApi
+namespace WildBear.Shop.Coffee.WildBear.TransactionApi
 {
     public class StoreAuthorization
     {
@@ -38,7 +38,7 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(scheme: "Bearer", parameter: accessToken);
             return client;
         }
-        
+
         private void AuthorizeFlow(CancellationToken cancellationToken)
         {
             if (_storeAuthDetails.WildBearStore.authorizationDetails is null)
@@ -62,7 +62,7 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
                     NewAuthorization(cancellationToken);
 
                 }
-            }           
+            }
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace WildBearAdventures.MVC.WildBear.TransactionApi
 
             return $"Basic {base64Credentials}";
         }
-                
+
 
 
     }

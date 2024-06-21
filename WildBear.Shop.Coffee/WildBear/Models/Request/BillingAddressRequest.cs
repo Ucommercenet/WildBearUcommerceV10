@@ -1,4 +1,4 @@
-﻿namespace WildBearAdventures.MVC.WildBear.Models.Request
+﻿namespace WildBear.Shop.Coffee.WildBear.Models.Request
 {
     public class BillingAddressRequest
     {

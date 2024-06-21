@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace WildBearAdventures.MVC.WildBear.Models.Authorization
+namespace WildBear.Shop.Coffee.WildBear.Models.Authorization
 {
     public class AuthorizationDetails
     {
@@ -12,7 +12,7 @@ namespace WildBearAdventures.MVC.WildBear.Models.Authorization
 
         [JsonProperty("refresh_token")]
         public string? RefreshToken { get; set; }
-             
+
         public DateTime AccessTokenExpiresAt { get; set; }
 
     }

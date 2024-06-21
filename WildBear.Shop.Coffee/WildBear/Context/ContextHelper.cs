@@ -1,6 +1,6 @@
-﻿using WildBearAdventures.MVC.WildBear.TransactionApi;
+﻿using WildBear.Shop.Coffee.WildBear.TransactionApi;
 
-namespace WildBearAdventures.MVC.WildBear.Context
+namespace WildBear.Shop.Coffee.WildBear.Context
 {
     public class ContextHelper : IContextHelper
     {
@@ -14,7 +14,7 @@ namespace WildBearAdventures.MVC.WildBear.Context
             _httpContextAccessor = httpContextAccessor;
         }
 
-        private const string KEY_CategoryGuid = "CurrentCategoryGuid";        
+        private const string KEY_CategoryGuid = "CurrentCategoryGuid";
         private const string KEY_BasketGuid = "CurrentBasketGuid";
         private const string KEY_BasketCount = "CurrentBasketCount";
 
@@ -37,7 +37,7 @@ namespace WildBearAdventures.MVC.WildBear.Context
             session?.SetString(KEY_CategoryGuid, CategoryGuid.ToString());
 
 
-            
+
         }
 
 

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WildBearAdventures.MVC.WildBear.TransactionApi;
 using WildBearAdventures.MVC.ViewModels;
+using WildBear.Shop.Coffee.WildBear.TransactionApi;
 
 
-namespace WildBearAdventures.MVC.Controllers
+namespace WildBear.Shop.Coffee.Controllers
 {
     public class CategoryNavigationController : Controller
     {
@@ -35,7 +35,7 @@ namespace WildBearAdventures.MVC.Controllers
 
             return View(categoryNavigationViewModel);
             #endregion
-           
+
 
         }
 

@@ -1,4 +1,4 @@
-﻿namespace WildBearAdventures.MVC.WildBear.MockData
+﻿namespace WildBear.Shop.Coffee.WildBear.MockData
 {
     public static class MockFictionalDataGenerator
     {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WildBearAdventures.MVC.WildBear.Context;
-using WildBearAdventures.MVC.WildBear.TransactionApi;
 using WildBearAdventures.MVC.ViewModels;
+using WildBear.Shop.Coffee.WildBear.Context;
+using WildBear.Shop.Coffee.WildBear.TransactionApi;
 
 
-namespace WildBearAdventures.MVC.Controllers
+namespace WildBear.Shop.Coffee.Controllers
 {
     public class CategoryController : Controller
     {
@@ -30,9 +30,9 @@ namespace WildBearAdventures.MVC.Controllers
 
             if (currentCategoryGuid is null)
             { return View(); }
-            
+
             var currentCategoryDto = _wildBearClient.GetSingleCategoryByGuid((Guid)currentCategoryGuid, token);
-            
+
             var productDtos = _wildBearClient.GetAllProductsFromCategoryGuid((Guid)currentCategoryGuid, token);
 
             var CategoryViewModel = new CategoryViewModel
@@ -42,9 +42,9 @@ namespace WildBearAdventures.MVC.Controllers
                 ImageUrl = currentCategoryDto?.ImageMediaUrl,
             };
 
-            return View(CategoryViewModel); 
+            return View(CategoryViewModel);
             #endregion
-            
+
         }
     }
 }
