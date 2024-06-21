@@ -5,7 +5,6 @@ using Ucommerce.Web.Core.DependencyInjection;
 using Ucommerce.Extensions.Search.Abstractions.Extensions;
 using Ucommerce.Search.Elastic.Configuration;
 using Ucommerce.Extensions.Payment.Abstractions.Extensions;
-using WildBearAdventures.API.PipelinesExtensions;
 using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 using Ucommerce.Web.Common.Extensions;
@@ -13,7 +12,6 @@ using WildBearAdventures.API;
 using WildBearAdventures.API.WildBearProducts;
 using WildBearAdventures.API.WildBearDemoProducts;
 using Ucommerce.Web.Infrastructure.Core;
-using WildBearAdventures.API.ImageService;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,8 +26,9 @@ builder.Services
     .AddElasticsearch()
     .AddPayments()
     //Custom pipeline Tasks
-    .AddCustomOrderProcessingTask()
-    .AddCoffeeProductDescriptionTask()
+    //TODO: Scenario 3: Pipeline customization
+    
+
     //Final builder setup
     .Build();
 
@@ -37,7 +36,6 @@ builder.Services.AddControllers();
 
 builder.Services.AddUnique<IIndexDefinition<ProductSearchModel>, ProductIndexDefinition>();
 builder.Services.AddTransient<DemoToolbox>();
-builder.Services.AddUnique<IImageService, CoffeeImageService>();
 
 #region Swagger Related
 builder.Services.AddEndpointsApiExplorer();
