@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WildBear.Shop.Coffee.ViewModels;
 using WildBear.Shop.Coffee.WildBear.TransactionApi;
-using WildBearAdventures.MVC.ViewModels;
 
 namespace WildBear.Shop.Coffee.Controllers
 {

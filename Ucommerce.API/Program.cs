@@ -11,7 +11,6 @@ using Ucommerce.Web.Common.Extensions;
 using WildBearAdventures.API;
 using WildBearAdventures.API.WildBearProducts;
 using WildBearAdventures.API.WildBearDemoProducts;
-using Ucommerce.Web.Infrastructure.Core;
 
 
 var builder = WebApplication.CreateBuilder(args);

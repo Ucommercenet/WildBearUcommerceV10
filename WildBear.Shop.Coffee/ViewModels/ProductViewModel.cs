@@ -1,6 +1,4 @@
-﻿using System.Security.Policy;
-
-namespace WildBear.Shop.Coffee.ViewModels
+﻿namespace WildBear.Shop.Coffee.ViewModels
 {
     public class ProductViewModel
     {

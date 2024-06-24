@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WildBearAdventures.MVC.ViewModels;
+using WildBear.Shop.Coffee.ViewModels;
 using WildBear.Shop.Coffee.WildBear.Context;
 using WildBear.Shop.Coffee.WildBear.TransactionApi;
 

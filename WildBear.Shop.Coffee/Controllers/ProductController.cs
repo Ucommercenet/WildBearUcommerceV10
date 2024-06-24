@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Xml.Linq;
+using WildBear.Shop.Coffee.ViewModels;
 using WildBear.Shop.Coffee.WildBear.Context;
+using WildBear.Shop.Coffee.WildBear.Models.Request;
 using WildBear.Shop.Coffee.WildBear.TransactionApi;
-using WildBearAdventures.MVC.ViewModels;
-using WildBearAdventures.MVC.WildBear.Models.Request;
-using WildBearAdventures.MVC.WildBear.WildBearApi;
-
 
 
 namespace WildBear.Shop.Coffee.Controllers

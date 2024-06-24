@@ -2,9 +2,6 @@
 using Ucommerce.Web.Infrastructure.Persistence.Entities.Definitions;
 using Ucommerce.Web.Infrastructure.Persistence;
 using WildBearAdventures.API.WildBearDemoProducts;
-using MimeKit.Cryptography;
-using Ucommerce.Web.Infrastructure.Persistence.Mapping;
-using Ucommerce.Web.Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

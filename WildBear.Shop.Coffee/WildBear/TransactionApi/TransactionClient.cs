@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Identity;
-using Newtonsoft.Json.Linq;
-using System.Threading;
+﻿using Newtonsoft.Json.Linq;
 using WildBear.Shop.Coffee.WildBear.Models.DTOs;
 using WildBear.Shop.Coffee.WildBear.Models.Request;
 

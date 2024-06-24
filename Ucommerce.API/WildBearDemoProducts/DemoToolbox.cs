@@ -1,14 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq.Dynamic.Core;
-using Ucommerce.Extensions.Search.Abstractions;
-using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
-using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
+﻿using Ucommerce.Extensions.Search.Abstractions;
 using Ucommerce.Web.Infrastructure.Persistence;
 using Ucommerce.Web.Infrastructure.Persistence.Entities;
 using Ucommerce.Web.Infrastructure.Persistence.Entities.Definitions;
-using static Ucommerce.Web.BackOffice.Constants.FieldIdConstants;
 
 namespace WildBearAdventures.API.WildBearDemoProducts
 {

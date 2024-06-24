@@ -3,8 +3,6 @@ using WildBear.Shop.Coffee.WildBear.MockData;
 using WildBear.Shop.Coffee.WildBear.Models.DTOs;
 using WildBear.Shop.Coffee.WildBear.Models.Request;
 using WildBear.Shop.Coffee.WildBear.TransactionApi;
-using WildBearAdventures.MVC.WildBear.Models.Request;
-using static WildBear.Shop.Coffee.WildBear.Models.DTOs.ShippingMethodCollectionDto;
 using static WildBear.Shop.Coffee.WildBear.Models.Request.ShippingInformationRequest;
 
 
