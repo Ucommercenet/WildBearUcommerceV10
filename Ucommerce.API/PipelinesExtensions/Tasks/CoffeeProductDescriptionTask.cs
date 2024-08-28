@@ -3,7 +3,7 @@ using Ucommerce.Web.Core.Pipelines.OrderProcessing;
 using Ucommerce.Web.Infrastructure.Persistence.Entities;
 using Ucommerce.Web.Infrastructure.Pipelines;
 
-namespace Ucommerce.API.PipelinesExtensions
+namespace Ucommerce.API.PipelinesExtensions.Tasks
 {
     public class CoffeeProductDescriptionTask : IPipelineTask<CreateProductInput, CreateProductOutput>
 

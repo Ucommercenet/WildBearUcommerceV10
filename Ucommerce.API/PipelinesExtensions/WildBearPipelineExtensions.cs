@@ -1,8 +1,10 @@
-﻿using Ucommerce.Extensions.Payment.Abstractions.Builder;
+﻿using Ucommerce.API.PipelinesExtensions.Tasks;
+using Ucommerce.Extensions.Payment.Abstractions.Builder;
 using Ucommerce.Web.BackOffice.Pipelines.Product;
 using Ucommerce.Web.BackOffice.Pipelines.Product.CreateProduct;
 using Ucommerce.Web.Infrastructure.DependencyInjection;
 using Ucommerce.Web.Infrastructure.Pipelines;
+using Ucommerce.Web.WebSite.Pipelines.Cart.AddToCart;
 using Ucommerce.Web.WebSite.Pipelines.Cart.CalculateCart;
 
 namespace Ucommerce.API.PipelinesExtensions
@@ -30,6 +32,17 @@ namespace Ucommerce.API.PipelinesExtensions
 
             return builder;
         }
+
+        public static IUcommerceBuilder AddDelayToCartPipelineTask(this IUcommerceBuilder builder)
+        {
+            //This will insert the task 'CustomOrderProcessingTask' before CreateProductIndexingPipelineTask
+            builder.InsertPipelineTaskBefore
+                <IPipelineTask<AddToCartInput, AddToCartOutput>, DelayToCartPipelineTask>
+                (before: typeof(ExecuteCartPipelineTask));
+
+            return builder;
+        }
+
 
 
 

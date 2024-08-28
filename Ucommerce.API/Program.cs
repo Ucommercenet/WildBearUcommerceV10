@@ -28,7 +28,7 @@ builder.Services
     .AddPayments()
     //Custom pipeline Tasks
     .AddCustomOrderProcessingTask()
-    .AddCoffeeProductDescriptionTask()
+    .AddDelayToCartPipelineTask()    
     //Final builder setup
     .Build();
 

@@ -1,7 +1,7 @@
 ﻿using Ucommerce.Web.Core.Pipelines.OrderProcessing;
 using Ucommerce.Web.Infrastructure.Pipelines;
 
-namespace Ucommerce.API.PipelinesExtensions
+namespace Ucommerce.API.PipelinesExtensions.Tasks
 {
     public class CustomOrderProcessingTask : IPipelineTask<OrderProcessingInput, OrderProcessingOutput>
     {
