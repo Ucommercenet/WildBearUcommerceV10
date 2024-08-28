@@ -7,7 +7,7 @@ using Ucommerce.Web.WebSite.Pipelines.Cart.CalculateCart;
 
 namespace Ucommerce.API.PipelinesExtensions
 {
-    public static class CheckoutPipelineExtensions
+    public static class WildBearPipelineExtensions
     {
         public static PaymentBuilder AddCustomOrderProcessingTask(this PaymentBuilder builder)
         {
@@ -24,7 +24,8 @@ namespace Ucommerce.API.PipelinesExtensions
         public static IUcommerceBuilder AddCoffeeProductDescriptionTask(this IUcommerceBuilder builder)
         {
             //This will insert the task 'CustomOrderProcessingTask' before CreateProductIndexingPipelineTask
-            builder.InsertPipelineTaskBefore<IPipelineTask<CreateProductInput, CreateProductOutput>, CoffeeProductDescriptionTask>
+            builder.InsertPipelineTaskBefore
+                <IPipelineTask<CreateProductInput, CreateProductOutput>, CoffeeProductDescriptionTask>
                 (before: typeof(CreateProductIndexingPipelineTask));
 
             return builder;
