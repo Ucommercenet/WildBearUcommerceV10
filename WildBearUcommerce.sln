@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ucommerce.API", "Ucommerce.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WildBear.Shop.Coffee", "WildBear.Shop.Coffee\WildBear.Shop.Coffee.csproj", "{1ADF9674-7A54-49AC-B901-185EAD2FB2BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppForTraceTest", "ConsoleAppForTraceTest\ConsoleAppForTraceTest.csproj", "{77223932-AFAD-4E5A-B730-82FDCB0442F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{1ADF9674-7A54-49AC-B901-185EAD2FB2BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1ADF9674-7A54-49AC-B901-185EAD2FB2BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1ADF9674-7A54-49AC-B901-185EAD2FB2BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77223932-AFAD-4E5A-B730-82FDCB0442F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77223932-AFAD-4E5A-B730-82FDCB0442F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77223932-AFAD-4E5A-B730-82FDCB0442F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77223932-AFAD-4E5A-B730-82FDCB0442F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
