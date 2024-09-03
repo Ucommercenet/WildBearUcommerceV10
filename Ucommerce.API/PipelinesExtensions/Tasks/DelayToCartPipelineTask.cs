@@ -1,4 +1,6 @@
-﻿using Ucommerce.Web.BackOffice.Pipelines.Product.CreateProduct;
+﻿using ConsoleAppForTraceTest;
+using Ucommerce.API.Diagnostics;
+using Ucommerce.Web.BackOffice.Pipelines.Product.CreateProduct;
 using Ucommerce.Web.Core.Pipelines.OrderProcessing;
 using Ucommerce.Web.Infrastructure.Persistence.Entities;
 using Ucommerce.Web.Infrastructure.Pipelines;
@@ -13,13 +15,19 @@ namespace Ucommerce.API.PipelinesExtensions.Tasks
 
         public Task Execute(PipelineContext<AddToCartInput, AddToCartOutput> context, CancellationToken cancellationToken)
         {
-
-            //TODO make execute asycn
-            //await Task.Delay(3000);
-
-            Thread.Sleep(3000);
+            CustomUcommerceEventSource.Log.Pipeline_Start("Start_DelayToCartPipelineTask");
 
 
+
+            var productName = context.Output.Product.Name;
+            var billingAddressName = context.Output.Cart?.BillingAddress?.FirstName;
+
+            Thread.Sleep(1000);
+
+            var primeNumbers = SimulateWorkload.CalculatePrimes(90000);
+
+
+            CustomUcommerceEventSource.Log.Pipeline_Finish("Finished_DelayToCartPipelineTask", productName, billingAddressName);
             return Task.CompletedTask;
         }
 
