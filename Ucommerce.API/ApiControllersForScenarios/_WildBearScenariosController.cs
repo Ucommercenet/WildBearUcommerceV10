@@ -101,6 +101,10 @@ namespace Ucommerce.API.ApiControllersForScenarios
             return Ok();
 
         }
+
+        
+       
+
         private ProductDefinitionFieldEntity CreateProductDefinitionField(DataTypeEntity dataType, string name, bool isMultilingual, bool isVariantProperty)
         {
             return new ProductDefinitionFieldEntity
@@ -113,6 +117,29 @@ namespace Ucommerce.API.ApiControllersForScenarios
                 IsVariantProperty = isVariantProperty,
                 DataType = dataType
             };
+        }
+
+
+        [HttpPost("ChangeOrderDate")]
+        public IActionResult ChangeOrderDate_AddDaysToCompletedDate(string orderNumberId)
+        {
+            var endpointMessage = string.Empty;
+
+            var order = _ucommerceDbContext.Set<OrderEntity>().FirstOrDefault(x => x.OrderNumber == orderNumberId);
+            if (order == null)
+            {
+                return NotFound("Order not found");
+            }
+
+            
+
+            order.CompletedDate = order.CompletedDate.Value.AddDays(5);
+
+            
+
+            _ucommerceDbContext.SaveChanges();
+
+            return Ok();
         }
 
     }
