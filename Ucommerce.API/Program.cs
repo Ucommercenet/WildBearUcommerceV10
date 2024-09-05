@@ -13,6 +13,12 @@ using Ucommerce.API.WildBearDemoProducts;
 using Ucommerce.API;
 using Ucommerce.API.PipelinesExtensions;
 using Ucommerce.API.ImageService;
+using System.Diagnostics;
+
+using OpenTelemetry;
+using OpenTelemetry.Trace;
+using OpenTelemetry.Resources;
+using Ucommerce.API.PipelinesExtensions.Tasks;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,8 +34,20 @@ builder.Services
     .AddPayments()
     //Custom pipeline Tasks
     .AddCustomOrderProcessingTask()
-    .AddDelayToCartPipelineTask()    
+    .AddDelayToCartPipelineTask()
+
     //Final builder setup
+    .Build();
+
+using TracerProvider? tracerProvider = Sdk.CreateTracerProviderBuilder()
+    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("UcommerceWildBearActivitySource"))
+    .AddSource(UcommerceWildBearActivitySource.Instance.Name)
+    .AddJaegerExporter(o =>
+    {
+        o.Protocol = OpenTelemetry.Exporter.JaegerExportProtocol.HttpBinaryThrift;
+    })
+
+    .AddHttpClientInstrumentation()
     .Build();
 
 builder.Services.AddControllers();
@@ -50,7 +68,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-} 
+}
 #endregion
 
 // configure and run

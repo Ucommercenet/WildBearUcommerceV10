@@ -15,6 +15,9 @@ namespace Ucommerce.API.PipelinesExtensions.Tasks
 
         public Task Execute(PipelineContext<AddToCartInput, AddToCartOutput> context, CancellationToken cancellationToken)
         {
+            using (UcommerceWildBearActivitySource.Instance.StartActivity("DelayToCartPipelineTask"));
+
+
             CustomUcommerceEventSource.Log.Pipeline_Start("Start_DelayToCartPipelineTask");
 
 
@@ -24,7 +27,9 @@ namespace Ucommerce.API.PipelinesExtensions.Tasks
 
             Thread.Sleep(1000);
 
-            var primeNumbers = SimulateWorkload.CalculatePrimes(90000);
+            
+
+                var primeNumbers = SimulateWorkload.CalculatePrimes(90000);
 
 
             CustomUcommerceEventSource.Log.Pipeline_Finish("Finished_DelayToCartPipelineTask", productName, billingAddressName);
