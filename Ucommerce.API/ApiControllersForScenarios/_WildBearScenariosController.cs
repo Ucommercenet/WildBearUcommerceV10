@@ -11,6 +11,13 @@ using Ucommerce.API.WildBearDemoProducts;
 
 namespace Ucommerce.API.ApiControllersForScenarios
 {
+
+
+    /// <summary>
+    /// The "_" in the class name ensures that controller is the top controller when using Swagger.
+    /// Same for methods
+    /// </summary>
+        
     [Route("api/[controller]")]
     [ApiController]
     public class _WildBearScenariosController : ControllerBase
@@ -25,9 +32,11 @@ namespace Ucommerce.API.ApiControllersForScenarios
         }
 
         [HttpPost("_RunStartUpSequence")]
-        public async Task<IActionResult> RunStartUpSequence(CancellationToken cancellationToken)
+        public async Task<IActionResult> _RunStartUpSequence(CancellationToken cancellationToken)
         {
-            await StartupCategories(cancellationToken);
+            StartupCategories(cancellationToken);
+            await StartupProducts(cancellationToken);
+            AddProductDefinition();
 
             return Ok();
         }
@@ -36,10 +45,9 @@ namespace Ucommerce.API.ApiControllersForScenarios
 
 
         [HttpPost("StartupCategories")]
-        public async Task<IActionResult> StartupCategories(CancellationToken cancellationToken)
+        public IActionResult StartupCategories(CancellationToken cancellationToken)
         {
-            const string CategoryName = "Drinks";
-            _demoToolbox.CreateCategory(CategoryName);
+            _demoToolbox.CreateCategory("Drinks");
 
             return Ok();
         }
@@ -102,8 +110,8 @@ namespace Ucommerce.API.ApiControllersForScenarios
 
         }
 
-        
-       
+
+
 
         private ProductDefinitionFieldEntity CreateProductDefinitionField(DataTypeEntity dataType, string name, bool isMultilingual, bool isVariantProperty)
         {
@@ -131,11 +139,11 @@ namespace Ucommerce.API.ApiControllersForScenarios
                 return NotFound("Order not found");
             }
 
-            
+
 
             order.CompletedDate = order.CompletedDate.Value.AddDays(5);
 
-            
+
 
             _ucommerceDbContext.SaveChanges();
 
