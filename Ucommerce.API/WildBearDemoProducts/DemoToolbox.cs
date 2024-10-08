@@ -8,7 +8,6 @@ using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 using Ucommerce.Web.Infrastructure.Persistence;
 using Ucommerce.Web.Infrastructure.Persistence.Entities;
 using Ucommerce.Web.Infrastructure.Persistence.Entities.Definitions;
-using static Ucommerce.Web.BackOffice.Constants.FieldIdConstants;
 
 namespace Ucommerce.API.WildBearDemoProducts
 {
@@ -67,7 +66,7 @@ namespace Ucommerce.API.WildBearDemoProducts
             {
                 Name = name,
                 Sku = sku,
-                Definition = productDefinition,
+                DefinitionGuid = productDefinition.Guid,
                 DisplayOnSite = true,
                 ProductDescriptions = new List<ProductDescriptionEntity> { new ProductDescriptionEntity() { DisplayName = name, ShortDescription = shortDescription, CultureCode = culture } }
             };
@@ -106,7 +105,7 @@ namespace Ucommerce.API.WildBearDemoProducts
             var defaultCatalog = _ucommerceDbContext.Set<CatalogEntity>()
               .Where(x => x.Deleted == false).First();
 
-            var category = new CategoryEntity() { Name = categoryName, Definition = defaultCategoryDefinition, Catalog = defaultCatalog, DisplayOnSite = true };
+            var category = new CategoryEntity() { Name = categoryName, DefinitionGuid = defaultCategoryDefinition.Guid, Catalog = defaultCatalog, DisplayOnSite = true };
 
 
             _ucommerceDbContext.Set<CategoryEntity>().Add(category);
