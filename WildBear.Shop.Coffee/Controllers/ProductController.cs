@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Xml.Linq;
-using WildBearAdventures.MVC.ViewModels;
-using WildBearAdventures.MVC.WildBear.Context;
-using WildBearAdventures.MVC.WildBear.Models.Request;
-using WildBearAdventures.MVC.WildBear.TransactionApi;
-using WildBearAdventures.MVC.WildBear.WildBearApi;
+using WildBear.Shop.Coffee.WildBear.Context;
+using WildBear.Shop.Coffee.WildBear.TransactionApi;
+using WildBear.Shop.Coffee.ViewModels;
+using WildBear.Shop.Coffee.WildBear.Models.Request;
 
 
 
-namespace WildBearAdventures.MVC.Controllers
+
+namespace WildBear.Shop.Coffee.Controllers
 {
 
     public class ProductController : Controller
@@ -31,7 +30,7 @@ namespace WildBearAdventures.MVC.Controllers
             #region Handout
             var currentProductDto = _wildBearClient.GetSingleProductByName(productName, ct);
 
-            var hasPrice = currentProductDto.UnitPrices.TryGetValue("EUR 15 pct", out var price);           
+            var hasPrice = currentProductDto.UnitPrices.TryGetValue("EUR 15 pct", out var price);
 
             var productViewModel = new ProductViewModel()
             {

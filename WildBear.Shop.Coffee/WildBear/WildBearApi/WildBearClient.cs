@@ -1,7 +1,7 @@
-﻿using WildBearAdventures.MVC.WildBear.Models.DTOs;
-using WildBearAdventures.MVC.WildBear.TransactionApi;
+﻿using WildBear.Shop.Coffee.WildBear.Models.DTOs;
+using WildBear.Shop.Coffee.WildBear.TransactionApi;
 
-namespace WildBearAdventures.MVC.WildBear.WildBearApi;
+namespace WildBear.Shop.Coffee.WildBear.WildBearApi;
 
 
 
@@ -18,7 +18,7 @@ public class WildBearClient : IStoreApiClient
     public ProductDto GetRandomProductFromCategory(string categoryName, CancellationToken token)
     {
         using var client = _storeAuthorization.GetAuthorizedClient(token);
-        
+
         var categoryGuid = GetOnlyCategoryGuidByName(categoryName, token);
         var uri = $"api/Product/GetAllProductsFromCategoryGuid?categoryId={categoryGuid}";
         var response = client.GetAsync(uri, token).Result;
@@ -39,12 +39,12 @@ public class WildBearClient : IStoreApiClient
         //IMPROVE: Fix breaks if the there is zero products in the list
         //var result = response.Content.ReadFromJsonAsync<List<ProductDto?>>().Result;
         var allProducts = response.Content.ReadFromJsonAsync<List<ProductDto?>>().Result;
-        
-        var regularProduct = allProducts.Where(x => x.productType == 2 ).ToList();
-        var variantProduct = allProducts.Where(x => x.productType == 3 ).ToList();
-        
-        var sellableProducts = allProducts.Where(x => x.productType == 2 | x.productType == 3 ).ToList();
-        
+
+        var regularProduct = allProducts.Where(x => x.productType == 2).ToList();
+        var variantProduct = allProducts.Where(x => x.productType == 3).ToList();
+
+        var sellableProducts = allProducts.Where(x => x.productType == 2 | x.productType == 3).ToList();
+
         return sellableProducts;
 
     }

@@ -1,4 +1,4 @@
-﻿namespace WildBearAdventures.MVC.WildBear.Models.Request
+﻿namespace WildBear.Shop.Coffee.WildBear.Models.Request
 {
     public class CreatePaymentRequest
     {
@@ -9,8 +9,8 @@
         public required Guid PaymentMethodGuid { get; set; }
 
         public required Guid PriceGroupGuid { get; set; }
-        
-        
+
+
 
 
 

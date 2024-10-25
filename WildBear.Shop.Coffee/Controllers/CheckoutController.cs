@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WildBearAdventures.MVC.WildBear.MockData;
-using WildBearAdventures.MVC.WildBear.Models.DTOs;
-using WildBearAdventures.MVC.WildBear.Models.Request;
-using WildBearAdventures.MVC.WildBear.TransactionApi;
-using static WildBearAdventures.MVC.WildBear.Models.DTOs.ShippingMethodCollectionDto;
-using static WildBearAdventures.MVC.WildBear.Models.Request.ShippingInformationRequest;
+using static WildBear.Shop.Coffee.WildBear.Models.DTOs.ShippingMethodCollectionDto;
+using static WildBear.Shop.Coffee.WildBear.Models.Request.ShippingInformationRequest;
+using WildBear.Shop.Coffee.WildBear.Models.Request;
+using WildBear.Shop.Coffee.WildBear.TransactionApi;
+using WildBear.Shop.Coffee.WildBear.MockData;
+using WildBear.Shop.Coffee.WildBear.Models.DTOs;
 
 
-namespace WildBearAdventures.MVC.Controllers
+namespace WildBear.Shop.Coffee.Controllers
 {
     public class CheckoutController : Controller
     {
@@ -17,7 +17,7 @@ namespace WildBearAdventures.MVC.Controllers
         {
             _transactionClient = transactionClient;
         }
-        
+
         public async Task<IActionResult> Index(Guid cartId, CancellationToken ct)
         {
             var selectedCultureCode = "da-DK"; //TODO Improvement: Get from ContextHelper or user                                              
@@ -35,7 +35,7 @@ namespace WildBearAdventures.MVC.Controllers
             var selectedCountry = countriesDto.Countries.First();
 
 
-            var shippingInformation = await AddShippingInfoToCart( cartId, selectedCountry, selectedCultureCode, selectedPriceGroupId, selectedShippingMethod, ct);
+            var shippingInformation = await AddShippingInfoToCart(cartId, selectedCountry, selectedCultureCode, selectedPriceGroupId, selectedShippingMethod, ct);
 
             var isShippingInfoAlsoBillingInfo = true;
 
@@ -112,7 +112,7 @@ namespace WildBearAdventures.MVC.Controllers
                 ShippingAddress = new Address
                 {
                     City = mockAddress.City,
-                    CompanyName =mockAddress.CompanyName ,
+                    CompanyName = mockAddress.CompanyName,
                     CountryId = selectedCountry.Id,
                     Email = mockAddress.Email,
                     FirstName = mockAddress.FirstName,
@@ -128,7 +128,7 @@ namespace WildBearAdventures.MVC.Controllers
 
             //Shipping Information
             await _transactionClient.PostCartShippingInformation(shippingInformationRequest, ct);
-           
+
             return shippingInformationRequest;
         }
 

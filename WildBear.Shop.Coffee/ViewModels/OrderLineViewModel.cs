@@ -1,4 +1,4 @@
-﻿namespace WildBearAdventures.MVC.ViewModels
+﻿namespace WildBear.Shop.Coffee.ViewModels
 {
     public class OrderLineViewModel
     {

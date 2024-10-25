@@ -1,8 +1,8 @@
-﻿namespace WildBearAdventures.MVC.WildBear.Models.Request
+﻿namespace WildBear.Shop.Coffee.WildBear.Models.Request
 {
     public class ShippingInformationRequest
     {
-        public required Guid ShoppingCartGuid {  get; set; }
+        public required Guid ShoppingCartGuid { get; set; }
         public required string PriceGroupId { get; set; }
         public required string ShippingMethodId { get; set; }
         public required string CultureCode { get; set; }

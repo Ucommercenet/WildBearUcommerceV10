@@ -1,10 +1,10 @@
 ﻿using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Identity;
 using Newtonsoft.Json.Linq;
 using System.Threading;
-using WildBearAdventures.MVC.WildBear.Models.DTOs;
-using WildBearAdventures.MVC.WildBear.Models.Request;
+using WildBear.Shop.Coffee.WildBear.Models.DTOs;
+using WildBear.Shop.Coffee.WildBear.Models.Request;
 
-namespace WildBearAdventures.MVC.WildBear.TransactionApi;
+namespace WildBear.Shop.Coffee.WildBear.TransactionApi;
 
 public class TransactionClient
 {
@@ -78,9 +78,9 @@ public class TransactionClient
 
 
 
-    
+
     //POST CALLS
-    
+
     /// <summary>
     /// 
     /// </summary>
@@ -120,7 +120,7 @@ public class TransactionClient
             { "paymentMethodId", $"{createPaymentRequest.PaymentMethodGuid}" },
             { "priceGroupId", $"{createPaymentRequest.PriceGroupGuid}" },
         };
-        
+
         var createPaymentResponse = await client.PostAsJsonAsync(requestUri: $"/api/v1/payments", value: requestPayload);
 
         var paymentResponseDto = await createPaymentResponse.Content.ReadAsAsync<PaymentResponseDto>();
@@ -128,7 +128,7 @@ public class TransactionClient
         if (createPaymentResponse.IsSuccessStatusCode is false)
         { throw new Exception($"Could not create payment"); }
 
-        return paymentResponseDto ;
+        return paymentResponseDto;
     }
 
     public async Task PostShoppingCartLineUpdate(ShoppingCartLineUpdateRequest request, CancellationToken ct)
@@ -157,7 +157,7 @@ public class TransactionClient
 
         return;
     }
-    
+
     public async Task PostCartShippingInformation(ShippingInformationRequest shippingInformationRequest, CancellationToken ct)
     {
         using var client = _storeAuthorizationFlow.GetAuthorizedClient(ct);
@@ -168,11 +168,11 @@ public class TransactionClient
             { "shippingMethodId", shippingInformationRequest.ShippingMethodId },
             { "cultureCode", shippingInformationRequest.CultureCode },
             { "shippingAddress", shippingInformationRequest.ShippingAddress },
-            
+
         };
 
         var response = await client.PostAsJsonAsync(requestUri: $"/api/v1/carts/{shippingInformationRequest.ShoppingCartGuid}/shipping", value: requestPayload);
-        
+
         if (response.IsSuccessStatusCode is false)
         { throw new Exception($"Could not PostCartShippingInformation"); }
     }
@@ -216,7 +216,7 @@ public class TransactionClient
 
         Dictionary<string, object> requestPayload = new()
         {
-            
+
             { "Quantity", "Todo"},
             { "Sku", "Todo" },
             { "CultureCode", "Todo" },
@@ -232,5 +232,5 @@ public class TransactionClient
         throw new NotImplementedException();
     }
 
- 
+
 }

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WildBearAdventures.MVC.ViewModels;
-using WildBearAdventures.MVC.WildBear.TransactionApi;
+using WildBear.Shop.Coffee.WildBear.TransactionApi;
+using WildBear.Shop.Coffee.ViewModels;
 
-namespace WildBearAdventures.MVC.Controllers
+namespace WildBear.Shop.Coffee.Controllers
 {
     public class HomeController : Controller
     {

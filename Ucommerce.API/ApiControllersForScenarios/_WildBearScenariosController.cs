@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ucommerce.Web.Infrastructure.Persistence.Entities.Definitions;
 using Ucommerce.Web.Infrastructure.Persistence;
-using MimeKit.Cryptography;
-using Ucommerce.Web.Infrastructure.Persistence.Mapping;
 using Ucommerce.Web.Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 using Ucommerce.API.WildBearDemoProducts;
+using System.Diagnostics;
+using Ucommerce.Web.BackOffice.Constants;
+using Ucommerce.Web.Core.Constants;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,7 +18,7 @@ namespace Ucommerce.API.ApiControllersForScenarios
     /// The "_" in the class name ensures that controller is the top controller when using Swagger.
     /// Same for methods
     /// </summary>
-        
+
     [Route("api/[controller]")]
     [ApiController]
     public class _WildBearScenariosController : ControllerBase
@@ -95,15 +96,51 @@ namespace Ucommerce.API.ApiControllersForScenarios
             if (wildCoffeeProductDefinitionEntity == null)
             { return NotFound("wildCoffeeDefinition not found"); }
 
+            
+
             var shortTextDataType = _ucommerceDbContext.Set<DataTypeEntity>()
               .FirstOrDefault(x => x.DefinitionName == "ShortText") ?? throw new Exception("ShortText DataType not found");
 
 
-            var definitionField = CreateProductDefinitionField(shortTextDataType, nameOfField, false, false);
+            var shortTextDefinitionField = CreateProductDefinitionField(shortTextDataType, nameOfField, false, false);
 
-            wildCoffeeProductDefinitionEntity.ProductDefinitionFields.Add(definitionField);
+            wildCoffeeProductDefinitionEntity.ProductDefinitionFields.Add(shortTextDefinitionField);
 
             //_ucommerceDbContext.Add(definitionField);
+            _ucommerceDbContext.SaveChanges();
+
+            return Ok();
+
+        }
+
+        [HttpPost("AddComplexTestProductDefinition")]
+        public IActionResult AddComplexProductDefinitionFields(string nameOfField = "CoffeeComplexTestImagePickerMultiSelect")
+        {
+
+            var wildCoffeeDefinitionName = "WildCoffee";
+
+            var wildCoffeeProductDefinitionEntity = _ucommerceDbContext
+                .Set<ProductDefinitionEntity>()
+                .Include(x => x.ProductDefinitionFields)
+                .Where(x => x.Name == wildCoffeeDefinitionName).FirstOrDefault();
+
+
+            if (wildCoffeeProductDefinitionEntity == null)
+            { return NotFound("wildCoffeeDefinition not found"); }
+
+
+
+            var CoffeeComplexTypeTest = _ucommerceDbContext.Set<DataTypeEntity>()
+              .FirstOrDefault(x => x.DefinitionName == "ImagePickerMultiSelect") ?? throw new Exception("DataType not found");
+
+            
+
+
+            var definitionFieldEntity = CreateProductDefinitionField(CoffeeComplexTypeTest, nameOfField, false, false);
+
+            wildCoffeeProductDefinitionEntity.ProductDefinitionFields.Add(definitionFieldEntity);
+
+
             _ucommerceDbContext.SaveChanges();
 
             return Ok();
@@ -128,7 +165,35 @@ namespace Ucommerce.API.ApiControllersForScenarios
         }
 
 
-        [HttpPost("ChangeOrderDate")]
+        /// <summary>
+        /// Sandbox Endpoints for testing snippets of code.
+        /// </summary>        
+        #region Sandbox Endpoints
+
+        //Create new endpoint that gets alle DataTypeEntity
+
+        [HttpGet("GetAllDataTypes")]
+        public IActionResult GetAllDataTypes()
+        {
+
+
+            var dataTypes = _ucommerceDbContext.Set<DataTypeEntity>().ToList();
+            return Ok(dataTypes);
+
+
+        }
+
+        //Create new endpoint that gets all PriceGroups
+        [HttpGet("GetAllPriceGroups")]
+        public IActionResult GetAllPriceGroups()
+        {
+            var priceGroups = _ucommerceDbContext.Set<PriceGroupEntity>().ToList();
+            return Ok(priceGroups.FirstOrDefault());
+        }
+
+
+
+        [HttpGet("GetChangeOrderDate")]
         public IActionResult ChangeOrderDate_AddDaysToCompletedDate(string orderNumberId)
         {
             var endpointMessage = string.Empty;
@@ -147,8 +212,9 @@ namespace Ucommerce.API.ApiControllersForScenarios
 
             _ucommerceDbContext.SaveChanges();
 
-            return Ok();
+            return Ok(order.CompletedDate);
         }
+        #endregion
 
     }
 }

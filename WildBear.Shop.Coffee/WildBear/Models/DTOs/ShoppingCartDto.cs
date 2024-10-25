@@ -1,4 +1,4 @@
-﻿namespace WildBearAdventures.MVC.WildBear.Models.DTOs;
+﻿namespace WildBear.Shop.Coffee.WildBear.Models.DTOs;
 public class ShoppingCartDto
 {
     public object billingAddress { get; set; }

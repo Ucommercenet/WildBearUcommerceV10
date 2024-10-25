@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WildBearAdventures.MVC.WildBear.Models.DTOs;
-using WildBearAdventures.MVC.WildBear.TransactionApi;
+using WildBear.Shop.Coffee.WildBear.TransactionApi;
 
-namespace WildBearAdventures.MVC.Controllers
+namespace WildBear.Shop.Coffee.Controllers
 {
     public class DiscoverPipelinesController : Controller
     {
@@ -30,8 +29,8 @@ namespace WildBearAdventures.MVC.Controllers
             var uri = $"/ucommerce/api/v1.0/pipelines";
 
             var response = client.GetAsync(uri, ct).Result;
-            var result  = response.Content.ReadAsStringAsync().Result;
-            
+            var result = response.Content.ReadAsStringAsync().Result;
+
         }
     }
 }

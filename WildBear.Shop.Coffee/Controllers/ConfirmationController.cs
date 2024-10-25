@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace WildBearAdventures.MVC.Controllers
+namespace WildBear.Shop.Coffee.Controllers
 {
     public class ConfirmationController : Controller
     {
         public IActionResult Index()
         {
-          
+
 
 
 
