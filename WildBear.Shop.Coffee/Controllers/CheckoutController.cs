@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using static WildBear.Shop.Coffee.WildBear.Models.DTOs.ShippingMethodCollectionDto;
 using static WildBear.Shop.Coffee.WildBear.Models.Request.ShippingInformationRequest;
 using WildBear.Shop.Coffee.WildBear.Models.Request;
 using WildBear.Shop.Coffee.WildBear.TransactionApi;

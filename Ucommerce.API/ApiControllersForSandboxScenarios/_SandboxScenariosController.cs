@@ -18,15 +18,14 @@ namespace Ucommerce.API.ApiControllersForScenarios
     /// The "_" in the class name ensures that controller is the top controller when using Swagger.
     /// Same for methods
     /// </summary>
-
     [Route("api/[controller]")]
     [ApiController]
-    public class _WildBearScenariosController : ControllerBase
+    public class _SandboxScenariosController : ControllerBase
     {
         private readonly UcommerceDbContext _ucommerceDbContext;
         private readonly DemoToolbox _demoToolbox;
 
-        public _WildBearScenariosController(UcommerceDbContext ucommerceDbContext, DemoToolbox demoEntitiesGenerator)
+        public _SandboxScenariosController(UcommerceDbContext ucommerceDbContext, DemoToolbox demoEntitiesGenerator)
         {
             _ucommerceDbContext = ucommerceDbContext;
             _demoToolbox = demoEntitiesGenerator;
