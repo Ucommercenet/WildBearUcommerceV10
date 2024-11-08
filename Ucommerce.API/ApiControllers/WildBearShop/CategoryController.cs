@@ -5,7 +5,7 @@ using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 using Ucommerce.Web.Common.Extensions;
 using Ucommerce.Web.WebSite.Controllers;
 
-namespace Ucommerce.API.ApiControllers
+namespace Ucommerce.API.ApiControllers.WildBearShop
 {
     [Route("api/[Controller]")]
     [ApiController]

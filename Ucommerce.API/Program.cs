@@ -19,6 +19,7 @@ using OpenTelemetry;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
 using Ucommerce.API.PipelinesExtensions.Tasks;
+using Ucommerce.API.ApiControllers.Sandbox;
 
 
 var builder = WebApplication.CreateBuilder(args);

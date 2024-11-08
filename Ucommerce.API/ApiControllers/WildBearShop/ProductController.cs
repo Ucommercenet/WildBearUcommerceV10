@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Globalization;
+using Ucommerce.API.Products;
 using Ucommerce.Extensions.Search.Abstractions.Models.IndexModels;
 using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 using Ucommerce.Web.Common.Extensions;
 using Ucommerce.Web.WebSite.Controllers;
 
-namespace Ucommerce.API.ApiControllers
+namespace Ucommerce.API.ApiControllers.WildBearShop
 {
     [Route("api/[Controller]")]
     [ApiController]
@@ -36,7 +37,7 @@ namespace Ucommerce.API.ApiControllers
                .ToResultSet(token);
             var result = searchroduct.SingleOrDefault();
 
-           var customFields = result.GetUserDefinedFields();
+            var customFields = result.GetUserDefinedFields();
 
 
             return result is null ? NotFound() : Ok(result);

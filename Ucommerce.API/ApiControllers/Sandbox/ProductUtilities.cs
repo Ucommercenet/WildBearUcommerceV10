@@ -9,7 +9,7 @@ using Ucommerce.Web.Infrastructure.Persistence;
 using Ucommerce.Web.Infrastructure.Persistence.Entities;
 using Ucommerce.Web.Infrastructure.Persistence.Entities.Definitions;
 
-namespace Ucommerce.API.WildBearDemoProducts
+namespace Ucommerce.API.ApiControllers.Sandbox
 {
     public class ProductUtilities
     {
@@ -90,7 +90,7 @@ namespace Ucommerce.API.WildBearDemoProducts
         }
 
         /// <summary>
-        /// Will use the Default Category Definition
+        /// Will use the Default Category Definition and save
         /// </summary>        
         public void CreateCategory(string categoryName)
         {
