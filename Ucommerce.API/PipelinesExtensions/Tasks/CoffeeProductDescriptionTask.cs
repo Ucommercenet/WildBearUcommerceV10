@@ -16,8 +16,10 @@ namespace Ucommerce.API.PipelinesExtensions.Tasks
             //DO if name contains coffee add description
             if (context.Input.Name.Contains("Coffee"))
             {
+                
 
-                var DanishDescription = context.Output.Product.ProductDescriptions.FirstOrDefault(x => x.CultureCode == "da-DK");
+                var DanishDescription = context.Output.Product.ProductDescriptions
+                    .FirstOrDefault(x => x.CultureCode == "da-DK");
 
                 DanishDescription.ShortDescription = "This is a great coffee";
 

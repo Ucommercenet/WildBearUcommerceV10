@@ -36,6 +36,8 @@ namespace Ucommerce.API.ApiControllers
                .ToResultSet(token);
             var result = searchroduct.SingleOrDefault();
 
+           var customFields = result.GetUserDefinedFields();
+
 
             return result is null ? NotFound() : Ok(result);
 
@@ -67,7 +69,7 @@ namespace Ucommerce.API.ApiControllers
                 UserDefinedFields = definedFields
             };
 
-            return result is null ? NotFound() : Ok(result);
+            return result is null ? NotFound() : Ok(ResultIncUserDefinedFields);
 
         }
 

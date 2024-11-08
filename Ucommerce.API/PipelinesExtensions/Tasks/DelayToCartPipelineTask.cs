@@ -1,4 +1,6 @@
 ﻿using ConsoleAppForTraceTest;
+using Flurl.Util;
+using Microsoft.EntityFrameworkCore;
 using Ucommerce.API.Diagnostics;
 using Ucommerce.Web.BackOffice.Pipelines.Product.CreateProduct;
 using Ucommerce.Web.Core.Pipelines.OrderProcessing;
@@ -25,18 +27,34 @@ namespace Ucommerce.API.PipelinesExtensions.Tasks
             var productName = context.Output.Product.Name;
             var billingAddressName = context.Output.Cart?.BillingAddress?.FirstName;
 
-            Thread.Sleep(1000);
 
-            
+            //Simulate some heavy work
+            Thread.Sleep(1000);            
+            var primeNumbers = SimulateWorkload.CalculatePrimes(90000);
 
-                var primeNumbers = SimulateWorkload.CalculatePrimes(90000);
+            var msg = $"This order was delayed";
+
+            var shoppingCartAudits = context.Output.Cart.Audits;
+
+            //var cartStatusAudit = new OrderStatusAuditEntity
+            //{
+            //    CartId = cart.Id,
+            //    NewOrderStatusId = 1, //TODO to be removed when new basket status is removed.
+            //    Message = context.Input.Message
+            //};
+            //await _dbContext.Set<OrderStatusAuditEntity>()
+            //    .AddAsync(cartStatusAudit, cancellationToken);
+
+            //context.Output.OrderStatusAudit = cartStatusAudit;
+
+
 
 
             CustomUcommerceEventSource.Log.Pipeline_Finish("Finished_DelayToCartPipelineTask", productName, billingAddressName);
             return Task.CompletedTask;
         }
 
-
+       
     }
 }
 

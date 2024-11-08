@@ -32,9 +32,10 @@ builder.Services
     .UcommerceBuilder
     .AddElasticsearch()
     .AddPayments()
-    //Custom pipeline Tasks
+    //Custom pipeline Tasks    
     .AddCustomOrderProcessingTask()
     .AddDelayToCartPipelineTask()
+    .AddCoffeeProductDescriptionTask()
 
     //Final builder setup
     .Build();
@@ -53,7 +54,7 @@ using TracerProvider? tracerProvider = Sdk.CreateTracerProviderBuilder()
 builder.Services.AddControllers();
 
 builder.Services.AddUnique<IIndexDefinition<ProductSearchModel>, ProductIndexDefinition>();
-builder.Services.AddTransient<DemoToolbox>();
+builder.Services.AddTransient<ProductUtilities>();
 builder.Services.AddUnique<IImageService, CoffeeImageService>();
 
 #region Swagger Related

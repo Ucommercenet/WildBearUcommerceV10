@@ -7,6 +7,7 @@ using Ucommerce.API.WildBearDemoProducts;
 using System.Diagnostics;
 using Ucommerce.Web.BackOffice.Constants;
 using Ucommerce.Web.Core.Constants;
+using Elastic.Clients.Elasticsearch;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,12 +24,12 @@ namespace Ucommerce.API.ApiControllersForScenarios
     public class _SandboxScenariosController : ControllerBase
     {
         private readonly UcommerceDbContext _ucommerceDbContext;
-        private readonly DemoToolbox _demoToolbox;
+        private readonly ProductUtilities _productUtilities;
 
-        public _SandboxScenariosController(UcommerceDbContext ucommerceDbContext, DemoToolbox demoEntitiesGenerator)
+        public _SandboxScenariosController(UcommerceDbContext ucommerceDbContext, ProductUtilities demoEntitiesGenerator)
         {
             _ucommerceDbContext = ucommerceDbContext;
-            _demoToolbox = demoEntitiesGenerator;
+            _productUtilities = demoEntitiesGenerator;
         }
 
         [HttpPost("_RunStartUpSequence")]
@@ -36,7 +37,66 @@ namespace Ucommerce.API.ApiControllersForScenarios
         {
             StartupCategories(cancellationToken);
             await StartupProducts(cancellationToken);
-            AddProductDefinition();
+            AddProductDefinitionField();
+
+            return Ok();
+        }
+
+        [HttpPost("NewProductDefinition")]
+        public IActionResult NewProductDefinition(string definitionName, CancellationToken cancellationToken)
+        {
+
+            //step 1 Creating the definition
+            var definition = new ProductDefinitionEntity()
+            {
+                Name = definitionName,
+                Description = "Definition for any type of products",
+                Deleted = false,
+            };
+
+            _ucommerceDbContext.Add(definition);
+            _ucommerceDbContext.SaveChanges();
+
+           
+
+            return Ok();
+        }
+
+        [HttpPost("NewProductDefinitionField")]
+        public IActionResult NewProductDefinitionField(string definitionName, string definitionFieldName, CancellationToken cancellationToken)
+        {
+
+            //step 1 find the definition from before
+            var productDefinitionEntity = _ucommerceDbContext
+               .Set<ProductDefinitionEntity>()
+               .Include(x => x.ProductDefinitionFields)
+               .Where(x => x.Name == definitionName).FirstOrDefault();
+
+            //step 2 create a new definitionFieldEntity
+
+            var shortTextDataType = _ucommerceDbContext.Set<DataTypeEntity>()
+             .FirstOrDefault(x => x.DefinitionName == "ShortText") ?? throw new Exception("ShortText DataType not found");
+
+            var definitionFieldEntity = new ProductDefinitionFieldEntity
+            {
+                Name = definitionFieldName,
+                Deleted = false,
+                Multilingual = false,
+                DisplayOnSite = true,
+                RenderInEditor = true,
+                IsVariantProperty = false,
+                DataType = shortTextDataType
+            };
+            
+
+            if (productDefinitionEntity.ProductDefinitionFields != null)
+            {
+                //Step 3 add the definitionFieldEntity to the new definition
+                productDefinitionEntity.ProductDefinitionFields.Add(definitionFieldEntity);
+
+                //Step 4 saves           
+                _ucommerceDbContext.SaveChanges();
+            }
 
             return Ok();
         }
@@ -44,10 +104,11 @@ namespace Ucommerce.API.ApiControllersForScenarios
 
 
 
+
         [HttpPost("StartupCategories")]
         public IActionResult StartupCategories(CancellationToken cancellationToken)
         {
-            _demoToolbox.CreateCategory("Drinks");
+            _productUtilities.CreateCategory("Drinks");
 
             return Ok();
         }
@@ -56,18 +117,18 @@ namespace Ucommerce.API.ApiControllersForScenarios
         public async Task<IActionResult> StartupProducts(CancellationToken cancellationToken)
         {
             var endpointMessage = string.Empty;
-            var wildCoffeeDefinitionName = "WildCoffee";
+            var wildCoffeeDefinitionName = "Tea";
 
-            //Will Create ProductDefinition if it does not exist          
+            //Will Create definition if it does not exist          
             var productDefinitionExists = _ucommerceDbContext.Set<ProductDefinitionEntity>().Any(x => x.Name == wildCoffeeDefinitionName);
             if (productDefinitionExists is false)
             {
-                _demoToolbox.CreateProductDefinition(wildCoffeeDefinitionName);
+                _productUtilities.CreateProductDefinition(wildCoffeeDefinitionName);
                 endpointMessage += $"Definition: {wildCoffeeDefinitionName} was added";
             }
 
             //***Adds DemoCoffeeProducts
-            var WildCoffeeProducts = await _demoToolbox.CreateCoffeeProducts(cancellationToken);
+            var WildCoffeeProducts = await _productUtilities.CreateCoffeeProducts(cancellationToken);
 
 
             //Just for debug
@@ -81,10 +142,10 @@ namespace Ucommerce.API.ApiControllersForScenarios
         /// <summary>
         /// The added field wil be of type ShortText
         /// </summary>        
-        [HttpPost("AddProductDefinition")]
-        public IActionResult AddProductDefinition(string nameOfField = "CoffeeAroma")
+        [HttpPost("AddProductDefinitionField")]
+        public IActionResult AddProductDefinitionField(string nameOfField = "CoffeeAroma")
         {
-            var wildCoffeeDefinitionName = "WildCoffee";
+            var wildCoffeeDefinitionName = "Tea";
 
             var wildCoffeeProductDefinitionEntity = _ucommerceDbContext
                 .Set<ProductDefinitionEntity>()
@@ -95,7 +156,7 @@ namespace Ucommerce.API.ApiControllersForScenarios
             if (wildCoffeeProductDefinitionEntity == null)
             { return NotFound("wildCoffeeDefinition not found"); }
 
-            
+
 
             var shortTextDataType = _ucommerceDbContext.Set<DataTypeEntity>()
               .FirstOrDefault(x => x.DefinitionName == "ShortText") ?? throw new Exception("ShortText DataType not found");
@@ -132,7 +193,7 @@ namespace Ucommerce.API.ApiControllersForScenarios
             var CoffeeComplexTypeTest = _ucommerceDbContext.Set<DataTypeEntity>()
               .FirstOrDefault(x => x.DefinitionName == "ImagePickerMultiSelect") ?? throw new Exception("DataType not found");
 
-            
+
 
 
             var definitionFieldEntity = CreateProductDefinitionField(CoffeeComplexTypeTest, nameOfField, false, false);

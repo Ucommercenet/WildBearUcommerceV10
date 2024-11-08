@@ -11,12 +11,12 @@ using Ucommerce.Web.Infrastructure.Persistence.Entities.Definitions;
 
 namespace Ucommerce.API.WildBearDemoProducts
 {
-    public class DemoToolbox
+    public class ProductUtilities
     {
         private readonly UcommerceDbContext _ucommerceDbContext;
         private IIndexer<ProductEntity> _productIndexer;
 
-        public DemoToolbox(UcommerceDbContext ucommerceDbContext, IIndexer<ProductEntity> productIndexer)
+        public ProductUtilities(UcommerceDbContext ucommerceDbContext, IIndexer<ProductEntity> productIndexer)
         {
             _ucommerceDbContext = ucommerceDbContext;
             _productIndexer = productIndexer;
@@ -117,7 +117,7 @@ namespace Ucommerce.API.WildBearDemoProducts
             var WildCoffeeProductDefinition = new ProductDefinitionEntity()
             {
                 Name = definitionName,
-                Description = "Definition for Coffee type products",
+                Description = "Definition for any type of products",
                 Deleted = false,
             };
 
