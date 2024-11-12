@@ -6,11 +6,10 @@ using Ucommerce.Extensions.Search.Abstractions.Extensions;
 namespace Ucommerce.API.WildBearDemoProducts
 {
     public class ProductIndexDefinition : DefaultProductsIndexDefinition
-    {       
+    {
         public ProductIndexDefinition(IOptions<SearchOptions> searchOptions) : base(searchOptions)
         {
-            //is searchable, is visible via back office
-               this.Field(p => p["Country"], typeof(string)).Facet();
+            this.Field(p => p["Country"], typeof(string)).Facet();
             this.Field(p => p["CoffeeAroma"], typeof(string)).Facet();
             this.Field(p => p["Tea"], typeof(string)).Facet();
 

@@ -22,39 +22,12 @@ namespace Ucommerce.API.ApiControllers.Sandbox
             _productIndexer = productIndexer;
         }
 
-        /// <summary>
-        /// Will both create and Index the newly created products.
-        /// </summary>
-        public async Task<List<ProductEntity>> CreateCoffeeProducts(CancellationToken cancellationToken)
-        {
-            var wildCoffeeDefinition = _ucommerceDbContext.Set<ProductDefinitionEntity>().FirstOrDefault(x => x.Name == "WildCoffee");
-            if (wildCoffeeDefinition == null) { throw new Exception("WildCoffee ProductDefinitionEntity not found"); }
-
-            var demoProducts = new List<ProductEntity>
-            {
-                //TODO: Add option to create any number if needed
-               await CreateRegularProduct(name: $"DemoCoffee{RandomLetterAndNumber()}", sku:RandomLetterAndNumber(), productDefinition: wildCoffeeDefinition, culture: "da-DK"),
-            };
-            _ucommerceDbContext.Set<ProductEntity>().AddRange(demoProducts);
-
-
-            var drinksCategory = _ucommerceDbContext.Set<CategoryEntity>().Where(x => x.Name == "Drinks").FirstOrDefault();
-            if (drinksCategory is not null)
-            { CreateCategoryProductRelation(demoProducts, drinksCategory); }
-
-            _ucommerceDbContext.SaveChanges();
-
-            //TODO: bug in the indexer! For now will only not-break if product are in a category
-            //await _productIndexer.Index(demoProducts.ToImmutableList(), cancellationToken);
-            return demoProducts;
-        }
-
 
         /// <summary>
         /// Creates a RegularProduct(aka non variant product)
         /// Note: name, DisplayName definition, culture are required        
         /// </summary>
-        public async Task<ProductEntity> CreateRegularProduct(string name, string sku, ProductDefinitionEntity productDefinition, string culture, string? shortDescription = null, decimal? price = null)
+        public ProductEntity CreateRegularProduct(string name, string sku, ProductDefinitionEntity productDefinition, string culture, string? shortDescription = null, decimal? price = null)
         {
             var startingPrice = new PriceEntity() { };
             var priceCollection = new List<PriceEntity>
@@ -84,14 +57,10 @@ namespace Ucommerce.API.ApiControllers.Sandbox
                     Category = category,
                     Product = product
                 };
-                _ucommerceDbContext.Set<CategoryProductRelationEntity>().Add(categoryProductRelation);
+                
             }
 
         }
-
-        /// <summary>
-        /// Will use the Default Category Definition and save
-        /// </summary>        
         public void CreateCategory(string categoryName)
         {
             //Example of how to use Include
@@ -125,20 +94,5 @@ namespace Ucommerce.API.ApiControllers.Sandbox
             _ucommerceDbContext.SaveChanges();
         }
 
-
-
-        private string RandomLetterAndNumber()
-        {
-            var random = new Random();
-
-            // Generate a random letter (A-Z)
-            char letter = (char)('A' + random.Next(0, 26));
-
-            // Generate a random number (0-9)
-            int number = random.Next(0, 10);
-
-            // Concatenate the letter and number and return as a string
-            return letter.ToString() + number.ToString();
-        }
     }
 }

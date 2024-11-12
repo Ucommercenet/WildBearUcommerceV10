@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Elastic.Clients.Elasticsearch;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Ucommerce.Web.BackOffice.Pipelines.Category.AddProductsToCategory;
 using Ucommerce.Web.Infrastructure.Persistence;
 using Ucommerce.Web.Infrastructure.Persistence.Entities;
 using Ucommerce.Web.Infrastructure.Persistence.Entities.Definitions;
@@ -25,21 +27,47 @@ namespace Ucommerce.API.ApiControllers.Sandbox
         [HttpPost("RunMainStartUpSequence")]
         public async Task<IActionResult> _RunStartUpSequence(CancellationToken cancellationToken)
         {
-            CreateNewCategory();
-            CreateNewProductDefinition();
-            
-            //await CreateProductsWithRandomName(cancellationToken);
-            //AddProductDefinitionField();
+
+            //Will be used as a theme for this Sequence
+            var productName = "Coffee";
+            var categoryName = "Drinks";
+            var productDefinitionName = $"{productName} And other hot beverages";
+            var culture = "da-DK";
+
+
+            CreateNewCategory(categoryName);
+            CreateNewProductDefinition(productDefinitionName);
+            CreateNewProduct(definitionName: productDefinitionName, productName: productName, culture: culture);
+            AddProductToCategory(categoryName, productName);
+
+
+            AddShortTextFieldToProductDefinition(productDefinitionName);
+
+
 
             return Ok();
         }
 
-        [HttpPost("CreateNewCategory")]
-        public IActionResult CreateNewCategory(string name = "Drinks")
+        
+        private void AddProductToCategory(string categoryName, string productName)
         {
-            var productDefinitionExists = _ucommerceDbContext.Set<CategoryEntity>().Any(x => x.Name == name);
+            var categoryEntity = _ucommerceDbContext.Set<CategoryEntity>().Single(x => x.Name == categoryName);
+            var productEntity = _ucommerceDbContext.Set<ProductEntity>().Single(x => x.Name == productName);
 
-            if (productDefinitionExists is true)
+            categoryEntity.CategoryProductRelations.Add(new CategoryProductRelationEntity
+            {
+                Category = categoryEntity,
+                Product = productEntity
+            });
+        }
+
+        
+        [HttpPost("CreateNewCategory")]
+        public IActionResult CreateNewCategory(string name)
+        {
+            var categoryExists = _ucommerceDbContext.Set<CategoryEntity>().Any(x => x.Name == name);
+
+            if (categoryExists is true)
             {
                 return Conflict("CategoryEntity already exists");
             }
@@ -47,8 +75,8 @@ namespace Ucommerce.API.ApiControllers.Sandbox
             return Ok();
         }
 
-        [HttpPost("CreateNewProductDefinition")]
-        public IActionResult CreateNewProductDefinition(string definitionName = "Coffee")
+        //TODO: add HttpPost on all IActionResult methods
+        public IActionResult CreateNewProductDefinition(string definitionName)
         {
             //Will Create definition if it does not exist          
             var productDefinitionExists = _ucommerceDbContext.Set<ProductDefinitionEntity>().Any(x => x.Name == definitionName);
@@ -57,69 +85,98 @@ namespace Ucommerce.API.ApiControllers.Sandbox
                 return Conflict("ProductDefinitionEntity already exists");
             }
             _productUtilities.CreateProductDefinition(definitionName);
-            return Ok();
+            return Ok("");
         }
-
-
-
-        [HttpPost("CreateProductsWithRandomName")]
-        public async Task<IActionResult> CreateProductsWithRandomName(CancellationToken cancellationToken)
-        {         
-            var WildCoffeeProducts = await _productUtilities.CreateCoffeeProducts(cancellationToken);
-
-                       
-            return Ok();
-
-        }
-
-
-        /// <summary>
-        /// The added field wil be of type ShortText
-        /// </summary>        
-        [HttpPost("AddProductDefinitionField")]
-        public IActionResult AddProductDefinitionField(string nameOfField = "CoffeeAroma")
+        
+        public IActionResult CreateNewProduct(string definitionName, string productName, string culture)
         {
-            var wildCoffeeDefinitionName = "Tea";
+            //Step 1: Find ProductDefinitionEntity
+            var productDefinition = _ucommerceDbContext.Set<ProductDefinitionEntity>()
+                .FirstOrDefault(x => x.Name == definitionName);
+            if (productDefinition == null)
+            {
+                return NotFound("ProductDefinitionEntity not found");
+            }
 
-            var wildCoffeeProductDefinitionEntity = _ucommerceDbContext
+            //Step 2: Create ProductEntity
+            var randomLetterAndNumber = GenerateRandomLetterAndNumber();
+            //Improve Todo: add some check if the productName or sku already exists
+
+            var productEntity = _productUtilities.CreateRegularProduct(
+                name: productName + randomLetterAndNumber,
+                sku: randomLetterAndNumber,
+                productDefinition: productDefinition,
+                culture: culture
+                );
+            _ucommerceDbContext.Add(productEntity);
+
+
+            _productUtilities.CreateCategoryProductRelation(new List<ProductEntity> { productEntity }, _ucommerceDbContext.Set<CategoryEntity>().First());
+
+            //Step 4: Add Product to Category
+            //_ucommerceDbContext.Set<CategoryProductRelationEntity>().Add(categoryProductRelation);
+
+            //Step 5: Save
+
+
+
+
+
+
+
+
+
+
+
+            return Ok();
+
+        }
+                
+        public IActionResult AddShortTextFieldToProductDefinition(string productDefinitionName)
+        {
+            
+            var productDefinition = _ucommerceDbContext
                 .Set<ProductDefinitionEntity>()
                 .Include(x => x.ProductDefinitionFields)
-                .Where(x => x.Name == wildCoffeeDefinitionName).FirstOrDefault();
+                .Where(x => x.Name == productDefinitionName).FirstOrDefault();  //productDefinitionName is not unique
 
-
-            if (wildCoffeeProductDefinitionEntity == null)
-            { return NotFound("wildCoffeeDefinition not found"); }
-
-
+            if (productDefinition == null)
+            { return NotFound("definition not found"); }
 
             var shortTextDataType = _ucommerceDbContext.Set<DataTypeEntity>()
               .FirstOrDefault(x => x.DefinitionName == "ShortText") ?? throw new Exception("ShortText DataType not found");
 
 
-            var shortTextDefinitionField = CreateProductDefinitionField(shortTextDataType, nameOfField, false, false);
+            var productDefinitionFieldEntity = new ProductDefinitionFieldEntity
+            {
+                Name = "Taste",
+                Deleted = false,
+                Multilingual = false,
+                DisplayOnSite = true,
+                RenderInEditor = true,
+                IsVariantProperty = false,
+                DataType = shortTextDataType
+            };
 
-            wildCoffeeProductDefinitionEntity.ProductDefinitionFields.Add(shortTextDefinitionField);
-
-            //_ucommerceDbContext.Add(definitionField);
+            productDefinition.ProductDefinitionFields.Add(productDefinitionFieldEntity);            
             _ucommerceDbContext.SaveChanges();
 
             return Ok();
 
-        }
+        }         
 
-        private ProductDefinitionFieldEntity CreateProductDefinitionField(DataTypeEntity dataType, string name, bool isMultilingual, bool isVariantProperty)
+        private string GenerateRandomLetterAndNumber()
         {
-            return new ProductDefinitionFieldEntity
-            {
-                Name = name,
-                Deleted = false,
-                Multilingual = isMultilingual,
-                DisplayOnSite = true,
-                RenderInEditor = true,
-                IsVariantProperty = isVariantProperty,
-                DataType = dataType
-            };
-        }
+            var random = new Random();
 
+            // Generate a random letter (A-Z)
+            char letter = (char)('A' + random.Next(0, 26));
+
+            // Generate a random number (0-9)
+            int number = random.Next(0, 10);
+
+            // Concatenate the letter and number and return as a string
+            return letter.ToString() + number.ToString();
+        }
     }
 }
