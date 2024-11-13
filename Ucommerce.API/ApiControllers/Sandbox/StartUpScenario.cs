@@ -13,10 +13,12 @@ namespace Ucommerce.API.ApiControllers.Sandbox
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Prefix with '_' will insure its placed first in swagger")]
     public class __StartUpScenario : ControllerBase
     {
         private readonly UcommerceDbContext _ucommerceDbContext;
         private readonly ProductUtilities _productUtilities;
+
 
         public __StartUpScenario(UcommerceDbContext ucommerceDbContext, ProductUtilities productUtilities)
         {
@@ -25,123 +27,110 @@ namespace Ucommerce.API.ApiControllers.Sandbox
         }
 
         [HttpPost("RunMainStartUpSequence")]
-        public async Task<IActionResult> _RunStartUpSequence(CancellationToken cancellationToken)
+        public IActionResult RunStartUpSequence(CancellationToken cancellationToken)
         {
 
-            //Will be used as a theme for this Sequence
-            var productName = "Coffee";
-            var categoryName = "Drinks";
-            var productDefinitionName = $"{productName} And other hot beverages";
+            //Names for the theme of this Sequence
+            var productNameSeed = "SpecialCoffee6";
+            var categoryName = "SpecialDrinks6";
+            var productDefinitionName = $"{productNameSeed} And other hot beverages";
+            var ProductDefinitionFieldName = "Taste";
             var culture = "da-DK";
 
 
             CreateNewCategory(categoryName);
             CreateNewProductDefinition(productDefinitionName);
-            CreateNewProduct(definitionName: productDefinitionName, productName: productName, culture: culture);
-            AddProductToCategory(categoryName, productName);
+            _ucommerceDbContext.SaveChanges(); 
+            var fullProductName = CreateNewProduct(definitionName: productDefinitionName, productName: productNameSeed, culture: culture);
+            _ucommerceDbContext.SaveChanges();
+            AddProductToCategory(categoryName, fullProductName);
+            AddShortTextFieldToProductDefinition(productDefinitionName, ProductDefinitionFieldName);
 
+            _ucommerceDbContext.SaveChanges();
 
-            AddShortTextFieldToProductDefinition(productDefinitionName);
-
-
-
-            return Ok();
+            return Ok($"Created a product named {productNameSeed} with the definition {productDefinitionName} and added it to {categoryName} category");
         }
 
-        
+
         private void AddProductToCategory(string categoryName, string productName)
         {
             var categoryEntity = _ucommerceDbContext.Set<CategoryEntity>().Single(x => x.Name == categoryName);
             var productEntity = _ucommerceDbContext.Set<ProductEntity>().Single(x => x.Name == productName);
 
-            categoryEntity.CategoryProductRelations.Add(new CategoryProductRelationEntity
+
+            var categoryProductRelation = new CategoryProductRelationEntity
             {
                 Category = categoryEntity,
                 Product = productEntity
-            });
+            };
+
+            _ucommerceDbContext.Set<CategoryProductRelationEntity>().Add(categoryProductRelation);
+
+            // This will not work
+            //categoryEntity.CategoryProductRelations.Add(categoryProductRelation);
+
+
         }
 
-        
-        [HttpPost("CreateNewCategory")]
-        public IActionResult CreateNewCategory(string name)
+        private void CreateNewCategory(string name)
         {
             var categoryExists = _ucommerceDbContext.Set<CategoryEntity>().Any(x => x.Name == name);
 
-            if (categoryExists is true)
+            if (categoryExists)
             {
-                return Conflict("CategoryEntity already exists");
+                throw new Exception("Category already exists");
             }
+
             _productUtilities.CreateCategory(name);
-            return Ok();
+            return;
         }
 
-        //TODO: add HttpPost on all IActionResult methods
-        public IActionResult CreateNewProductDefinition(string definitionName)
+        private void CreateNewProductDefinition(string definitionName)
         {
             //Will Create definition if it does not exist          
             var productDefinitionExists = _ucommerceDbContext.Set<ProductDefinitionEntity>().Any(x => x.Name == definitionName);
             if (productDefinitionExists is true)
             {
-                return Conflict("ProductDefinitionEntity already exists");
+                throw new Exception("ProductDefinitionEntity already exists");
             }
             _productUtilities.CreateProductDefinition(definitionName);
-            return Ok("");
+            Ok();
         }
-        
-        public IActionResult CreateNewProduct(string definitionName, string productName, string culture)
+
+        private string CreateNewProduct(string definitionName, string productName, string culture)
         {
             //Step 1: Find ProductDefinitionEntity
             var productDefinition = _ucommerceDbContext.Set<ProductDefinitionEntity>()
                 .FirstOrDefault(x => x.Name == definitionName);
             if (productDefinition == null)
             {
-                return NotFound("ProductDefinitionEntity not found");
+                throw new Exception("ProductDefinitionEntity not found");
             }
 
             //Step 2: Create ProductEntity
             var randomLetterAndNumber = GenerateRandomLetterAndNumber();
-            //Improve Todo: add some check if the productName or sku already exists
+            //Improve Todo: add some check if the productNameSeed or sku already exists
 
             var productEntity = _productUtilities.CreateRegularProduct(
                 name: productName + randomLetterAndNumber,
                 sku: randomLetterAndNumber,
                 productDefinition: productDefinition,
-                culture: culture
-                );
+                culture: culture);
+
             _ucommerceDbContext.Add(productEntity);
 
-
-            _productUtilities.CreateCategoryProductRelation(new List<ProductEntity> { productEntity }, _ucommerceDbContext.Set<CategoryEntity>().First());
-
-            //Step 4: Add Product to Category
-            //_ucommerceDbContext.Set<CategoryProductRelationEntity>().Add(categoryProductRelation);
-
-            //Step 5: Save
-
-
-
-
-
-
-
-
-
-
-
-            return Ok();
+            return productEntity.Name;
 
         }
-                
-        public IActionResult AddShortTextFieldToProductDefinition(string productDefinitionName)
+
+        private void AddShortTextFieldToProductDefinition(string productDefinitionName, string productDefinitionFieldName)
         {
-            
+
             var productDefinition = _ucommerceDbContext
                 .Set<ProductDefinitionEntity>()
                 .Include(x => x.ProductDefinitionFields)
-                .Where(x => x.Name == productDefinitionName).FirstOrDefault();  //productDefinitionName is not unique
-
-            if (productDefinition == null)
-            { return NotFound("definition not found"); }
+                .Where(x => x.Name == productDefinitionName)
+                .FirstOrDefault() ?? throw new Exception("definition not found");  //productDefinitionName is not unique
 
             var shortTextDataType = _ucommerceDbContext.Set<DataTypeEntity>()
               .FirstOrDefault(x => x.DefinitionName == "ShortText") ?? throw new Exception("ShortText DataType not found");
@@ -149,7 +138,7 @@ namespace Ucommerce.API.ApiControllers.Sandbox
 
             var productDefinitionFieldEntity = new ProductDefinitionFieldEntity
             {
-                Name = "Taste",
+                Name = productDefinitionFieldName,
                 Deleted = false,
                 Multilingual = false,
                 DisplayOnSite = true,
@@ -158,14 +147,13 @@ namespace Ucommerce.API.ApiControllers.Sandbox
                 DataType = shortTextDataType
             };
 
-            productDefinition.ProductDefinitionFields.Add(productDefinitionFieldEntity);            
-            _ucommerceDbContext.SaveChanges();
+            productDefinition.ProductDefinitionFields.Add(productDefinitionFieldEntity);
 
-            return Ok();
+            return;
 
-        }         
+        }
 
-        private string GenerateRandomLetterAndNumber()
+        private static string GenerateRandomLetterAndNumber()
         {
             var random = new Random();
 

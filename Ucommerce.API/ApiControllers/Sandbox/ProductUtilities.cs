@@ -48,9 +48,9 @@ namespace Ucommerce.API.ApiControllers.Sandbox
             return product;
         }
 
-        public void CreateCategoryProductRelation(List<ProductEntity> demoProducts, CategoryEntity category)
+        public void AddProductsToCategory(List<ProductEntity> productList, CategoryEntity category)
         {
-            foreach (var product in demoProducts)
+            foreach (var product in productList)
             {
                 var categoryProductRelation = new CategoryProductRelationEntity()
                 {
@@ -77,8 +77,7 @@ namespace Ucommerce.API.ApiControllers.Sandbox
             var category = new CategoryEntity() { Name = categoryName, DefinitionGuid = defaultCategoryDefinition.Guid, Catalog = defaultCatalog, DisplayOnSite = true };
 
 
-            _ucommerceDbContext.Set<CategoryEntity>().Add(category);
-            _ucommerceDbContext.SaveChanges();
+            _ucommerceDbContext.Set<CategoryEntity>().Add(category);            
         }
 
         public void CreateProductDefinition(string definitionName)
@@ -90,8 +89,7 @@ namespace Ucommerce.API.ApiControllers.Sandbox
                 Deleted = false,
             };
 
-            _ucommerceDbContext.Add(WildCoffeeProductDefinition);
-            _ucommerceDbContext.SaveChanges();
+            _ucommerceDbContext.Add(WildCoffeeProductDefinition);            
         }
 
     }
