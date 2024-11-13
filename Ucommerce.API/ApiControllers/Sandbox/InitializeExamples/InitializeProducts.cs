@@ -6,7 +6,7 @@ using Ucommerce.Web.Infrastructure.Persistence;
 using Ucommerce.Web.Infrastructure.Persistence.Entities;
 using Ucommerce.Web.Infrastructure.Persistence.Entities.Definitions;
 
-namespace Ucommerce.API.ApiControllers.Sandbox
+namespace Ucommerce.API.ApiControllers.Sandbox.InitializeExamples
 {
     /// <summary>
     /// The "_" in the class name ensures that controller is the top controller when using Swagger.    
@@ -14,20 +14,20 @@ namespace Ucommerce.API.ApiControllers.Sandbox
     [Route("api/[controller]")]
     [ApiController]
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Prefix with '_' will insure its placed first in swagger")]
-    public class __StartUpScenario : ControllerBase
+    public class _InitializeProducts : ControllerBase
     {
         private readonly UcommerceDbContext _ucommerceDbContext;
         private readonly ProductUtilities _productUtilities;
 
 
-        public __StartUpScenario(UcommerceDbContext ucommerceDbContext, ProductUtilities productUtilities)
+        public _InitializeProducts(UcommerceDbContext ucommerceDbContext, ProductUtilities productUtilities)
         {
             _ucommerceDbContext = ucommerceDbContext;
             _productUtilities = productUtilities;
         }
 
-        [HttpPost("RunMainStartUpSequence")]
-        public IActionResult RunStartUpSequence(CancellationToken cancellationToken)
+        [HttpPost("InitializeProductSetupSequence")]
+        public IActionResult InitializeProductSetupSequence(CancellationToken cancellationToken)
         {
 
             //Names for the theme of this Sequence
@@ -40,7 +40,7 @@ namespace Ucommerce.API.ApiControllers.Sandbox
 
             CreateNewCategory(categoryName);
             CreateNewProductDefinition(productDefinitionName);
-            _ucommerceDbContext.SaveChanges(); 
+            _ucommerceDbContext.SaveChanges();
             var fullProductName = CreateNewProduct(definitionName: productDefinitionName, productName: productNameSeed, culture: culture);
             _ucommerceDbContext.SaveChanges();
             AddProductToCategory(categoryName, fullProductName);
