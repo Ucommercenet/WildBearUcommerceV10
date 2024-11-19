@@ -55,6 +55,8 @@ namespace Ucommerce.API.ApiControllers.Sandbox.InitializeExamples
                 catalogGuid = _ucommerceDbContext.Set<CatalogEntity>().First().Guid;
             }
 
+            
+
 
 
             var pipeLineInput = new CreateCategoryInput(
