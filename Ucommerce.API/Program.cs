@@ -20,6 +20,7 @@ using OpenTelemetry.Trace;
 using OpenTelemetry.Resources;
 using Ucommerce.API.PipelinesExtensions.Tasks;
 using Ucommerce.API.ApiControllers.Sandbox;
+using Ucommerce.API.ApiControllers.Sandbox.CategoryAsLocations;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -55,6 +56,7 @@ using TracerProvider? tracerProvider = Sdk.CreateTracerProviderBuilder()
 builder.Services.AddControllers();
 
 builder.Services.AddUnique<IIndexDefinition<ProductSearchModel>, ProductIndexDefinition>();
+builder.Services.AddUnique<IIndexDefinition<CategorySearchModel>, CategoryIndexDefinition>();
 builder.Services.AddTransient<ProductUtilities>();
 builder.Services.AddUnique<IImageService, CoffeeImageService>();
 

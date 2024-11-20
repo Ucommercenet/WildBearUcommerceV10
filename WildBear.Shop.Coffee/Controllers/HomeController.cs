@@ -17,18 +17,18 @@ namespace WildBear.Shop.Coffee.Controllers
         {
             //Handout Part 1: (Extra) Write an Ucommerce endpoint
 
-            var productDto = _wildBearClient.GetRandomProductFromCategory(categoryName: "Drinks", new CancellationToken());
-            productDto.UnitPrices.TryGetValue("EUR 15 pct", out var price);
+            //var productDto = _wildBearClient.GetRandomProductFromCategory(categoryName: "Support", new CancellationToken());
+            //productDto.UnitPrices.TryGetValue("EUR 15 pct", out var price);
 
-            var coffeeViewModel = new CoffeeViewModel()
-            {
-                Name = productDto.Name,
-                Price = price,
-                Description = productDto.ShortDescription
+            //var coffeeViewModel = new CoffeeViewModel()
+            //{
+            //    Name = productDto.Name,
+            //    Price = price,
+            //    Description = productDto.ShortDescription
 
-            };
+            //};
 
-            return View(coffeeViewModel);
+            return View();
         }
 
 
