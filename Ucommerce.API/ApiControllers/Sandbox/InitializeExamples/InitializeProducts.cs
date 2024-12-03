@@ -38,6 +38,7 @@ namespace Ucommerce.API.ApiControllers.Sandbox.InitializeExamples
             var culture = "da-DK";
 
 
+            //TODO: Add DbContext tracking so we dont need to save 2 times.
             CreateNewCategory(categoryName);
             CreateNewProductDefinition(productDefinitionName);
             _ucommerceDbContext.SaveChanges();
