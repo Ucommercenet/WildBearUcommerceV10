@@ -27,7 +27,7 @@ namespace Ucommerce.API.ApiControllers.Sandbox
         /// Creates a RegularProduct(aka non variant product)
         /// Note: name, DisplayName definition, culture are required        
         /// </summary>
-        public ProductEntity CreateRegularProduct(string name, string sku, ProductDefinitionEntity productDefinition, string culture, string? shortDescription = null, decimal? price = null)
+        public ProductEntity CreateRegularProduct(string name, string sku, Guid productDefinitionGuid, string culture, string? shortDescription = null, decimal? price = null)
         {
             var startingPrice = new PriceEntity() { };
             var priceCollection = new List<PriceEntity>
@@ -39,7 +39,7 @@ namespace Ucommerce.API.ApiControllers.Sandbox
             {
                 Name = name,
                 Sku = sku,
-                DefinitionGuid = productDefinition.Guid,
+                DefinitionGuid = productDefinitionGuid,
                 DisplayOnSite = true,
                 ProductDescriptions = new List<ProductDescriptionEntity> { new ProductDescriptionEntity() { DisplayName = name, ShortDescription = shortDescription, CultureCode = culture } }
             };
@@ -57,17 +57,12 @@ namespace Ucommerce.API.ApiControllers.Sandbox
                     Category = category,
                     Product = product
                 };
-                
+
             }
 
         }
-        public void CreateCategory(string categoryName)
+        public CategoryEntity CreateCategory(string categoryName)
         {
-            //Example of how to use Include
-            //var existingCategoryEntity = _ucommerceDbContext.Set<CategoryEntity>()
-            //    .Where(x => x.Name == "Software").Include(x => x.Definition).First();
-
-
             var defaultCategoryDefinition = _ucommerceDbContext.Set<DefinitionEntity>()
                 .Where(x => x.Name == "Default Category Definition").First();
 
@@ -76,20 +71,21 @@ namespace Ucommerce.API.ApiControllers.Sandbox
 
             var category = new CategoryEntity() { Name = categoryName, DefinitionGuid = defaultCategoryDefinition.Guid, Catalog = defaultCatalog, DisplayOnSite = true };
 
-
-            _ucommerceDbContext.Set<CategoryEntity>().Add(category);            
+           
+            return category;
         }
 
-        public void CreateProductDefinition(string definitionName)
+        public ProductDefinitionEntity CreateProductDefinition(string definitionName)
         {
             var WildCoffeeProductDefinition = new ProductDefinitionEntity()
             {
                 Name = definitionName,
                 Description = "Definition for any type of products",
                 Deleted = false,
-            };
+                ProductDefinitionFields = []
+            };            
 
-            _ucommerceDbContext.Add(WildCoffeeProductDefinition);            
+            return WildCoffeeProductDefinition;
         }
 
     }

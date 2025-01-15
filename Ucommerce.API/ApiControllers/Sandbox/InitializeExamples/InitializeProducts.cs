@@ -1,6 +1,8 @@
 ﻿using Elastic.Clients.Elasticsearch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
+using Ucommerce.Extensions.Search.Abstractions;
 using Ucommerce.Web.BackOffice.Pipelines.Category.AddProductsToCategory;
 using Ucommerce.Web.Infrastructure.Persistence;
 using Ucommerce.Web.Infrastructure.Persistence.Entities;
@@ -18,75 +20,88 @@ namespace Ucommerce.API.ApiControllers.Sandbox.InitializeExamples
     {
         private readonly UcommerceDbContext _ucommerceDbContext;
         private readonly ProductUtilities _productUtilities;
+        private readonly IIndexer<ProductEntity> _productIndexer;
+        private readonly IIndexer<CategoryEntity> _categoryIndexer;
 
 
-        public _InitializeProducts(UcommerceDbContext ucommerceDbContext, ProductUtilities productUtilities)
+        public _InitializeProducts(UcommerceDbContext ucommerceDbContext, ProductUtilities productUtilities, IIndexer<ProductEntity> indexer, IIndexer<CategoryEntity> categoryIndexer)
         {
             _ucommerceDbContext = ucommerceDbContext;
             _productUtilities = productUtilities;
-        }
+            _productIndexer = indexer;
+            _categoryIndexer = categoryIndexer;
+        }  
 
         [HttpPost("InitializeProductSetupSequence")]
-        public IActionResult InitializeProductSetupSequence(CancellationToken cancellationToken)
+        public async Task<IActionResult> InitializeProductSetupSequence(CancellationToken cancellationToken)
         {
 
             //Names for the theme of this Sequence
-            var productNameSeed = "SpecialCoffee6";
-            var categoryName = "SpecialDrinks6";
+            var productNameSeed = "CoffeeTest";
+            var categoryName = "DrinksTest";
             var productDefinitionName = $"{productNameSeed} And other hot beverages";
             var ProductDefinitionFieldName = "Taste";
             var culture = "da-DK";
 
+            //Step 1: Create a ProductDefinition and add a field to it
+            var productDefinitionEntity = CreateNewProductDefinition(productDefinitionName);
+            AddShortTextFieldToProductDefinition(productDefinitionEntity, ProductDefinitionFieldName);
+            _ucommerceDbContext.SaveChanges();
+            /* SaveChanges is necessary here because, without it:
+            EF Core will try and save the product (See next SaveChanges) before it know about the ProductDefinition which will result in a failure.
+            Why EF Core is not is not creating the entities in SQL, in the same order as we have initialized them is, is a good question!
+            */
 
-            //TODO: Add DbContext tracking so we dont need to save 2 times.
-            CreateNewCategory(categoryName);
-            CreateNewProductDefinition(productDefinitionName);
-            _ucommerceDbContext.SaveChanges();
-            var fullProductName = CreateNewProduct(definitionName: productDefinitionName, productName: productNameSeed, culture: culture);
-            _ucommerceDbContext.SaveChanges();
-            AddProductToCategory(categoryName, fullProductName);
-            AddShortTextFieldToProductDefinition(productDefinitionName, ProductDefinitionFieldName);
+            //Step 2: Create a Product and put it in a Category
+            var product = CreateNewProduct(productDefinitionGuid: productDefinitionEntity.Guid, productName: productNameSeed, culture: culture);
+            var category = CreateCategory(categoryName, Get_productUtilities());
+            AddProductToCategory(category, product);
+            _ucommerceDbContext.SaveChanges(); //Se comment above
 
-            _ucommerceDbContext.SaveChanges();
+            //Step 3: add the product and category to the index
+            await _productIndexer.Index(product, cancellationToken);
+            await _categoryIndexer.Index(category, cancellationToken);
+           
 
             return Ok($"Created a product named {productNameSeed} with the definition {productDefinitionName} and added it to {categoryName} category");
         }
 
 
-        private void AddProductToCategory(string categoryName, string productName)
+        private void AddProductToCategory(CategoryEntity category, ProductEntity product)
         {
-            var categoryEntity = _ucommerceDbContext.Set<CategoryEntity>().Single(x => x.Name == categoryName);
-            var productEntity = _ucommerceDbContext.Set<ProductEntity>().Single(x => x.Name == productName);
-
-
             var categoryProductRelation = new CategoryProductRelationEntity
             {
-                Category = categoryEntity,
-                Product = productEntity
+                Category = category,
+                Product = product
             };
 
             _ucommerceDbContext.Set<CategoryProductRelationEntity>().Add(categoryProductRelation);
-
-            // This will not work
-            //categoryEntity.CategoryProductRelations.Add(categoryProductRelation);
-
-
         }
 
-        private void CreateNewCategory(string name)
+        private ProductUtilities Get_productUtilities()
+        {
+            return _productUtilities;
+        }
+
+        private CategoryEntity CreateCategory(string name, ProductUtilities _productUtilities)
         {
             var categoryExists = _ucommerceDbContext.Set<CategoryEntity>().Any(x => x.Name == name);
 
             if (categoryExists)
             {
-                throw new Exception("Category already exists");
+                var category = _ucommerceDbContext.Set<CategoryEntity>().Single(x => x.Name == name);
+
+                return category;
             }
 
-            _productUtilities.CreateCategory(name);
-            return;
+            var newCategory = _productUtilities.CreateCategory(name);
+
+            _ucommerceDbContext.Add(newCategory);
+
+            return newCategory;
         }
 
-        private void CreateNewProductDefinition(string definitionName)
+        private ProductDefinitionEntity CreateNewProductDefinition(string definitionName)
         {
             //Will Create definition if it does not exist          
             var productDefinitionExists = _ucommerceDbContext.Set<ProductDefinitionEntity>().Any(x => x.Name == definitionName);
@@ -94,44 +109,35 @@ namespace Ucommerce.API.ApiControllers.Sandbox.InitializeExamples
             {
                 throw new Exception("ProductDefinitionEntity already exists");
             }
-            _productUtilities.CreateProductDefinition(definitionName);
-            Ok();
+
+            var productDefinitionEntity = _productUtilities.CreateProductDefinition(definitionName);
+            _ucommerceDbContext.Add(productDefinitionEntity);
+
+            return productDefinitionEntity;
+
+
         }
 
-        private string CreateNewProduct(string definitionName, string productName, string culture)
+        private ProductEntity CreateNewProduct(Guid productDefinitionGuid, string productName, string culture)
         {
-            //Step 1: Find ProductDefinitionEntity
-            var productDefinition = _ucommerceDbContext.Set<ProductDefinitionEntity>()
-                .FirstOrDefault(x => x.Name == definitionName);
-            if (productDefinition == null)
-            {
-                throw new Exception("ProductDefinitionEntity not found");
-            }
 
-            //Step 2: Create ProductEntity
             var randomLetterAndNumber = GenerateRandomLetterAndNumber();
             //Improve Todo: add some check if the productNameSeed or sku already exists
 
             var productEntity = _productUtilities.CreateRegularProduct(
                 name: productName + randomLetterAndNumber,
                 sku: randomLetterAndNumber,
-                productDefinition: productDefinition,
+                productDefinitionGuid: productDefinitionGuid,
                 culture: culture);
 
             _ucommerceDbContext.Add(productEntity);
 
-            return productEntity.Name;
+            return productEntity;
 
         }
 
-        private void AddShortTextFieldToProductDefinition(string productDefinitionName, string productDefinitionFieldName)
+        private void AddShortTextFieldToProductDefinition(ProductDefinitionEntity productDefinition, string productDefinitionFieldName)
         {
-
-            var productDefinition = _ucommerceDbContext
-                .Set<ProductDefinitionEntity>()
-                .Include(x => x.ProductDefinitionFields)
-                .Where(x => x.Name == productDefinitionName)
-                .FirstOrDefault() ?? throw new Exception("definition not found");  //productDefinitionName is not unique
 
             var shortTextDataType = _ucommerceDbContext.Set<DataTypeEntity>()
               .FirstOrDefault(x => x.DefinitionName == "ShortText") ?? throw new Exception("ShortText DataType not found");
