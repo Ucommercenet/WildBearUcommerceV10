@@ -21,12 +21,9 @@ namespace Ucommerce.API.ApiControllers.Sandbox.InitializeExamples
             _ucommerceDbContext = ucommerceDbContext;
         }
 
-
-
         [HttpPost("WORKINPROGRESS_InitializeProductsWithPipelinesSequence")]
         public async Task<ActionResult> WORKINPROGRESS_InitializeProductsWithPipelinesSequence(CancellationToken cancellationToken)
         {
-
             //Names for the theme of this Sequence
             var productNameSeed = "PipelineCoffee1";
             var categoryName = "PipelineDrinks1";
@@ -39,9 +36,9 @@ namespace Ucommerce.API.ApiControllers.Sandbox.InitializeExamples
             //var boo = CreateCategoryInput(Guid DefinitionGuid, string Name, Guid CatalogId, int SortOrder, CultureInfo CultureInfo)
 
 
-
+            //THIS is not a Category Definition!!?
             ////TODO: Ooops we need to Find the Category DefinitionEntity
-            var categoryDefinitionEntity = _ucommerceDbContext.Set<DefinitionFieldEntity>().FirstOrDefault(x => x.Name == "TODO");
+            var categoryDefinitionEntity = _ucommerceDbContext.Set<DefinitionFieldEntity>().FirstOrDefault(x => x.Name != "TODO");
             //  .FirstOrDefault(x => x.Name == productDefinitionName)?.Guid) ?? throw new Exception("DefinitionEntity not found");
 
 
@@ -55,9 +52,10 @@ namespace Ucommerce.API.ApiControllers.Sandbox.InitializeExamples
                 catalogGuid = _ucommerceDbContext.Set<CatalogEntity>().First().Guid;
             }
 
-            
 
 
+            // Error Message User is missing role of type: Ucommerce.Web.Infrastructure.Persistence.Entities.Roles.CreateCatalogRoleEntity
+            // This needs to be called by the WildBear Client not "just" swagger.
 
             var pipeLineInput = new CreateCategoryInput(
                 DefinitionGuid: categoryDefinitionEntity.Guid,

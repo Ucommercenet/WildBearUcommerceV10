@@ -1,9 +1,14 @@
 ﻿using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.Mapping;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using System.Linq;
 using System.Linq.Dynamic.Core;
+using Ucommerce.API.Products;
 using Ucommerce.Extensions.Search.Abstractions;
 using Ucommerce.Web.BackOffice.Pipelines.Category.AddProductsToCategory;
+using Ucommerce.Web.Common.Extensions;
 using Ucommerce.Web.Infrastructure.Persistence;
 using Ucommerce.Web.Infrastructure.Persistence.Entities;
 using Ucommerce.Web.Infrastructure.Persistence.Entities.Definitions;
@@ -30,17 +35,47 @@ namespace Ucommerce.API.ApiControllers.Sandbox.InitializeExamples
             _productUtilities = productUtilities;
             _productIndexer = indexer;
             _categoryIndexer = categoryIndexer;
-        }  
+        }
+
+        //Remark all default values are just for easier testing in swagger, change to fit your needs
+        [HttpPost("SetUserDefinedFieldValueOnProduct")]
+        public IActionResult SetUserDefinedFieldValueOnProduct(
+            string productName = "CoffeeTest6I1", string productPropertyEntityName = "Taste and flavor", string newValue = "Sweet but also bitter")
+        {
+
+            var product = _ucommerceDbContext.Products.First(x => x.Name == productName);
+
+            //Remark remember to use Include or ProductDefinitionFields will be null
+            var definition = _ucommerceDbContext.Set<ProductDefinitionEntity>()
+                .Include(x => x.ProductDefinitionFields)
+                .Single(x => x.Guid == product.DefinitionGuid);
+
+            //Remark productPropertyEntityName is not unique, this might change in the future, because of feedback.
+            var definitionField = definition.ProductDefinitionFields
+                .Where(x => x.Name == productPropertyEntityName)
+                .First();
+
+            var productPropertyEntity = _ucommerceDbContext.Set<ProductPropertyEntity>()
+                .Where(x => x.ProductId == product.Id)
+                .Where(x => x.ProductDefinitionFieldId == definitionField.Id)
+                .First();
+
+            productPropertyEntity.Value = newValue;
+            _ucommerceDbContext.SaveChanges();
+
+            return Ok("UserDefinedFieldValueOnProduct updated");
+
+        }
 
         [HttpPost("InitializeProductSetupSequence")]
         public async Task<IActionResult> InitializeProductSetupSequence(CancellationToken cancellationToken)
         {
 
             //Names for the theme of this Sequence
-            var productNameSeed = "CoffeeTest";
-            var categoryName = "DrinksTest";
+            var productNameSeed = "CoffeeTest6";
+            var categoryName = "DrinksTest6";
             var productDefinitionName = $"{productNameSeed} And other hot beverages";
-            var ProductDefinitionFieldName = "Taste";
+            var ProductDefinitionFieldName = "Taste and flavor";
             var culture = "da-DK";
 
             //Step 1: Create a ProductDefinition and add a field to it
@@ -56,12 +91,14 @@ namespace Ucommerce.API.ApiControllers.Sandbox.InitializeExamples
             var product = CreateNewProduct(productDefinitionGuid: productDefinitionEntity.Guid, productName: productNameSeed, culture: culture);
             var category = CreateCategory(categoryName, Get_productUtilities());
             AddProductToCategory(category, product);
-            _ucommerceDbContext.SaveChanges(); //Se comment above
+
 
             //Step 3: add the product and category to the index
             await _productIndexer.Index(product, cancellationToken);
             await _categoryIndexer.Index(category, cancellationToken);
-           
+
+            _ucommerceDbContext.SaveChanges(); //Se comment above
+
 
             return Ok($"Created a product named {productNameSeed} with the definition {productDefinitionName} and added it to {categoryName} category");
         }
