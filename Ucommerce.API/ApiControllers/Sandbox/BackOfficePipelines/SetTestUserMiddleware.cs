@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
+using Ucommerce.Web.BackOffice.Authentication;
 
-namespace Ucommerce.API;
+namespace Ucommerce.API.ApiControllers.Sandbox.BackOfficePipelines;
 
 /// <summary>
 /// Middleware for setting the test user
@@ -36,7 +38,10 @@ public class SetTestUserMiddleware
                 new("UserId", "90114c77-05a9-4060-b0f4-d839055690d1"),
             };
             var identity = new ClaimsIdentity(claims, authenticationType: "Test");
+
             context.User = new ClaimsPrincipal(identity);
+            await context.SignInAsync(AuthenticationConstants.BACKOFFICE_AUTHENTICATION_SCHEME, new ClaimsPrincipal(identity));
+
             await _next(context);
         }
         catch (Exception e)

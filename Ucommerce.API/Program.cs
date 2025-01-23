@@ -10,7 +10,6 @@ using Ucommerce.Extensions.Search.Abstractions.Models.SearchModels;
 using Ucommerce.Web.Common.Extensions;
 using Ucommerce.Web.Infrastructure.Core;
 using Ucommerce.API.WildBearDemoProducts;
-using Ucommerce.API;
 using Ucommerce.API.PipelinesExtensions;
 using Ucommerce.API.ImageService;
 using System.Diagnostics;
@@ -21,6 +20,7 @@ using OpenTelemetry.Resources;
 using Ucommerce.API.PipelinesExtensions.Tasks;
 using Ucommerce.API.ApiControllers.Sandbox;
 using Ucommerce.API.ApiControllers.Sandbox.CategoryAsLocations;
+using Ucommerce.API.ApiControllers.Sandbox.BackOfficePipelines;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -34,6 +34,7 @@ builder.Services
     .UcommerceBuilder
     .AddElasticsearch()
     .AddPayments()
+
     //Custom pipeline Tasks    
     .AddCustomOrderProcessingTask()
     .AddDelayToCartPipelineTask()
