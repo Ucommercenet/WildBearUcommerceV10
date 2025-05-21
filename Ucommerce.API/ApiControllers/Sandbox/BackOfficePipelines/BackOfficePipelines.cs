@@ -21,8 +21,7 @@ namespace Ucommerce.API.ApiControllers.Sandbox.BackOfficePipelines
     {
         private readonly UcommerceDbContext _ucommerceDbContext;
         private readonly IPipeline<CreateCategoryInput, CreateCategoryOutput> _createCategoryPipeline;
-        private readonly IPipeline<UpdateOrderInput, UpdateOrderOutput> _updateOrderPipeline;
-        private object orderStatus;
+        private readonly IPipeline<UpdateOrderInput, UpdateOrderOutput> _updateOrderPipeline;   
 
         public BackOfficePipelinesController(UcommerceDbContext ucommerceDbContext, IPipeline<CreateCategoryInput, CreateCategoryOutput> createCategoryPipeline, IPipeline<UpdateOrderInput, UpdateOrderOutput> updateOrderPipeline)
         {
