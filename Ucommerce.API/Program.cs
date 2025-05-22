@@ -36,22 +36,10 @@ builder.Services
     .AddPayments()
 
     //Custom pipeline Tasks    
-    .AddCustomOrderProcessingTask()
-    .AddDelayToCartPipelineTask()
+    .AddCustomOrderProcessingTask()    
     .AddCoffeeProductDescriptionTask()
 
     //Final builder setup
-    .Build();
-
-using TracerProvider? tracerProvider = Sdk.CreateTracerProviderBuilder()
-    .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("UcommerceWildBearActivitySource"))
-    .AddSource(UcommerceWildBearActivitySource.Instance.Name)
-    .AddJaegerExporter(o =>
-    {
-        o.Protocol = OpenTelemetry.Exporter.JaegerExportProtocol.HttpBinaryThrift;
-    })
-
-    .AddHttpClientInstrumentation()
     .Build();
 
 builder.Services.AddControllers();

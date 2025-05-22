@@ -31,20 +31,7 @@ namespace Ucommerce.API.PipelinesExtensions
                 (before: typeof(CreateProductIndexingPipelineTask));
 
             return builder;
-        }
-
-        public static IUcommerceBuilder AddDelayToCartPipelineTask(this IUcommerceBuilder builder)
-        {
-            //This will insert the task 'CustomOrderProcessingTask' before CreateProductIndexingPipelineTask
-            builder.InsertPipelineTaskBefore
-                <IPipelineTask<AddToCartInput, AddToCartOutput>, DelayToCartPipelineTask>
-                (before: typeof(ExecuteCartPipelineTask));
-
-            return builder;
-        }
-
-
-
+        }    
 
     }
 }
