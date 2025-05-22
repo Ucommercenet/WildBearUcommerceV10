@@ -37,7 +37,7 @@ namespace Ucommerce.API.ApiControllers.WildBearShop
                .ToResultSet(token);
             var result = searchroduct.SingleOrDefault();
 
-            var customFields = result.GetUserDefinedFields();
+            var customFields = result?.GetUserDefinedFields();
 
 
             return result is null ? NotFound() : Ok(result);
