@@ -9,9 +9,10 @@ namespace Ucommerce.API.WildBearDemoProducts
     {
         public ProductIndexDefinition(IOptions<SearchOptions> searchOptions) : base(searchOptions)
         {
-            this.Field(p => p["Country"], typeof(string)).Facet();
-            this.Field(p => p["CoffeeAroma"], typeof(string)).Facet();
-            this.Field(p => p["Tea"], typeof(string)).Facet();
+            this.Field(p => p["Origin Country"], typeof(string)).Facet();
+            this.Field(p => p["Taste and flavor"], typeof(string)).Facet();
+
+
 
 
         }

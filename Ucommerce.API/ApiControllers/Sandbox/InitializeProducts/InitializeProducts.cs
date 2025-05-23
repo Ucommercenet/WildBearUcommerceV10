@@ -72,8 +72,8 @@ namespace Ucommerce.API.ApiControllers.Sandbox.InitializeExamples
         {
 
             //Names for the theme of this Sequence
-            var productNameSeed = "CoffeeTest6";
-            var categoryName = "DrinksTest6";
+            var productNameSeed = "Caramel Coffee";
+            var categoryName = "NewDrinks";
             var productDefinitionName = $"{productNameSeed} And other hot beverages";
             var ProductDefinitionFieldName = "Taste and flavor";
             var culture = "da-DK";
@@ -157,6 +157,8 @@ namespace Ucommerce.API.ApiControllers.Sandbox.InitializeExamples
 
         private ProductEntity CreateNewProduct(Guid productDefinitionGuid, string productName, string culture)
         {
+
+
 
             var randomLetterAndNumber = GenerateRandomLetterAndNumber();
             //Improve Todo: add some check if the productNameSeed or sku already exists
