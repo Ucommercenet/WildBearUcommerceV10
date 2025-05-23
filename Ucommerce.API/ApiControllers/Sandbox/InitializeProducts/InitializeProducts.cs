@@ -89,7 +89,7 @@ namespace Ucommerce.API.ApiControllers.Sandbox.InitializeExamples
 
             //Step 2: Create a Product and put it in a Category
             var product = CreateNewProduct(productDefinitionGuid: productDefinitionEntity.Guid, productName: productNameSeed, culture: culture);
-            var category = CreateCategory(categoryName, Get_productUtilities());
+            var category = CreateCategory(categoryName);
             AddProductToCategory(category, product);
 
 
@@ -113,14 +113,9 @@ namespace Ucommerce.API.ApiControllers.Sandbox.InitializeExamples
             };
 
             _ucommerceDbContext.Set<CategoryProductRelationEntity>().Add(categoryProductRelation);
-        }
+        }       
 
-        private ProductUtilities Get_productUtilities()
-        {
-            return _productUtilities;
-        }
-
-        private CategoryEntity CreateCategory(string name, ProductUtilities _productUtilities)
+        private CategoryEntity CreateCategory(string name)
         {
             var categoryExists = _ucommerceDbContext.Set<CategoryEntity>().Any(x => x.Name == name);
 
@@ -131,7 +126,7 @@ namespace Ucommerce.API.ApiControllers.Sandbox.InitializeExamples
                 return category;
             }
 
-            var newCategory = _productUtilities.CreateCategory(name);
+            var newCategory = _productUtilities.CreateCategory(name); 
 
             _ucommerceDbContext.Add(newCategory);
 
